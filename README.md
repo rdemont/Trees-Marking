@@ -1,6 +1,6 @@
 # treesmarking
 
-It's a flutter projet to help personne are mering tree in the forest 
+It's a flutter projet to help personne are marking trees in the forest 
 
 ## Getting Started
 
