@@ -19,7 +19,11 @@ class BusinessObj{
   }
 
   Future<int> save(){
-    return dbObj.save();
+    return dbObj.save().then((value) 
+    {
+print ("BusinessObj - SAVE- ID: $id");      
+      return value ;
+    });
   }
 
 

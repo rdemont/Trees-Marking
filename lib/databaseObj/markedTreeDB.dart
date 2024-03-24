@@ -159,8 +159,7 @@ class MarkedTreeDB extends DatabaseObj {
   @override
   Map<String, Object?> toMap() 
   {
-    Map<String, Object?> result = super.toMap();
-    result.addAll({
+    return {
       'speciesId':_species!= null ? _species?.id : _speciesId,
       'trunkSizeId': _trunkSize != null ? trunkSize?.id : _trunkSizeId ,
       'campaignId': _campaign != null ? campaign?.id : _campaignId, 
@@ -168,8 +167,8 @@ class MarkedTreeDB extends DatabaseObj {
       'latitude': _latitude,
       'longitude': _longitude,
       'insertTime': _insertTime 
-    });
-    return  result ; 
+    };
+    
   }
 
 

@@ -62,12 +62,11 @@ class SpeciesDB extends DatabaseObj {
   @override
   Map<String, Object?> toMap() 
   {
-    Map<String, Object?> result = super.toMap();
-    result.addAll({
+    return{
       'name':_name,
       'communuse': _communUse ? 0 : 1 
-    });
-    return  result ; 
+    };
+    
   }
 
 }

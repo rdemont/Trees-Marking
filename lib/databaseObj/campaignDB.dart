@@ -83,8 +83,6 @@ class CampaignDB extends DatabaseObj {
       Campaign result = Campaign(this);
       if (obj.isEmpty)
       {
-        
-      }else {
         id = obj[0]["id"] as int; 
         _name = obj[0]["name"] as String; 
         _remark = obj[0]["remark"] as String; 
@@ -107,16 +105,16 @@ class CampaignDB extends DatabaseObj {
   @override
   Map<String, Object?> toMap() 
   {
-    Map<String, Object?> result = super.toMap();
-    result.addAll({
+    //Map<String, Object?> result = super.toMap();
+   return{
       'name':_name,
       'remark': _remark,
       'latitude': _latitude,
       'longitude': _longitude,
-      'campaignDate': _campaignDate       
+      'campaignDate': _campaignDate.millisecondsSinceEpoch    
       
-    });
-    return  result ; 
+    };
+    
   }
 
 

@@ -80,13 +80,12 @@ class TrunkSizeDB extends DatabaseObj {
   @override
   Map<String, Object?> toMap() 
   {
-    Map<String, Object?> result = super.toMap();
-    result.addAll({
+    return{
       'name':_name,
       'minDiameter': _minDiameter ,
       'maxDiameter': _maxDiameter 
-    });
-    return  result ; 
+    };
+    
   }
 
 }

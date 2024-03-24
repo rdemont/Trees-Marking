@@ -45,10 +45,10 @@ class DatabaseService {
     print("** rename table **"); 
           
 
-    db.execute("DROP TABLE markedTree");
-    db.execute("DROP TABLE species");
-    db.execute("DROP TABLE trunkSize");
-    db.execute("DROP TABLE campaign");
+//    db.execute("DROP TABLE markedTree");
+//    db.execute("DROP TABLE species");
+//    db.execute("DROP TABLE trunkSize");
+//    db.execute("DROP TABLE campaign");
     createTables(db);
 
 
@@ -84,7 +84,7 @@ class DatabaseService {
 
   static Future<void> createTables(Database database) async {
     await database.execute("""
-      CREATE TABLE markedTree(
+      CREATE TABLE IF NOT EXISTS markedTree(
           id INTEGER PRIMARY KEY AUTOINCREMENT,
           speciesId int NOT NULL,
           trunkSizeId int NOT null,
@@ -97,7 +97,7 @@ class DatabaseService {
     """);
 
     await database.execute("""
-    CREATE TABLE species(
+    CREATE TABLE IF NOT EXISTS species(
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       name TEXT NOT NULL,
       communUse BOOLEAN
@@ -105,7 +105,7 @@ class DatabaseService {
     """);
 
     await database.execute("""
-    CREATE TABLE trunkSize(
+    CREATE TABLE IF NOT EXISTS trunkSize(
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       minDiameter INTEGER, 
       maxDiameter INTEGER, 
@@ -115,15 +115,17 @@ class DatabaseService {
     """);    
 
     await database.execute("""
-    CREATE TABLE campaign(
+    CREATE TABLE IF NOT EXISTS campaign(
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       name TEXT NOT NULL,
       remark TEXT,
       latitude FLOAT,
       longitude FLOAT,
-      campagnDate DATETIME DEFAULT CURRENT_TIMESTAMP 
+      campaignDate DATETIME DEFAULT CURRENT_TIMESTAMP 
     )          
     """);        
+
+
 
     //await database.insert('Groups', Group(name: "Default").toMap());
 

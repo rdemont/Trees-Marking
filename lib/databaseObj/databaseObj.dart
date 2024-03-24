@@ -40,16 +40,23 @@ class DatabaseObj{
     mode = mode & ~MODE_ISDELETE ; 
   }
 
-  Future<int> save() async {
+  Future<int> save()  {
+    if (_id == 0){
+      mode = mode | MODE_ISNEW; 
+    }
+  print("databaseObj SAVE mode :$mode");
     if ((mode & MODE_ISDELETE) == MODE_ISDELETE)
     {
       //DELETE 
       if ((mode & MODE_ISNEW) != MODE_ISNEW) 
       {
+print("databaseObj SAVE - DELETE");        
+/*
         final Database db = await DatabaseService.initializeDb();
         int count = await db.delete(tableName,where: "id = $id");
         if (count == 1) return SAVE_RESULT_OK ; 
         return SAVE_RESULT_ERROR ; 
+*/        
       }
     }else {
       if ((mode & MODE_ISUPDATE) == MODE_ISUPDATE)
@@ -57,17 +64,26 @@ class DatabaseObj{
         if ((mode & MODE_ISNEW) == MODE_ISNEW)
         {
           //INSERT 
-          final Database db = await DatabaseService.initializeDb();
-          _id = await db.insert(tableName,this.toMap());
-          if (_id >0 ) return SAVE_RESULT_OK ; 
-          return SAVE_RESULT_ERROR ; 
+print("databaseObj SAVE - INSERT");                  
+          DatabaseService.initializeDb().then((db){
+            db.insert(tableName,toMap()).then((value){
+              _id = value ; 
+print("databaseObj SAVE - INSERT - ID: $_id");                                        
+              if (_id >0 ) return SAVE_RESULT_OK ; 
+              return SAVE_RESULT_ERROR ; 
+            });
+          });
+
         }
         }else {
+          //UPDATE
+print("databaseObj SAVE - INSERT");   
+/*                         
           final Database db = await DatabaseService.initializeDb();
           int count = await db.update(tableName,this.toMap());
           if (count == 1 ) return SAVE_RESULT_OK ; 
           return SAVE_RESULT_ERROR ; 
-
+*/
         }    
       } 
     return Future(() => SAVE_RESULT_OK);
@@ -102,7 +118,7 @@ class DatabaseObj{
     int? offset}){
 
       return DatabaseService.initializeDb().then((db) {
-        return db.query(tableName,
+        return db.query(table,
           distinct: distinct,
           columns: columns,
           where: where,
