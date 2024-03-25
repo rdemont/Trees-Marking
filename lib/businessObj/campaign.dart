@@ -59,6 +59,10 @@ class Campaign extends BusinessObj
     return objDb.open(id);
   }
 
+  static Campaign fromMap(Map<String,Object?>map){
+    CampaignDB objDb = CampaignDB();
+    return objDb.fromMap(map);
+  }
 
 
 }

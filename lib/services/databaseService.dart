@@ -45,17 +45,32 @@ class DatabaseService {
     print("** rename table **"); 
           
 
-//    db.execute("DROP TABLE markedTree");
-//    db.execute("DROP TABLE species");
-//    db.execute("DROP TABLE trunkSize");
-//    db.execute("DROP TABLE campaign");
-    createTables(db);
+    //db.execute("DROP TABLE markedTree");
+    //db.execute("DROP TABLE species");
+    //db.execute("DROP TABLE trunkSize");
+    //db.execute("DROP TABLE campaign");
+    //db.execute("DELETE FROM  campaign");
+    ///createTables(db);
 
 
 
     print("** show tables **");
-    db.rawQuery('SELECT * FROM sqlite_master ORDER BY name;').then((value) {
-      print(value);
+    db.rawQuery('SELECT * FROM sqlite_master ORDER BY name;').then((tables) 
+    {
+      if (tables.length > 0) 
+      {
+        for (int i = 0; i < tables.length; i++) 
+        {
+          String tableName = tables[i]['name'].toString() ; 
+          db.rawQuery("SELECT count(*) as nb FROM $tableName").then((count)
+          {
+            print("TABLE : $tableName / NB-Raw : "+count[0]['nb'].toString());          
+            print(tables[i]);
+
+          });
+
+        }
+      }
     });
   }
 

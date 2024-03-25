@@ -2,7 +2,9 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:treesmarking/businessObj/campaign.dart';
+
 
 class CampaignWidget extends StatefulWidget {
 
@@ -88,7 +90,7 @@ class _CampaignWidgetState extends State<CampaignWidget> {
                   showContextMenu(context, widget.campaignList[index].id!);
                 },
                 child: ListTile(
-                  title: Text(widget.campaignList[index].name),
+                  title: Text(widget.campaignList[index].name+"/"+DateFormat("dd.MM.yyyy").format(widget.campaignList[index].campaignDate)),
                   selected:
                       widget.selectedCampaignId == widget.campaignList[index].id,
                   onTap: () {
@@ -132,7 +134,8 @@ class _CampaignWidgetState extends State<CampaignWidget> {
           ),
           TextButton(
             onPressed: () {
-              print(textFieldController.text);
+debugPrint("Test Debug Pring");
+print(textFieldController.text);
               Campaign campaign = Campaign.newObj();
               campaign.name = textFieldController.text;
 print("Campaign Save 1");

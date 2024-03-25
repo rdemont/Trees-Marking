@@ -65,8 +65,9 @@ print("databaseObj SAVE - DELETE");
         {
           //INSERT 
 print("databaseObj SAVE - INSERT");                  
-          DatabaseService.initializeDb().then((db){
-            db.insert(tableName,toMap()).then((value){
+          return DatabaseService.initializeDb().then((db){
+print("databaseObj SAVE - INSERT Step DB");                            
+            return db.insert(tableName,toMap()).then((value){
               _id = value ; 
 print("databaseObj SAVE - INSERT - ID: $_id");                                        
               if (_id >0 ) return SAVE_RESULT_OK ; 

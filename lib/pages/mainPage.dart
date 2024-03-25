@@ -5,6 +5,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:treesmarking/Widget/CampaignWidget.dart';
+import 'package:treesmarking/businessObj/list/campaignList.dart';
 
 import '../Widget/MarkedTreeWidget.dart';
 import '../Widget/SettingsWidget.dart';
@@ -33,7 +34,13 @@ class _MainPageState extends State<MainPage> {
   List<MarkedTree> markedTreeList = [];
   List<Campaign> campaignList = [];
 
-  
+  @override
+  void initState() {
+print("**initState**");
+    _loadCampaign();
+    //_loadTodoFromGroup(selectedGroupId);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -76,9 +83,24 @@ class _MainPageState extends State<MainPage> {
 print("Campaign ID to load $campaignId");    
     Campaign.openObj(campaignId).then((campaign) {
       campaign.markedTreeList().then((list) {
-        markedTreeList = list ; 
+        setState(() {
+print("load markedTreeList count : "+list.length.toString());          
+          markedTreeList = list ; 
+        });
       });
     });
   }
   
+  
+
+  _loadCampaign() 
+  {
+print("function  _loadCampaign");
+    CampaignList.getAll().then((value) {
+      setState(() {
+print("CompaignList count "+value.length.toString());
+        campaignList = value; 
+      });
+    });
+  }
 }

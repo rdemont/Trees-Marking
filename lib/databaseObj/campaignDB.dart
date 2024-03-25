@@ -83,13 +83,7 @@ class CampaignDB extends DatabaseObj {
       Campaign result = Campaign(this);
       if (obj.isEmpty)
       {
-        id = obj[0]["id"] as int; 
-        _name = obj[0]["name"] as String; 
-        _remark = obj[0]["remark"] as String; 
-        _latitude = obj[0]["latitude"] as double; 
-        _longitude = obj[0]["longitude"] as double; 
-        _campaignDate = obj[0]["campaignDate"] as DateTime; 
-
+        fromMap(obj[0]);
       }
       return result ; 
     });
@@ -118,10 +112,27 @@ class CampaignDB extends DatabaseObj {
   }
 
 
-  Future<List<MarkedTree>> markedTreeList() async 
+  Campaign fromMap(Map<String,Object?> map)
   {
-    final List<Map<String, Object?>> result = await query('markedTree',where: "campaignId = $id");
-    return result.map((e) => MarkedTree.fromMap(e)).toList();    
+    Campaign result = Campaign(this) ;
+    super.id = map["id"] as int; 
+    _name = map["name"] as String; 
+    _remark = map["remark"] as String; 
+    _latitude = map["latitude"] as double; 
+    _longitude = map["longitude"] as double; 
+    _campaignDate = DateTime.fromMicrosecondsSinceEpoch(map["campaignDate"] as int); 
+
+    return result; 
+
+  }
+
+  Future<List<MarkedTree>> markedTreeList()  
+  {
+    return query('markedTree',where: "campaignId = $id").then((value) {
+  print("list count :"+value.length.toString());
+      final List<Map<String, Object?>> result = value; 
+      return result.map((e) => MarkedTree.fromMap(e)).toList();    
+    });
   }
 
 

@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:treesmarking/pages/mainPage.dart';
 
+import 'services/databaseService.dart';
+
 void main() {
   runApp(const MyApp());
+
 }
 
 class MyApp extends StatelessWidget {
@@ -11,6 +14,9 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    
+    DatabaseService.initializeDb();
+
     return MaterialApp(
       title: 'Trees-Marking',
       theme: ThemeData(
