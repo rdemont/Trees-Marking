@@ -1,7 +1,5 @@
 
 
-
-
 import '../businessObj/trunkSize.dart';
 import 'databaseObj.dart';
 
@@ -9,49 +7,51 @@ class TrunkSizeDB extends DatabaseObj {
   
 
 
-  String _name ='' ;
   int _minDiameter = 0;
-  int _maxDiameter = 0;
+int _maxDiameter = 0;
+String _name = '';
 
-  SpeciesDB()
+
+
+  TrunkSizeDB()
   {
     tableName = 'trunkSize';
   }
 
-  String get name => _name;
   int get minDiameter => _minDiameter;
-  int get maxDiameter => _maxDiameter;
+int get maxDiameter => _maxDiameter;
+String get name => _name;
 
 
 
-  set name(String value)
-  {
-    if (_name != value)
-    {
-      dataUpdated(); 
-      _name = value;
-    }
-  }
-
-  set minDiameter(int value)
-  {
-    if (_minDiameter != value)
-    {
-      dataUpdated(); 
-      _minDiameter = value;
-    }
-  }
-
-
-  set maxDiameter(int value)
-  {
-    if (_maxDiameter != value)
-    {
-      dataUpdated(); 
-      _maxDiameter = value;
-    }
-  }
-
+  
+                    set minDiameter(int value)
+                    {
+                        if (_minDiameter != value)
+                        {
+                        dataUpdated(); 
+                        _minDiameter = value;
+                        }
+                    }
+                
+                    set maxDiameter(int value)
+                    {
+                        if (_maxDiameter != value)
+                        {
+                        dataUpdated(); 
+                        _maxDiameter = value;
+                        }
+                    }
+                
+                    set name(String value)
+                    {
+                        if (_name != value)
+                        {
+                        dataUpdated(); 
+                        _name = value;
+                        }
+                    }
+                
 
   Future<TrunkSize> open(int id)
   {
@@ -59,12 +59,7 @@ class TrunkSizeDB extends DatabaseObj {
       TrunkSize result = TrunkSize(this);
       if (obj.isEmpty)
       {
-        
-      }else {
-        id = obj[0]["id"] as int; 
-        _name = obj[0]["name"] as String; 
-        _minDiameter = obj[0]["minDiameter"] as int; 
-        _maxDiameter = obj[0]["maxDiameter"] as int; 
+        fromMap(obj[0]);
       }
       return result ; 
     });
@@ -80,12 +75,32 @@ class TrunkSizeDB extends DatabaseObj {
   @override
   Map<String, Object?> toMap() 
   {
-    return{
-      'name':_name,
-      'minDiameter': _minDiameter ,
-      'maxDiameter': _maxDiameter 
+    //Map<String, Object?> result = super.toMap();
+   return{
+      'minDiameter': _minDiameter,
+'maxDiameter': _maxDiameter,
+'name': _name,
+
     };
     
   }
+
+
+  TrunkSize fromMap(Map<String,Object?> map)
+  {
+    TrunkSize result = TrunkSize(this) ;
+    super.id = map["id"] as int; 
+    
+    _minDiameter = map['minDiameter'] as int;
+_maxDiameter = map['maxDiameter'] as int;
+_name = map['name'] as String;
+
+
+
+    return result; 
+
+  }
+
+
 
 }

@@ -1,3 +1,5 @@
+
+
 import '../businessObj/species.dart';
 import 'databaseObj.dart';
 
@@ -5,8 +7,10 @@ class SpeciesDB extends DatabaseObj {
   
 
 
-  String _name ='' ;
-  bool _communUse = false;
+  String _name = '';
+String _communUse = '';
+
+
 
   SpeciesDB()
   {
@@ -14,27 +18,29 @@ class SpeciesDB extends DatabaseObj {
   }
 
   String get name => _name;
-  bool get communUse => _communUse;
+String get communUse => _communUse;
 
 
-  set name(String value)
-  {
-    if (_name != value)
-    {
-      dataUpdated(); 
-      _name = value;
-    }
-  }
 
-  set communUse(bool value)
-  {
-    if (_communUse != value)
-    {
-      dataUpdated(); 
-      _communUse = value;
-    }
-  }
-
+  
+                    set name(String value)
+                    {
+                        if (_name != value)
+                        {
+                        dataUpdated(); 
+                        _name = value;
+                        }
+                    }
+                
+                    set communUse(String value)
+                    {
+                        if (_communUse != value)
+                        {
+                        dataUpdated(); 
+                        _communUse = value;
+                        }
+                    }
+                
 
   Future<Species> open(int id)
   {
@@ -42,11 +48,7 @@ class SpeciesDB extends DatabaseObj {
       Species result = Species(this);
       if (obj.isEmpty)
       {
-        
-      }else {
-        id = obj[0]["id"] as int; 
-        _name = obj[0]["name"] as String; 
-        _communUse = ((obj[0]["communUse"] as int) == 0 ? true: false) ; 
+        fromMap(obj[0]);
       }
       return result ; 
     });
@@ -62,11 +64,30 @@ class SpeciesDB extends DatabaseObj {
   @override
   Map<String, Object?> toMap() 
   {
-    return{
-      'name':_name,
-      'communuse': _communUse ? 0 : 1 
+    //Map<String, Object?> result = super.toMap();
+   return{
+      'name': _name,
+'communUse': _communUse,
+
     };
     
   }
+
+
+  Species fromMap(Map<String,Object?> map)
+  {
+    Species result = Species(this) ;
+    super.id = map["id"] as int; 
+    
+    _name = map['name'] as String;
+_communUse = map['communUse'] as String;
+
+
+
+    return result; 
+
+  }
+
+
 
 }

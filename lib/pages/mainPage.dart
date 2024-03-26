@@ -6,6 +6,7 @@
 import 'package:flutter/material.dart';
 import 'package:treesmarking/Widget/CampaignWidget.dart';
 import 'package:treesmarking/businessObj/list/campaignList.dart';
+import 'package:treesmarking/businessObj/list/markedTreeList.dart';
 
 import '../Widget/MarkedTreeWidget.dart';
 import '../Widget/SettingsWidget.dart';
@@ -82,7 +83,7 @@ print("**initState**");
   void _loadMarkedTreeFromCampaign(campaignId) async {
 print("Campaign ID to load $campaignId");    
     Campaign.openObj(campaignId).then((campaign) {
-      campaign.markedTreeList().then((list) {
+      MarkedTreeList.getFromCampaign(campaignId).then((list) {
         setState(() {
 print("load markedTreeList count : "+list.length.toString());          
           markedTreeList = list ; 

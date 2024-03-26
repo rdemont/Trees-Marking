@@ -1,63 +1,59 @@
-
-
-import 'package:treesmarking/businessObj/businessObj.dart';
 import 'package:treesmarking/databaseObj/markedTreeDB.dart';
 
-import 'species.dart';
-import 'trunkSize.dart';
+import 'businessObj.dart';
 
 class MarkedTree extends BusinessObj
 {
   MarkedTreeDB get _localDbObj => dbObj as MarkedTreeDB ;
 
   MarkedTree(super.dbObj);
+
+	
+  int get speciesId => _localDbObj.speciesId;
+int get trunkSizeId => _localDbObj.trunkSizeId;
+int get campaignId => _localDbObj.campaignId;
+String get remark => _localDbObj.remark;
+double get latitude => _localDbObj.latitude;
+double get longitude => _localDbObj.longitude;
+DateTime get insertTime => _localDbObj.insertTime;
+
+
   
-  //int get specieId => _localDbObj.specieId;
-  //int get trunkSizeId => _localDbObj.trunkSizeId;
-  String get remark => _localDbObj.remark;
-  double get latitude => _localDbObj.latitude;
-  double get longitude => _localDbObj.longitude;
-  DateTime get insertTime => _localDbObj.insertTime;
-
-  Species? get specie{
-    return _localDbObj.species;
-  } 
-
-  TrunkSize? get trunkSize{
-    return _localDbObj.trunkSize;
-  }
-
-  set specie(Species? value)
-  {
-    _localDbObj.species = value;
-  } 
-
-
-  set trunkSize(TrunkSize? value)
-  {
-    _localDbObj.trunkSize = value;
-  } 
-
-  set remark(String value)
-  {
-    _localDbObj.remark = value;
-  } 
-
-  set latitude(double value)
-  {
-    _localDbObj.latitude = value;
-  } 
-
-  set longitude(double value)
-  {
-    _localDbObj.longitude = value;
-  } 
-
-  set insertTime(DateTime value)
-  {
-    _localDbObj.insertTime = value;
-  } 
-
+                    set speciesId(int value)
+                    {
+                        _localDbObj.speciesId = value;
+                    } 
+                
+                    set trunkSizeId(int value)
+                    {
+                        _localDbObj.trunkSizeId = value;
+                    } 
+                
+                    set campaignId(int value)
+                    {
+                        _localDbObj.campaignId = value;
+                    } 
+                
+                    set remark(String value)
+                    {
+                        _localDbObj.remark = value;
+                    } 
+                
+                    set latitude(double value)
+                    {
+                        _localDbObj.latitude = value;
+                    } 
+                
+                    set longitude(double value)
+                    {
+                        _localDbObj.longitude = value;
+                    } 
+                
+                    set insertTime(DateTime value)
+                    {
+                        _localDbObj.insertTime = value;
+                    } 
+                
 
   static MarkedTree newObj(){
     MarkedTreeDB objDb = MarkedTreeDB();
@@ -69,10 +65,9 @@ class MarkedTree extends BusinessObj
     return objDb.open(id);
   }
 
-  static MarkedTree fromMap(Map<String, Object?> map){
+  static MarkedTree fromMap(Map<String,Object?>map){
     MarkedTreeDB objDb = MarkedTreeDB();
     return objDb.fromMap(map);
-
   }
 
 

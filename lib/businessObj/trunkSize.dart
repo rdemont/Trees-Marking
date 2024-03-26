@@ -1,6 +1,5 @@
+import 'package:treesmarking/databaseObj/trunkSizeDB.dart';
 
-
-import '../databaseObj/trunkSizeDB.dart';
 import 'businessObj.dart';
 
 class TrunkSize extends BusinessObj
@@ -9,25 +8,28 @@ class TrunkSize extends BusinessObj
 
   TrunkSize(super.dbObj);
 
-  String get name => _localDbObj.name;
+	
   int get minDiameter => _localDbObj.minDiameter;
-  int get maxDiameter => _localDbObj.maxDiameter;
+int get maxDiameter => _localDbObj.maxDiameter;
+String get name => _localDbObj.name;
 
 
-  set name(String value)
-  {
-    _localDbObj.name = value;
-  } 
-
-  set minDiameter(int value)
-  {
-    _localDbObj.minDiameter = value;
-  } 
   
-  set maxDiameter(int value)
-  {
-    _localDbObj.maxDiameter = value;
-  } 
+                    set minDiameter(int value)
+                    {
+                        _localDbObj.minDiameter = value;
+                    } 
+                
+                    set maxDiameter(int value)
+                    {
+                        _localDbObj.maxDiameter = value;
+                    } 
+                
+                    set name(String value)
+                    {
+                        _localDbObj.name = value;
+                    } 
+                
 
   static TrunkSize newObj(){
     TrunkSizeDB objDb = TrunkSizeDB();
@@ -37,6 +39,11 @@ class TrunkSize extends BusinessObj
   static Future<TrunkSize> openObj(int id){
     TrunkSizeDB objDb = TrunkSizeDB();
     return objDb.open(id);
+  }
+
+  static TrunkSize fromMap(Map<String,Object?>map){
+    TrunkSizeDB objDb = TrunkSizeDB();
+    return objDb.fromMap(map);
   }
 
 
