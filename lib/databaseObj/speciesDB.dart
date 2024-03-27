@@ -46,7 +46,7 @@ String get communUse => _communUse;
   {
     return query(tableName,where: "id = $id").then((obj){
       Species result = Species(this);
-      if (obj.isEmpty)
+      if (!obj.isEmpty)
       {
         fromMap(obj[0]);
       }

@@ -79,7 +79,7 @@ DateTime get campaignDate => _campaignDate;
   {
     return query(tableName,where: "id = $id").then((obj){
       Campaign result = Campaign(this);
-      if (obj.isEmpty)
+      if (!obj.isEmpty)
       {
         fromMap(obj[0]);
       }
@@ -119,7 +119,7 @@ DateTime get campaignDate => _campaignDate;
 _remark = map['remark'] as String;
 _latitude = map['latitude'] as double;
 _longitude = map['longitude'] as double;
-_campaignDate = DateTime.fromMicrosecondsSinceEpoch(map['campaignDate'] as int);
+_campaignDate = DateTime.fromMillisecondsSinceEpoch(map['campaignDate'] as int);
 
 
 

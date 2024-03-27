@@ -1,6 +1,7 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:treesmarking/pages/speciesPage.dart';
 
 class SettingsWidget extends StatefulWidget {
   const SettingsWidget({Key? key});
@@ -69,13 +70,17 @@ class _SettingsWidgetState extends State<SettingsWidget> {
               visible: _displayedTabIndex == 2,
               child: Container(
                 margin: const EdgeInsets.only(left: 20),
-                child: const Column(
+                child: Column(
                   children: [
                     ListTile(
                       title: Text("Species"),
-                    ),
+                      onTap: openSpeciesPage,
+                    )
+                    ,
                     ListTile(
                       title: Text("Trunk Size"),
+                       onTap: openTrunkSizePage,
+                      
                     ),
 
                   ],
@@ -115,5 +120,21 @@ class _SettingsWidgetState extends State<SettingsWidget> {
         ),
       ),
     );
+  }
+
+  void openSpeciesPage() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) =>  SpeciesPage()  )
+    );
+  }
+
+
+  openTrunkSizePage(){
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) =>  SpeciesPage()  )
+    );
+
   }
 }

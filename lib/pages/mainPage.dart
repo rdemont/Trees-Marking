@@ -32,8 +32,9 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  List<MarkedTree> markedTreeList = [];
-  List<Campaign> campaignList = [];
+  List<MarkedTree> _markedTreeList = [];
+  List<Campaign> _campaignList = [];
+  Campaign _campaignSelected = Campaign.newObj(); 
 
   @override
   void initState() {
@@ -51,42 +52,36 @@ print("**initState**");
 
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
 
-        title: Text(widget.title),
+        title: Text(_campaignSelected.name),
       ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Container(
-          margin: const EdgeInsets.only(left:30),
-          child: SingleChildScrollView(
-            child: Column(
-              children: [MarkedTreeWidget(items: markedTreeList,)]
-            )
-          )
-        )),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ),
+      body: Container( 
+          //color: Colors.red,
+          height: double.infinity,
+          child: MarkedTreeWidget(markedTreeList: _markedTreeList,campaign: _campaignSelected,)
+        ),
       endDrawer:  Drawer(child:  SettingsWidget()), // This trailing comma makes auto-formatting nicer for build methods.
       drawer: Drawer(child: CampaignWidget(
-        campaignList: campaignList,
+        campaignList: _campaignList,
         onCamaignChange: _loadMarkedTreeFromCampaign,
       ),),
     );
   }
 
-  void _incrementCounter() {
-  }
+
 
   void _loadMarkedTreeFromCampaign(campaignId) async {
 print("Campaign ID to load $campaignId");    
     Campaign.openObj(campaignId).then((campaign) {
+      setState(() {
+print ("Campaign.name "+campaign.name);
+        _campaignSelected = campaign;
+      });
       MarkedTreeList.getFromCampaign(campaignId).then((list) {
         setState(() {
 print("load markedTreeList count : "+list.length.toString());          
-          markedTreeList = list ; 
+
+          
+          _markedTreeList = list ; 
         });
       });
     });
@@ -96,12 +91,15 @@ print("load markedTreeList count : "+list.length.toString());
 
   _loadCampaign() 
   {
-print("function  _loadCampaign");
     CampaignList.getAll().then((value) {
       setState(() {
-print("CompaignList count "+value.length.toString());
-        campaignList = value; 
+        _campaignList = value; 
+        if (_campaignList.length >0 )
+        {
+          _campaignSelected = _campaignList[0];
+        }
       });
     });
   }
+  
 }

@@ -101,7 +101,7 @@ DateTime get insertTime => _insertTime;
   {
     return query(tableName,where: "id = $id").then((obj){
       MarkedTree result = MarkedTree(this);
-      if (obj.isEmpty)
+      if (!obj.isEmpty)
       {
         fromMap(obj[0]);
       }
@@ -145,7 +145,7 @@ _campaignId = map['campaignId'] as int;
 _remark = map['remark'] as String;
 _latitude = map['latitude'] as double;
 _longitude = map['longitude'] as double;
-_insertTime = DateTime.fromMicrosecondsSinceEpoch(map['insertTime'] as int);
+_insertTime = DateTime.fromMillisecondsSinceEpoch(map['insertTime'] as int);
 
 
 

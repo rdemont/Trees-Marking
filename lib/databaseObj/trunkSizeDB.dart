@@ -57,7 +57,7 @@ String get name => _name;
   {
     return query(tableName,where: "id = $id").then((obj){
       TrunkSize result = TrunkSize(this);
-      if (obj.isEmpty)
+      if (!obj.isEmpty)
       {
         fromMap(obj[0]);
       }
