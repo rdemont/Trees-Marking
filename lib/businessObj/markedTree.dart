@@ -1,3 +1,4 @@
+import 'package:treesmarking/businessObj/species.dart';
 import 'package:treesmarking/databaseObj/markedTreeDB.dart';
 
 import 'businessObj.dart';
@@ -17,7 +18,7 @@ double get latitude => _localDbObj.latitude;
 double get longitude => _localDbObj.longitude;
 DateTime get insertTime => _localDbObj.insertTime;
 
-
+Future<Species> get spacies => Species.openObj(_localDbObj.speciesId);
   
                     set speciesId(int value)
                     {
@@ -53,7 +54,8 @@ DateTime get insertTime => _localDbObj.insertTime;
                     {
                         _localDbObj.insertTime = value;
                     } 
-                
+
+
 
   static MarkedTree newObj(){
     MarkedTreeDB objDb = MarkedTreeDB();

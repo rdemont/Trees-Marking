@@ -1,32 +1,26 @@
-
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:treesmarking/businessObj/species.dart';
 
-import '../businessObj/list/speciesList.dart';
-
-
-
 class SpeciesPage extends StatefulWidget {
-  const SpeciesPage({super.key});
+  
+  Species species;
 
+  SpeciesPage({super.key, Species? species}):this.species=species ?? Species.newObj();
 
   @override
   State<SpeciesPage> createState() => _SpeciesPageState();
 }
 
 
-
 class _SpeciesPageState extends State<SpeciesPage> {
-  List<Species> _speciesList = [];
-
+  TextEditingController nameController = TextEditingController();
 
   @override
   void initState() {
-    _loadSpecies();
-    
     super.initState();
+    nameController.text = widget.species.name.toString();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -34,75 +28,78 @@ class _SpeciesPageState extends State<SpeciesPage> {
       appBar: AppBar(
         title: const Text('Spacies Page'),
       ),
-      floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.add_circle_outline),
-        onPressed: () {
-          addSpecies();
-        },
-      ),
-      body: ListView.builder(
-            padding: EdgeInsets.zero,
-            shrinkWrap: true,
-            itemCount: _speciesList.length,
-            itemBuilder: (BuildContext context, int index) {
-              return ListTile(
-                  title: Text(_speciesList[index].name), 
-                );
-            }
-          ),
-    
+      body: Container(
+        margin: const EdgeInsets.only(left: 20.0, right: 20.0, top: 20.0, bottom: 10.0),
+        child:Column(
+          
+          children: [
+            Row(
+              children: [
+                Text("Name : "),
+                Flexible(
+                  child: TextField(
+                      controller: nameController,
+                      decoration: const InputDecoration(hintText: "Spacies name"), 
+                    )
+                )              
+              ],
+            ),
+            Row(
+              children: [
+                Text("Commun use : "),
+                Checkbox(
+                  value: widget.species.communUse, 
+                  onChanged: (value) {
+                    setState(() {
+                      widget.species.communUse = value ?? true; 
+                    });
+                  })
+                ],
+            ),
+            Expanded(child: Container()),
+            Row(children: [
+              ElevatedButton(onPressed: (){
+                save();
+              }, 
+              child: Text("Save")),
+
+              Expanded(child: Container()),
+              
+              ElevatedButton(onPressed: (){
+                delete();
+              }, 
+              child: Text("Delete")),
+              ElevatedButton(onPressed: () {
+                cancel();
+              },
+              child: Text("Cancel")),
+            ],)
+          ],
+        )
+      )
     );
   }
-  
-  addSpecies() {
-    var textFieldController = TextEditingController();
 
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text("New spacies"),
-        content: TextField(
-          controller: textFieldController,
-          decoration: const InputDecoration(hintText: "name"),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context, 'Cancel'),
-            child: const Text('Cancel'),
-          ),
-          TextButton(
-            onPressed: () {
-debugPrint("Test Debug Pring");
-print(textFieldController.text);
-              Species species = Species.newObj();
-              species.name = textFieldController.text;
-print("Campaign Save 1");
-              species.save().then((value){
-                int tmpid = species.id ;
-print("Campaign Save DONE with Value $value and ID: $tmpid");              
-                
-              });
-
-              
-              
-
-              Navigator.pop(context, 'OK');
-              
-            },
-            child: const Text('OK'),
-          ),
-        ],
-      ),
-    );
-  }
-  
-  void _loadSpecies() {
-print("Load Species");    
-    SpeciesList.getAll().then((value) {
-      setState(() {
-        _speciesList = value; 
-      });
+  save()
+  {
+    widget.species.name = nameController.text;
+print("species page add");
+    widget.species.save().then((value){
+print("species page add -- POP");      
+      Navigator.pop(context);
     });
-
   }
+
+  delete()
+  {
+    widget.species.delete();
+    widget.species.save().then((value){
+      Navigator.pop(context);
+    });
+  }
+
+  cancel(){
+    Navigator.pop(context);
+  }
+
 }

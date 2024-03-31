@@ -31,7 +31,7 @@ class CampaignWidget extends StatefulWidget {
 
 
 class _CampaignWidgetState extends State<CampaignWidget> {
-  final TextEditingController groupItemController = TextEditingController();
+  //final TextEditingController groupItemController = TextEditingController();
   Offset _tapPosition = Offset.zero;
 
   void _getTapPosition(TapDownDetails details) {

@@ -4,12 +4,12 @@
 
 
 import 'package:flutter/material.dart';
-import 'package:treesmarking/Widget/CampaignWidget.dart';
+import 'package:treesmarking/Widget/campaignWidget.dart';
 import 'package:treesmarking/businessObj/list/campaignList.dart';
 import 'package:treesmarking/businessObj/list/markedTreeList.dart';
 
-import '../Widget/MarkedTreeWidget.dart';
-import '../Widget/SettingsWidget.dart';
+import '../Widget/markedTreeWidget.dart';
+import '../Widget/settingsWidget.dart';
 import '../businessObj/campaign.dart';
 import '../businessObj/markedTree.dart';
 
@@ -40,6 +40,7 @@ class _MainPageState extends State<MainPage> {
   void initState() {
 print("**initState**");
     _loadCampaign();
+    
     //_loadTodoFromGroup(selectedGroupId);
     super.initState();
   }
@@ -49,17 +50,23 @@ print("**initState**");
 
     return Scaffold(
       appBar: AppBar(
-
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-
-        title: Text(_campaignSelected.name),
+         title: Text(_campaignSelected.name),
+         actions: [
+          Builder(builder: (context) => IconButton(
+            icon: Icon(Icons.settings_outlined),
+            onPressed: () => Scaffold.of(context).openEndDrawer(),
+            tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip, ),)
+         ],
       ),
       body: Container( 
           //color: Colors.red,
           height: double.infinity,
           child: MarkedTreeWidget(markedTreeList: _markedTreeList,campaign: _campaignSelected,)
         ),
-      endDrawer:  Drawer(child:  SettingsWidget()), // This trailing comma makes auto-formatting nicer for build methods.
+      
+      endDrawer:  Drawer(child:  SettingsWidget()), 
+      
       drawer: Drawer(child: CampaignWidget(
         campaignList: _campaignList,
         onCamaignChange: _loadMarkedTreeFromCampaign,
@@ -97,6 +104,7 @@ print("load markedTreeList count : "+list.length.toString());
         if (_campaignList.length >0 )
         {
           _campaignSelected = _campaignList[0];
+          _loadMarkedTreeFromCampaign(_campaignSelected.id);
         }
       });
     });

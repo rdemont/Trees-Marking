@@ -1,7 +1,11 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:treesmarking/businessObj/trunkSize.dart';
 import 'package:treesmarking/pages/speciesPage.dart';
+
+import '../pages/speciesListPage.dart';
+import '../pages/trunkSizeListPage.dart';
 
 class SettingsWidget extends StatefulWidget {
   const SettingsWidget({Key? key});
@@ -74,12 +78,12 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                   children: [
                     ListTile(
                       title: Text("Species"),
-                      onTap: openSpeciesPage,
+                      onTap: openSpeciesListPage,
                     )
                     ,
                     ListTile(
                       title: Text("Trunk Size"),
-                       onTap: openTrunkSizePage,
+                       onTap: openTrunkSizeListPage,
                       
                     ),
 
@@ -122,19 +126,20 @@ class _SettingsWidgetState extends State<SettingsWidget> {
     );
   }
 
-  void openSpeciesPage() {
+  void openSpeciesListPage() {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) =>  SpeciesPage()  )
+      MaterialPageRoute(builder: (context) =>  SpeciesListPage()  )
     );
   }
 
 
-  openTrunkSizePage(){
+  openTrunkSizeListPage(){    
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) =>  SpeciesPage()  )
+      MaterialPageRoute(builder: (context) =>  TrunkSizeListPage()  )
     );
 
   }
+  
 }

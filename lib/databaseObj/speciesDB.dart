@@ -8,7 +8,7 @@ class SpeciesDB extends DatabaseObj {
 
 
   String _name = '';
-String _communUse = '';
+  bool _communUse = true;
 
 
 
@@ -18,7 +18,7 @@ String _communUse = '';
   }
 
   String get name => _name;
-String get communUse => _communUse;
+  bool get communUse => _communUse;
 
 
 
@@ -32,7 +32,7 @@ String get communUse => _communUse;
                         }
                     }
                 
-                    set communUse(String value)
+                    set communUse(bool value)
                     {
                         if (_communUse != value)
                         {
@@ -64,7 +64,7 @@ String get communUse => _communUse;
   @override
   Map<String, Object?> toMap() 
   {
-    //Map<String, Object?> result = super.toMap();
+print("Species toMap [name:$_name ; communUse: $communUse]");
    return{
       'name': _name,
 'communUse': _communUse,
@@ -80,7 +80,7 @@ String get communUse => _communUse;
     super.id = map["id"] as int; 
     
     _name = map['name'] as String;
-_communUse = map['communUse'] as String;
+    _communUse = (map['communUse'] as int) == 1;
 
 
 

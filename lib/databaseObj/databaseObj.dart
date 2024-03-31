@@ -50,17 +50,23 @@ class DatabaseObj{
       //DELETE 
       if ((mode & MODE_ISNEW) != MODE_ISNEW) 
       {
-print("databaseObj SAVE - DELETE");        
-/*
-        final Database db = await DatabaseService.initializeDb();
-        int count = await db.delete(tableName,where: "id = $id");
-        if (count == 1) return SAVE_RESULT_OK ; 
-        return SAVE_RESULT_ERROR ; 
-*/        
+print("databaseObj SAVE - DELETE");   
+        return DatabaseService.initializeDb().then((db){
+          return db.delete(tableName,where: "id = $id").then((value){
+              if (value == 1 ) return SAVE_RESULT_OK ; 
+              return SAVE_RESULT_ERROR ; 
+          });
+        });
+      }{
+print("databaseObj SAVE - DELETE - NO DELETE  IF ID = 0");                
       }
+
     }else {
+print("databaseObj NOT DELETES ")      ;
       if ((mode & MODE_ISUPDATE) == MODE_ISUPDATE)
       {
+print("databaseObj SAVE - ISUPDATED");           
+
         if ((mode & MODE_ISNEW) == MODE_ISNEW)
         {
           //INSERT 
@@ -75,18 +81,19 @@ print("databaseObj SAVE - INSERT - ID: $_id");
             });
           });
 
-        }
+        
         }else {
           //UPDATE
-print("databaseObj SAVE - INSERT");   
-/*                         
-          final Database db = await DatabaseService.initializeDb();
-          int count = await db.update(tableName,this.toMap());
-          if (count == 1 ) return SAVE_RESULT_OK ; 
-          return SAVE_RESULT_ERROR ; 
-*/
+print("databaseObj SAVE - UPDATE");                            
+          return DatabaseService.initializeDb().then((db){
+            return db.update(tableName, toMap(),where: "id = $id").then((value){
+              if (value == 1 ) return SAVE_RESULT_OK ; 
+              return SAVE_RESULT_ERROR ; 
+            });
+          });
         }    
       } 
+    }
     return Future(() => SAVE_RESULT_OK);
   } 
 
