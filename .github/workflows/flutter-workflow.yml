@@ -32,13 +32,13 @@ jobs:
           version: 3.19.2
 
       - name: Install dependencies
-        run: flutter pub get --verbose 
+      - run: flutter pub get --verbose 
 
-      #- name: Analyze project source
-      #  run: dart analyze
+      - name: Analyze project source
+      - run: dart analyze
 
-      #- name: Run tests
-      #  run: flutter test          
+      - name: Run tests
+      - run: flutter test          
     
       # Build apk.
       - name: build apk
@@ -46,7 +46,7 @@ jobs:
     
       # Upload generated apk to the artifacts.
       - name: relase output 
-      - uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v1
         with:
           name: release-apk
           path: build/app/outputs/apk/release/app-release.apk
