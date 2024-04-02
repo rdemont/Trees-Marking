@@ -50,11 +50,13 @@ print("initState markedTreePage SeciesList getall ");
       });
     });
 
+
     TrunkSizeList.getAll().then((value) {
       setState(() {
         trunkSizeList = value ;
         if (!trunkSizeList.isEmpty)
         {
+print("test");
           trunkSizeListDdm =  trunkSizeList.map((value) {
         
             return DropdownMenuItem(
