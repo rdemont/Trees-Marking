@@ -34,16 +34,18 @@ jobs:
       - name: Install dependencies
         run: flutter pub get --verbose 
 
-      - name: Analyze project source
+      #- name: Analyze project source
       #  run: dart analyze
 
-      - name: Run tests
+      #- name: Run tests
       #  run: flutter test          
     
       # Build apk.
+      - name: build apk
       - run: flutter build apk
     
       # Upload generated apk to the artifacts.
+      - name: relase output 
       - uses: actions/upload-artifact@v1
         with:
           name: release-apk
