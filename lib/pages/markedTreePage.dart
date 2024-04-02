@@ -2,6 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:treesmarking/businessObj/list/speciesList.dart';
+import 'package:treesmarking/businessObj/list/trunkSizeList.dart';
+import 'package:treesmarking/businessObj/trunkSize.dart';
 
 import '../businessObj/markedTree.dart';
 import '../businessObj/species.dart';
@@ -20,15 +22,49 @@ class MarkedTreePage extends StatefulWidget {
 
 class _MarkedTreePageState extends State<MarkedTreePage> {
   TextEditingController remarkController = TextEditingController();
-  late List<Species> speciesList ;
+  List<Species> speciesList = [];
+  List<DropdownMenuItem<String>> speciesListDdm = [];
+
+  List<TrunkSize> trunkSizeList = [] ; 
+  List<DropdownMenuItem<String>> trunkSizeListDdm = [];
 
   @override
   void initState() {
     super.initState();
     remarkController.text = widget.markedTree.remark.toString();
     SpeciesList.getAll().then((value) {
+print("initState markedTreePage SeciesList getall "); 
       setState(() {
-        speciesList = value ;   
+        speciesList = value ;
+        if (!speciesList.isEmpty)
+        {
+          speciesListDdm =  speciesList.map((value) {
+        
+            return DropdownMenuItem(
+              value: value.id.toString(),
+              child: Text(value.name)
+            );
+          }).toList();
+          speciesListDdm.add(const DropdownMenuItem(value: "0",child: Text("Empty"),));
+        };
+      });
+    });
+
+
+    TrunkSizeList.getAll().then((value) {
+      setState(() {
+        trunkSizeList = value ;
+        if (!trunkSizeList.isEmpty)
+        {
+          trunkSizeListDdm =  trunkSizeList.map((value) {
+        
+            return DropdownMenuItem(
+              value: value.id.toString(),
+              child: Text(value.name +" "+value.minDiameter.toString()+" cm - "+value.maxDiameter.toString()+" cm")
+            );
+          }).toList();
+          trunkSizeListDdm.add(const DropdownMenuItem(value: "0",child: Text("Empty"),));
+        };
       });
     });
   }
@@ -58,22 +94,39 @@ class _MarkedTreePageState extends State<MarkedTreePage> {
                   ),
                   onChanged: (value) {
                     setState(() {
-                      widget.markedTree.speciesId = value as int;
-                      //change in object 
-                      //widget.species.communUse = value ?? true; 
+                      widget.markedTree.speciesId = int.tryParse(value as String ) ?? 0 ;
                     });
                   },
-                  items:speciesList.map((value) {
-                    return DropdownMenuItem(
-                      value: value.id.toString(),
-                      child: Text(value.name)
-                    );
-                  }).toList(),
+                  items:speciesListDdm,
                 ),
                   
                 
               ],
             ),
+            Row(
+              children: [
+                Text("Trunk size : "),
+                DropdownButton(
+                  value: widget.markedTree.trunkSizeId.toString(),
+                  icon: const Icon(Icons.arrow_downward),
+                  elevation: 16,
+                  style: const TextStyle(color: Colors.deepPurple),
+                  underline: Container(
+                    height: 2,
+                    color: Colors.deepPurpleAccent,
+                  ),
+                  onChanged: (value) {
+                    setState(() {
+                      widget.markedTree.trunkSizeId = int.tryParse(value as String ) ?? 0 ;
+                    });
+                  },
+                  items:trunkSizeListDdm,
+                ),
+                  
+                
+              ],
+            ),
+
             Row(
               children: [
                 Text("Remark : "),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:treesmarking/businessObj/campaign.dart';
 import 'package:treesmarking/businessObj/species.dart';
+import 'package:treesmarking/pages/markedTreePage.dart';
 import '../businessObj/list/markedTreeList.dart';
 import '../businessObj/markedTree.dart';
 
@@ -43,12 +44,33 @@ class _MarkedTreeWidgetState extends State<MarkedTreeWidget> {
             itemBuilder: (BuildContext context, int index) {
               return ListTile(
                   title: Text(widget.markedTreeList[index].remark+"/"+DateFormat("dd.MM.yyyy HH:mm:ss").format(widget.markedTreeList[index].insertTime)), 
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) =>  MarkedTreePage(marketTree: widget.markedTreeList[index],)  )
+                    ).then((value){
+                      setState(() {
+                        _loadData();
+                      });
+                    });
+                  },
                 );
             }
           ),
           Align(
             alignment: Alignment.bottomRight,
-            child: FloatingActionButton(onPressed: _addMarkedTree,child: Text("Add"),),
+            child: FloatingActionButton(onPressed:() {
+            
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) =>  MarkedTreePage()  )
+              ).then((value){
+                setState(() {
+                  _loadData();
+                });
+              });
+            }, 
+            child: Text("Add"),),
           )]
       
   );
