@@ -4,12 +4,12 @@
 
 
 import 'package:flutter/material.dart';
-import 'package:treesmarking/Widget/campaignWidget.dart';
 import 'package:treesmarking/businessObj/list/campaignList.dart';
 import 'package:treesmarking/businessObj/list/markedTreeList.dart';
 
-import '../Widget/markedTreeWidget.dart';
-import '../Widget/settingsWidget.dart';
+import '../widget/campaignWidget.dart';
+import '../widget/markedTreeWidget.dart';
+import '../widget/settingsWidget.dart';
 import '../businessObj/campaign.dart';
 import '../businessObj/markedTree.dart';
 
