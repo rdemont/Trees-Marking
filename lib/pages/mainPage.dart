@@ -7,9 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:treesmarking/businessObj/list/campaignList.dart';
 import 'package:treesmarking/businessObj/list/markedTreeList.dart';
 
-import '../tmpwidget/campaignWidget.dart';
-import '../tmpwidget/markedTreeWidget.dart';
-import '../tmpwidget/settingsWidget.dart';
+import '../widget/campaignWidget.dart';
+import '../widget/markedTreeWidget.dart';
+import '../widget/settingsWidget.dart';
 import '../businessObj/campaign.dart';
 import '../businessObj/markedTree.dart';
 
