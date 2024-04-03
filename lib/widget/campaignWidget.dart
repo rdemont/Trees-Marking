@@ -9,15 +9,16 @@ import 'package:treesmarking/businessObj/campaign.dart';
 class CampaignWidget extends StatefulWidget {
 
   final List<Campaign> campaignList;
-  int? selectedCampaignId;
-  Function onCamaignChange; 
+  
+  final Function onCamaignChange; 
 
   CampaignWidget(
   {
     super.key,
     required this.campaignList,
     //required this.selectedCampaignId,
-    required this.onCamaignChange
+    required this.onCamaignChange,
+    
   });
 
   @override
@@ -31,6 +32,7 @@ class CampaignWidget extends StatefulWidget {
 class _CampaignWidgetState extends State<CampaignWidget> {
   //final TextEditingController groupItemController = TextEditingController();
   Offset _tapPosition = Offset.zero;
+  int? selectedCampaignId;
 
   void _getTapPosition(TapDownDetails details) {
     final RenderBox referenceBox = context.findRenderObject() as RenderBox;
@@ -85,16 +87,16 @@ class _CampaignWidgetState extends State<CampaignWidget> {
               return GestureDetector(
                 onTapDown: (details) => _getTapPosition(details),
                 onLongPress: () {
-                  showContextMenu(context, widget.campaignList[index].id!);
+                  showContextMenu(context, widget.campaignList[index].id);
                 },
                 child: ListTile(
                   title: Text(widget.campaignList[index].name+"/"+DateFormat("dd.MM.yyyy").format(widget.campaignList[index].campaignDate)),
                   selected:
-                      widget.selectedCampaignId == widget.campaignList[index].id,
+                      selectedCampaignId == widget.campaignList[index].id,
                   onTap: () {
                     Navigator.pop(context);
                     setState(() {
-                      widget.selectedCampaignId = widget.campaignList[index].id;
+                      selectedCampaignId = widget.campaignList[index].id;
                       //widget.onListChange;
                       widget.onCamaignChange(widget.campaignList[index].id);
                     });

@@ -8,7 +8,7 @@ import '../businessObj/trunkSize.dart';
 
 class TrunkSizePage extends StatefulWidget {
   
-  TrunkSize trunkSize;
+  final TrunkSize trunkSize;
 
   TrunkSizePage({super.key, TrunkSize? trunkSize}):this.trunkSize=trunkSize ?? TrunkSize.newObj();
 

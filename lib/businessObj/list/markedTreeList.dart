@@ -4,7 +4,7 @@
 import 'package:treesmarking/businessObj/markedTree.dart';
 
 import '../../services/databaseService.dart';
-import '../campaign.dart';
+
 
 class MarkedTreeList
 {

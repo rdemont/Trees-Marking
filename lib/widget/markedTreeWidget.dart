@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:treesmarking/businessObj/campaign.dart';
-import 'package:treesmarking/businessObj/species.dart';
 import 'package:treesmarking/pages/markedTreePage.dart';
 import '../businessObj/list/markedTreeList.dart';
 import '../businessObj/markedTree.dart';
 
 class MarkedTreeWidget extends StatefulWidget {
 
-  List<MarkedTree> markedTreeList = [];
-  Campaign campaign ;
+  final List<MarkedTree> markedTreeList;
+  final Campaign campaign ;
   
   MarkedTreeWidget({required this.markedTreeList,required  this.campaign});
   
@@ -22,10 +21,11 @@ class MarkedTreeWidget extends StatefulWidget {
 
 class _MarkedTreeWidgetState extends State<MarkedTreeWidget> {
   
-
+  //List<MarkedTree> _markedTreeList = [];
 
   @override
   void initState() {
+    //_markedTreeList = widget.markedTreeList;
     _loadData();
     super.initState();
   }
@@ -111,7 +111,7 @@ print("markedTree Save DONE with Value $value and ID: $tmpid");
                 MarkedTreeList.getFromCampaign(widget.campaign.id).then((list) {
                   setState(() {
 print("load markedTreeList count : "+list.length.toString());                    
-                    widget.markedTreeList = list ; 
+                    //_markedTreeList = list ; 
                   });     
                 });
                 //widget.onCamaignChange(campaign.id);

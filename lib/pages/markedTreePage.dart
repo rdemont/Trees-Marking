@@ -11,7 +11,7 @@ import '../businessObj/species.dart';
 
 class MarkedTreePage extends StatefulWidget {
   
-  MarkedTree markedTree;
+  final MarkedTree markedTree;
 
   MarkedTreePage({super.key, MarkedTree? marketTree}):this.markedTree=marketTree ?? MarkedTree.newObj();
 

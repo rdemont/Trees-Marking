@@ -4,7 +4,7 @@ import 'package:treesmarking/businessObj/species.dart';
 
 class SpeciesPage extends StatefulWidget {
   
-  Species species;
+  final Species species;
 
   SpeciesPage({super.key, Species? species}):this.species=species ?? Species.newObj();
 

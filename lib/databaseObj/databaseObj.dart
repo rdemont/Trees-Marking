@@ -3,7 +3,6 @@ import 'dart:async';
 import 'dart:core';
 
 import 'package:flutter/material.dart';
-import 'package:sqflite/sqflite.dart';
 import 'package:treesmarking/services/databaseService.dart';
 
 class DatabaseObj{
