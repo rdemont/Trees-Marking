@@ -20,10 +20,8 @@ class CampaignWidget extends StatefulWidget {
     required this.onCamaignChange
   });
 
-
   @override
   State<CampaignWidget> createState() => _CampaignWidgetState();
-
 }
 
 
