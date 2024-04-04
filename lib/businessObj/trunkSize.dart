@@ -9,20 +9,32 @@ class TrunkSize extends BusinessObj
   TrunkSize(super.dbObj);
 
 	
-  int get minDiameter => _localDbObj.minDiameter;
-int get maxDiameter => _localDbObj.maxDiameter;
+  double get minDiameter => _localDbObj.minDiameter;
+double get maxDiameter => _localDbObj.maxDiameter;
+double get volume => _localDbObj.volume;
+String get code => _localDbObj.code;
 String get name => _localDbObj.name;
 
 
   
-                    set minDiameter(int value)
+                    set minDiameter(double value)
                     {
                         _localDbObj.minDiameter = value;
                     } 
                 
-                    set maxDiameter(int value)
+                    set maxDiameter(double value)
                     {
                         _localDbObj.maxDiameter = value;
+                    } 
+                
+                    set volume(double value)
+                    {
+                        _localDbObj.volume = value;
+                    } 
+                
+                    set code(String value)
+                    {
+                        _localDbObj.code = value;
                     } 
                 
                     set name(String value)

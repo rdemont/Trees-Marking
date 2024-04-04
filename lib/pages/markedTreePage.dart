@@ -1,6 +1,7 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:treesmarking/businessObj/campaign.dart';
 import 'package:treesmarking/businessObj/list/speciesList.dart';
 import 'package:treesmarking/businessObj/list/trunkSizeList.dart';
 import 'package:treesmarking/businessObj/trunkSize.dart';
@@ -12,8 +13,9 @@ import '../businessObj/species.dart';
 class MarkedTreePage extends StatefulWidget {
   
   final MarkedTree markedTree;
+  final Campaign campaign;
 
-  MarkedTreePage({super.key, MarkedTree? marketTree}):this.markedTree=marketTree ?? MarkedTree.newObj();
+  MarkedTreePage({super.key, MarkedTree? marketTree, required this.campaign}):this.markedTree=marketTree ?? MarkedTree.newObj();
 
   @override
   State<MarkedTreePage> createState() => _MarkedTreePageState();
@@ -61,7 +63,7 @@ print("test");
         
             return DropdownMenuItem(
               value: value.id.toString(),
-              child: Text(value.name +" "+value.minDiameter.toString()+" cm - "+value.maxDiameter.toString()+" cm")
+              child: Text(value.code +" - "+value.minDiameter.toString()+" cm - "+value.maxDiameter.toString()+" cm ["+value.volume.toString()+"sv]")
             );
           }).toList();
           trunkSizeListDdm.add(const DropdownMenuItem(value: "0",child: Text("Empty"),));
@@ -167,7 +169,7 @@ print("test");
   save()
   {
     widget.markedTree.remark = remarkController.text;
-
+    widget.markedTree.campaignId = widget.campaign.id;
     widget.markedTree.save().then((value){
       Navigator.pop(context);
     });

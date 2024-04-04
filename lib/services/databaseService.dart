@@ -47,7 +47,7 @@ class DatabaseService {
     //db.execute("DROP TABLE trunkSize");
     //db.execute("DROP TABLE campaign");
     //db.execute("DELETE FROM  campaign");
-    ///createTables(db);
+    //createTables(db);
 
 
 
@@ -156,12 +156,42 @@ class DatabaseService {
     await database.execute("""
     CREATE TABLE IF NOT EXISTS trunkSize(
       id INTEGER PRIMARY KEY AUTOINCREMENT,
-      minDiameter INTEGER, 
-      maxDiameter INTEGER, 
-      name TEXT NOT NULL
+      minDiameter FLOAT, 
+      maxDiameter FLOAT, 
+      volume FLOAT,
+      code TEXT NOT NULL,
+      name TEXT
 
     )          
     """);    
+
+    await database.execute("DELETE FROM  trunkSize");
+    await database.execute("INSERT INTO trunkSize (minDiameter,maxDiameter,volume,code) VALUES (16.0,19.99,0.2,'1')");    
+    await database.execute("INSERT INTO trunkSize (minDiameter,maxDiameter,volume,code) VALUES (20.0,23.99,0.3,'2')");
+    await database.execute("INSERT INTO trunkSize (minDiameter,maxDiameter,volume,code) VALUES (24.0,27.99,0.5,'3')");
+    await database.execute("INSERT INTO trunkSize (minDiameter,maxDiameter,volume,code) VALUES (28.0,31.99,0.7,'4')");
+    await database.execute("INSERT INTO trunkSize (minDiameter,maxDiameter,volume,code) VALUES (32.0,35.99,1.0,'5')");
+    await database.execute("INSERT INTO trunkSize (minDiameter,maxDiameter,volume,code) VALUES (36.0,39.99,1.3,'6')");
+    await database.execute("INSERT INTO trunkSize (minDiameter,maxDiameter,volume,code) VALUES (40.0,43.99,1.6,'7')");
+    await database.execute("INSERT INTO trunkSize (minDiameter,maxDiameter,volume,code) VALUES (44.0,47.99,2.0,'8')");
+    await database.execute("INSERT INTO trunkSize (minDiameter,maxDiameter,volume,code) VALUES (48.0,51.99,2.4,'9')");
+    await database.execute("INSERT INTO trunkSize (minDiameter,maxDiameter,volume,code) VALUES (52.0,55.99,2.8,'10')");
+    await database.execute("INSERT INTO trunkSize (minDiameter,maxDiameter,volume,code) VALUES (56.0,59.99,3.3,'11')");
+    await database.execute("INSERT INTO trunkSize (minDiameter,maxDiameter,volume,code) VALUES (60.0,63.99,3.8,'12')");
+    await database.execute("INSERT INTO trunkSize (minDiameter,maxDiameter,volume,code) VALUES (64.0,67.99,4.4,'13')");
+    await database.execute("INSERT INTO trunkSize (minDiameter,maxDiameter,volume,code) VALUES (68.0,71.99,5.0,'14')");
+    await database.execute("INSERT INTO trunkSize (minDiameter,maxDiameter,volume,code) VALUES (72.0,75.99,5.7,'15')");
+    await database.execute("INSERT INTO trunkSize (minDiameter,maxDiameter,volume,code) VALUES (76.0,79.99,6.4,'16')");
+    await database.execute("INSERT INTO trunkSize (minDiameter,maxDiameter,volume,code) VALUES (80.0,83.99,7.1,'17')");
+    await database.execute("INSERT INTO trunkSize (minDiameter,maxDiameter,volume,code) VALUES (84.0,87.99,7.9,'18')");
+    await database.execute("INSERT INTO trunkSize (minDiameter,maxDiameter,volume,code) VALUES (88.0,91.99,8.7,'19')");
+    await database.execute("INSERT INTO trunkSize (minDiameter,maxDiameter,volume,code) VALUES (92.0,95.99,9.5,'20')");
+    await database.execute("INSERT INTO trunkSize (minDiameter,maxDiameter,volume,code) VALUES (96.0,99.99,10.3,'21')");
+    await database.execute("INSERT INTO trunkSize (minDiameter,maxDiameter,volume,code) VALUES (100.0,103.99,11.2,'22')");
+    await database.execute("INSERT INTO trunkSize (minDiameter,maxDiameter,volume,code) VALUES (104.0,107.99,12.1,'23')");
+    await database.execute("INSERT INTO trunkSize (minDiameter,maxDiameter,volume,code) VALUES (108.0,111.99,13.1,'24')");
+    
+
 
     await database.execute("""
     CREATE TABLE IF NOT EXISTS campaign(

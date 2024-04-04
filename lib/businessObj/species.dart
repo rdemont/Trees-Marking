@@ -10,7 +10,7 @@ class Species extends BusinessObj
 
 	
   String get name => _localDbObj.name;
-  bool get communUse => _localDbObj.communUse;
+bool get communUse => _localDbObj.communUse;
 
 
   
@@ -24,8 +24,6 @@ class Species extends BusinessObj
                         _localDbObj.communUse = value;
                     } 
                 
-
-
 
   static Species newObj(){
     SpeciesDB objDb = SpeciesDB();

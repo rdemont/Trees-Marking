@@ -47,7 +47,7 @@ class _MarkedTreeWidgetState extends State<MarkedTreeWidget> {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) =>  MarkedTreePage(marketTree: widget.markedTreeList[index],)  )
+                      MaterialPageRoute(builder: (context) =>  MarkedTreePage(marketTree: widget.markedTreeList[index],campaign: widget.campaign,)  )
                     ).then((value){
                       setState(() {
                         _loadData();
@@ -63,7 +63,7 @@ class _MarkedTreeWidgetState extends State<MarkedTreeWidget> {
             
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) =>  MarkedTreePage()  )
+                MaterialPageRoute(builder: (context) =>  MarkedTreePage(campaign: widget.campaign,)  )
               ).then((value){
                 setState(() {
                   _loadData();

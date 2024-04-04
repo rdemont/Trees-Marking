@@ -3,6 +3,7 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../businessObj/trunkSize.dart';
 
@@ -21,6 +22,8 @@ class _TrunkSizePageState extends State<TrunkSizePage> {
   TextEditingController nameController = TextEditingController();
   TextEditingController minController = TextEditingController();
   TextEditingController maxController = TextEditingController();
+  TextEditingController volumeController = TextEditingController();
+  TextEditingController codeController = TextEditingController();
 
   @override
   void initState() {
@@ -28,6 +31,9 @@ class _TrunkSizePageState extends State<TrunkSizePage> {
     nameController.text = widget.trunkSize.name.toString();
     minController.text = widget.trunkSize.minDiameter.toString();
     maxController.text = widget.trunkSize.maxDiameter.toString();
+    volumeController.text = widget.trunkSize.volume.toString();
+    codeController.text = widget.trunkSize.code.toString();
+    
   }
 
   @override
@@ -43,15 +49,16 @@ class _TrunkSizePageState extends State<TrunkSizePage> {
           children: [
             Row(
               children: [
-                Text("Name : "),
+                Text("Code : "),
                 Flexible(
                   child: TextField(
-                      controller: nameController,
-                      decoration: const InputDecoration(hintText: "Trunk size name"), 
+                      controller: codeController,
+                      decoration: const InputDecoration(hintText: "Trunk size code"), 
                     )
                 )              
               ],
-            ),
+            ),            
+            
             Row(
               children: [
                 Text("Min dimeter  : "),
@@ -59,6 +66,7 @@ class _TrunkSizePageState extends State<TrunkSizePage> {
                   child: TextField(
                       controller: minController,
                       decoration: const InputDecoration(hintText: "min diameter"), 
+                      keyboardType: TextInputType.number,
                     )
                 )      
                 ],
@@ -70,10 +78,34 @@ class _TrunkSizePageState extends State<TrunkSizePage> {
                   child: TextField(
                       controller: maxController,
                       decoration: const InputDecoration(hintText: "max diameter"), 
+                      keyboardType: TextInputType.number,
                     )
                 )      
                 ],
             ),
+            Row(
+              children: [
+                Text("Volume  : "),
+                Flexible(
+                  child: TextField(
+                      controller: volumeController,
+                      decoration: const InputDecoration(hintText: "Volume"), 
+                      keyboardType: TextInputType.number,
+                    )
+                )      
+                ],
+            ),            
+            Row(
+              children: [
+                Text("Name : "),
+                Flexible(
+                  child: TextField(
+                      controller: nameController,
+                      decoration: const InputDecoration(hintText: "Trunk size name"), 
+                    )
+                )              
+              ],
+            ),            
             Expanded(child: Container()),
             Row(children: [
               ElevatedButton(onPressed: (){
@@ -101,8 +133,10 @@ class _TrunkSizePageState extends State<TrunkSizePage> {
   save()
   {
     widget.trunkSize.name = nameController.text;
-    widget.trunkSize.minDiameter = int.tryParse(minController.text) ?? 0;
-    widget.trunkSize.maxDiameter = int.tryParse(maxController.text) ?? 0;
+    widget.trunkSize.minDiameter = double.tryParse(minController.text) ?? 0.0;
+    widget.trunkSize.maxDiameter = double.tryParse(maxController.text) ?? 0.0;
+    widget.trunkSize.volume = double.tryParse(volumeController.text) ?? 0.0;
+    widget.trunkSize.code = codeController.text;
     widget.trunkSize.save().then((value){
       Navigator.pop(context);
     });

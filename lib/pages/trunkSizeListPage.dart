@@ -54,9 +54,9 @@ class _TrunkSizeListPageState extends State<TrunkSizeListPage> {
                     margin: const EdgeInsets.only(left: 10.0, right: 5.0, top: 2.0, bottom: 2.0),
                     child: Row(
                       children: [
-                      Text(_trunkSizeList[index].name),
+                      Text(_trunkSizeList[index].code),
                       Expanded(child: Container()),
-                      Text(_trunkSizeList[index].minDiameter.toString()+" cm - "+_trunkSizeList[index].minDiameter.toString()+" cm"),
+                      Text(_trunkSizeList[index].minDiameter.toString()+" cm - "+_trunkSizeList[index].minDiameter.toString()+" cm ["+_trunkSizeList[index].volume.toString()+" sv]" ),
                     ]), 
                   )
                     

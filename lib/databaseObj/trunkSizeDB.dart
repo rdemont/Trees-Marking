@@ -7,8 +7,10 @@ class TrunkSizeDB extends DatabaseObj {
   
 
 
-  int _minDiameter = 0;
-int _maxDiameter = 0;
+  double _minDiameter = 0.0;
+double _maxDiameter = 0.0;
+double _volume = 0.0;
+String _code = '';
 String _name = '';
 
 
@@ -18,14 +20,16 @@ String _name = '';
     tableName = 'trunkSize';
   }
 
-  int get minDiameter => _minDiameter;
-int get maxDiameter => _maxDiameter;
+  double get minDiameter => _minDiameter;
+double get maxDiameter => _maxDiameter;
+double get volume => _volume;
+String get code => _code;
 String get name => _name;
 
 
 
   
-                    set minDiameter(int value)
+                    set minDiameter(double value)
                     {
                         if (_minDiameter != value)
                         {
@@ -34,12 +38,30 @@ String get name => _name;
                         }
                     }
                 
-                    set maxDiameter(int value)
+                    set maxDiameter(double value)
                     {
                         if (_maxDiameter != value)
                         {
                         dataUpdated(); 
                         _maxDiameter = value;
+                        }
+                    }
+                
+                    set volume(double value)
+                    {
+                        if (_volume != value)
+                        {
+                        dataUpdated(); 
+                        _volume = value;
+                        }
+                    }
+                
+                    set code(String value)
+                    {
+                        if (_code != value)
+                        {
+                        dataUpdated(); 
+                        _code = value;
                         }
                     }
                 
@@ -79,6 +101,8 @@ String get name => _name;
    return{
       'minDiameter': _minDiameter,
 'maxDiameter': _maxDiameter,
+'volume': _volume,
+'code': _code,
 'name': _name,
 
     };
@@ -91,9 +115,11 @@ String get name => _name;
     TrunkSize result = TrunkSize(this) ;
     super.id = map["id"] as int; 
     
-    _minDiameter = map['minDiameter'] as int;
-_maxDiameter = map['maxDiameter'] as int;
-_name = map['name'] as String;
+    _minDiameter = (map['minDiameter']??0.0) as double;
+_maxDiameter = (map['maxDiameter']??0.0) as double;
+_volume = (map['volume']??0.0) as double;
+_code = (map['code']??'') as String;
+_name = (map['name']??'') as String;
 
 
 
