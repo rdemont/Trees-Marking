@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+
 import 'package:treesmarking/businessObj/list/speciesList.dart';
 import 'package:treesmarking/businessObj/list/trunkSizeList.dart';
 import 'package:treesmarking/businessObj/species.dart';
-import 'package:treesmarking/businessObj/trunkSizeImpl.dart';
+
 
 import '../businessObj/campaign.dart';
 import '../businessObj/list/campaignList.dart';

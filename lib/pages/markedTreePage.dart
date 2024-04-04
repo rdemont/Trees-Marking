@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:treesmarking/businessObj/campaign.dart';
 import 'package:treesmarking/businessObj/list/speciesList.dart';
 import 'package:treesmarking/businessObj/list/trunkSizeList.dart';
-import 'package:treesmarking/businessObj/trunkSizeImpl.dart';
+
 
 import '../businessObj/markedTree.dart';
 import '../businessObj/species.dart';

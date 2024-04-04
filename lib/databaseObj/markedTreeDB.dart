@@ -2,13 +2,10 @@
 
 import 'package:treesmarking/businessObj/species.dart';
 import 'package:treesmarking/businessObj/trunkSizeImpl.dart';
-import 'package:treesmarking/databaseObj/speciesDB.dart';
-import 'package:treesmarking/databaseObj/trunkSizeDB.dart';
 
 import '../businessObj/campaign.dart';
 import '../businessObj/markedTree.dart';
-import '../businessObj/species.dart';
-import '../businessObj/species.dart';
+
 import '../businessObj/trunkSize.dart';
 import 'databaseObj.dart';
 
