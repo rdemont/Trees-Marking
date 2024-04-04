@@ -23,7 +23,8 @@ bool get communUse => _localDbObj.communUse;
                     {
                         _localDbObj.communUse = value;
                     } 
-                
+
+    
 
   static Species newObj(){
     SpeciesDB objDb = SpeciesDB();

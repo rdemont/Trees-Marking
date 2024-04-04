@@ -1,6 +1,10 @@
+import 'package:treesmarking/businessObj/campaign.dart';
+import 'package:treesmarking/businessObj/species.dart';
+import 'package:treesmarking/businessObj/trunkSizeImpl.dart';
 import 'package:treesmarking/databaseObj/markedTreeDB.dart';
 
 import 'businessObj.dart';
+import 'trunkSize.dart';
 
 class MarkedTree extends BusinessObj
 {
@@ -17,6 +21,9 @@ double get latitude => _localDbObj.latitude;
 double get longitude => _localDbObj.longitude;
 DateTime get insertTime => _localDbObj.insertTime;
 
+Species get species => _localDbObj.species ;
+TrunkSize get trunkSize => _localDbObj.trunkSize ; 
+Campaign get campaign => _localDbObj.campaign ;
 
   
                     set speciesId(int value)
@@ -65,7 +72,7 @@ DateTime get insertTime => _localDbObj.insertTime;
     return objDb.open(id);
   }
 
-  static MarkedTree fromMap(Map<String,Object?>map){
+  static Future<MarkedTree> fromMap(Map<String,Object?>map){
     MarkedTreeDB objDb = MarkedTreeDB();
     return objDb.fromMap(map);
   }

@@ -4,10 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:treesmarking/businessObj/campaign.dart';
 import 'package:treesmarking/businessObj/list/speciesList.dart';
 import 'package:treesmarking/businessObj/list/trunkSizeList.dart';
-import 'package:treesmarking/businessObj/trunkSize.dart';
+import 'package:treesmarking/businessObj/trunkSizeImpl.dart';
 
 import '../businessObj/markedTree.dart';
 import '../businessObj/species.dart';
+import '../businessObj/trunkSize.dart';
 
 
 class MarkedTreePage extends StatefulWidget {
@@ -63,7 +64,7 @@ print("test");
         
             return DropdownMenuItem(
               value: value.id.toString(),
-              child: Text(value.code +" - "+value.minDiameter.toString()+" cm - "+value.maxDiameter.toString()+" cm ["+value.volume.toString()+"sv]")
+              child: Text(value.toString())
             );
           }).toList();
           trunkSizeListDdm.add(const DropdownMenuItem(value: "0",child: Text("Empty"),));
@@ -76,6 +77,7 @@ print("test");
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text('Marked tree Page'),
       ),
       body: Container(

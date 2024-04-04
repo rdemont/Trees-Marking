@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 
 
 import '../businessObj/trunkSize.dart';
+import '../businessObj/trunkSizeImpl.dart';
 
 class TrunkSizePage extends StatefulWidget {
   
   final TrunkSize trunkSize;
 
-  TrunkSizePage({super.key, TrunkSize? trunkSize}):this.trunkSize=trunkSize ?? TrunkSize.newObj();
+  TrunkSizePage({super.key, TrunkSize? trunkSize}):this.trunkSize=trunkSize ?? TrunkSizeImpl.newObj();
 
   @override
   State<TrunkSizePage> createState() => _TrunkSizePageState();
@@ -36,6 +37,7 @@ class _TrunkSizePageState extends State<TrunkSizePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text('Trunk size Page'),
       ),
       body: Container(

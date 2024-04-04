@@ -33,6 +33,7 @@ class _SpeciesListPageState extends State<SpeciesListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text('Spacies list Page'),
       ),
       floatingActionButton: FloatingActionButton(

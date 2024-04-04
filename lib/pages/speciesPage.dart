@@ -26,6 +26,7 @@ class _SpeciesPageState extends State<SpeciesPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text('Spacies Page'),
       ),
       body: Container(

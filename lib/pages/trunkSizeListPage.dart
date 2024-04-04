@@ -1,8 +1,7 @@
-
 import 'package:flutter/material.dart';
-import 'package:treesmarking/businessObj/trunkSize.dart';
 
 import '../businessObj/list/trunkSizeList.dart';
+import '../businessObj/trunkSize.dart';
 import 'trunkSizePage.dart';
 
 class TrunkSizeListPage extends StatefulWidget {
@@ -31,6 +30,7 @@ class _TrunkSizeListPageState extends State<TrunkSizeListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text('Trunk size list Page'),
       ),
       floatingActionButton: FloatingActionButton(

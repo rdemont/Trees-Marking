@@ -1,6 +1,7 @@
 
 
 import '../businessObj/trunkSize.dart';
+import '../businessObj/trunkSizeImpl.dart';
 import 'databaseObj.dart';
 
 class TrunkSizeDB extends DatabaseObj {

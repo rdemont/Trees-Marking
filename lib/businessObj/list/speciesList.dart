@@ -14,4 +14,20 @@ class SpeciesList
     });
   }
 
+  static Future<Map<int, Species>> getObjectsMap(){
+    return DatabaseService.initializeDb().then((db) {
+      return db.query("campaign",orderBy: "id").then((raws){
+        Map<int, Species> result = {} ;
+        for (int i=0;i<raws.length;i++)
+        {
+          Species obj = Species.fromMap(raws[i]);
+
+          result[obj.id]  = obj;
+          
+        }
+        return result ; 
+      });
+    });
+  }
+
 }

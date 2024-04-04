@@ -1,6 +1,15 @@
 
 
+import 'package:treesmarking/businessObj/species.dart';
+import 'package:treesmarking/businessObj/trunkSizeImpl.dart';
+import 'package:treesmarking/databaseObj/speciesDB.dart';
+import 'package:treesmarking/databaseObj/trunkSizeDB.dart';
+
+import '../businessObj/campaign.dart';
 import '../businessObj/markedTree.dart';
+import '../businessObj/species.dart';
+import '../businessObj/species.dart';
+import '../businessObj/trunkSize.dart';
 import 'databaseObj.dart';
 
 class MarkedTreeDB extends DatabaseObj {
@@ -14,8 +23,9 @@ String _remark = '';
 double _latitude = 0.0;
 double _longitude = 0.0;
 DateTime _insertTime = DateTime.now();
-
-
+Species _species = Species.newObj(); 
+TrunkSize _trunkSize = TrunkSizeImpl.newObj(); 
+Campaign _campaign = Campaign.newObj(); 
 
   MarkedTreeDB()
   {
@@ -29,7 +39,9 @@ String get remark => _remark;
 double get latitude => _latitude;
 double get longitude => _longitude;
 DateTime get insertTime => _insertTime;
-
+Species get species => _species ;
+TrunkSize get trunkSize => _trunkSize;
+Campaign get campaign => _campaign;
 
 
   
@@ -104,6 +116,16 @@ DateTime get insertTime => _insertTime;
       if (!obj.isEmpty)
       {
         fromMap(obj[0]);
+
+        Species.openObj(_speciesId).then((value) {
+          _species = value ; 
+        });
+        TrunkSizeImpl.openObj(_trunkSizeId).then((value) {
+          _trunkSize = value ; 
+        });
+        Campaign.openObj(_campaignId).then((value) {
+          _campaign = value ; 
+        });
       }
       return result ; 
     });
@@ -134,8 +156,7 @@ DateTime get insertTime => _insertTime;
   }
 
 
-  MarkedTree fromMap(Map<String,Object?> map)
-  {
+  Future<MarkedTree> fromMap(Map<String,Object?> map) async {
     MarkedTree result = MarkedTree(this) ;
     super.id = map["id"] as int; 
     
@@ -146,9 +167,18 @@ _remark = map['remark'] as String;
 _latitude = map['latitude'] as double;
 _longitude = map['longitude'] as double;
 _insertTime = DateTime.fromMillisecondsSinceEpoch(map['insertTime'] as int);
-
-
-
+      if (_speciesId >0 )
+      {
+        _species = await Species.openObj(_speciesId);
+      }
+      if (_trunkSizeId > 0 )
+      {
+        _trunkSize = await TrunkSizeImpl.openObj(_trunkSizeId);
+      }
+      if (_campaignId > 0)
+      {
+        _campaign = await Campaign.openObj(_campaignId); 
+      }
     return result; 
 
   }
