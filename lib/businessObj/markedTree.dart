@@ -1,6 +1,6 @@
 import 'package:treesmarking/businessObj/campaign.dart';
 import 'package:treesmarking/businessObj/species.dart';
-import 'package:treesmarking/businessObj/trunkSizeImpl.dart';
+
 import 'package:treesmarking/databaseObj/markedTreeDB.dart';
 
 import 'businessObj.dart';

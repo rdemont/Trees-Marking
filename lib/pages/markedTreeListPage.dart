@@ -28,13 +28,12 @@ class MarkedTreeListPage extends StatefulWidget {
 class _MarkedTreeListPageState extends State<MarkedTreeListPage> {
   List<MarkedTree> _markedTreeList = [];
   List<Campaign> _campaignList = [];
-  Map<int,Species> _spaciesAll = {}; 
-  Map<int,TrunkSize> _trunkSizeAll = {}; 
+  
   Campaign _campaignSelected = Campaign.newObj(); 
 
   @override
   void initState() {
-    _loadFK(); 
+    
 print("**initState**");
     _loadCampaign();
     super.initState();
@@ -135,22 +134,6 @@ print("**initState**");
     });
   }
 
-
-  _loadFK() 
-   {
-    
-    SpeciesList.getObjectsMap().then((value) {
-      setState(() {
-        _spaciesAll = value ;   
-      });
-      
-    });
-  
-    TrunkSizeList.getObjectsMap().then((value){
-      _trunkSizeAll = value ; 
-    });
-  }
-  
 
 
 Widget getBottomInfo() {
