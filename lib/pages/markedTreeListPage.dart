@@ -49,7 +49,7 @@ print("**initState**");
             tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip, ),)
          ],
       ),
-      bottomNavigationBar: BottomAppBar(child: getBottomInfo(),),
+      bottomNavigationBar: SizedBox(height: 50, child:BottomAppBar(child: getBottomInfo(),)),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add_circle_outline),
         onPressed: () {
@@ -179,34 +179,18 @@ Widget getBottomInfo() {
       );
       ScaffoldMessenger.of(context).showSnackBar(infoBar);
     }, 
-    child: Row(
-    children: [
-      Column(
+    child: Expanded(
+      child: Row(
         children: [
-          Text("Number"),
-          Divider(),
-          Text(_markedTreeList.length.toString())
-        ],
-      ),
-      VerticalDivider( 
-        width: 20,
-        thickness: 2,
-        indent: 1,
-        endIndent: 1,
-        color: Colors.black,
-      ),
-      Column(
-        children: [
-          Text("SV"),
-          Divider(),
-          Text(sv.toStringAsFixed(2))
-        ],
-      ),
-      Expanded(child: Text(""),),
-    ],
-  
-    ),
-    
-  );
-}
+          Expanded(child: Text(""),),
+          Text("Species: " +speciesCount.length.toString()),
+          VerticalDivider(),
+          Text("Count:"+_markedTreeList.length.toString()),
+          VerticalDivider(),
+          Text("SV: "+sv.toStringAsFixed(2)),
+          Expanded(child: Text(""),),
+        ],)  
+      )
+    );
+  }
 }
