@@ -22,7 +22,7 @@ jobs:
           fetch-deap: 0 
 
       - name: Get next version
-        uses: reecetech/version-increment@2023.9.3
+        uses: reecetech/version-increment@2023.10.2
         id: version
         with:
           release_branch: main
@@ -71,7 +71,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name:  Tree-Marked-daily-${{ steps.version.outputs.version }}
+          tag_name:  Tree-Marked :${{ steps.version.outputs.version }}
           release_name: Daily Release ${{ steps.version.outputs.version }}
           draft: true
           prerelease: false
