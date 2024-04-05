@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:treesmarking/pages/mainPage.dart';
 
 
 import 'pages/markedTreeListPage.dart';
@@ -39,8 +40,8 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      //home: const MainPage(title: 'Trees marking apps'),
-      home: const  MarkedTreeListPage(),
+      home: const MainPage(title: 'Trees marking apps'),
+      //home: const  MarkedTreeListPage(),
     );
   }
 }

@@ -38,8 +38,8 @@ class _MarkedTreePageState extends State<MarkedTreePage> {
   void initState() {
     super.initState();
     remarkController.text = widget.markedTree.remark.toString();
+
     SpeciesList.getAll().then((value) {
-print("initState markedTreePage SeciesList getall "); 
       setState(() {
         speciesList = value ;
         if (!speciesList.isEmpty)
@@ -62,7 +62,6 @@ print("initState markedTreePage SeciesList getall ");
         trunkSizeList = value ;
         if (!trunkSizeList.isEmpty)
         {
-print("test");
           trunkSizeListDdm =  trunkSizeList.map((value) {
         
             return DropdownMenuItem(

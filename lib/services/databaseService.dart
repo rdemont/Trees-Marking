@@ -46,7 +46,10 @@ class DatabaseService {
     //db.execute("DROP TABLE species");
     //db.execute("DROP TABLE trunkSize");
     //db.execute("DROP TABLE campaign");
+    //db.execute("DELETE FROM  markedTree");
+    //db.execute("DELETE FROM  species");
     //db.execute("DELETE FROM  campaign");
+    //db.execute("DELETE FROM  trunkSize");
     //createTables(db);
 
 
@@ -164,7 +167,7 @@ class DatabaseService {
 
     )          
     """);    
-
+/*
     await database.execute("DELETE FROM  trunkSize");
     await database.execute("INSERT INTO trunkSize (minDiameter,maxDiameter,volume,code) VALUES (16.0,19.99,0.2,'1')");    
     await database.execute("INSERT INTO trunkSize (minDiameter,maxDiameter,volume,code) VALUES (20.0,23.99,0.3,'2')");
@@ -191,7 +194,7 @@ class DatabaseService {
     await database.execute("INSERT INTO trunkSize (minDiameter,maxDiameter,volume,code) VALUES (104.0,107.99,12.1,'23')");
     await database.execute("INSERT INTO trunkSize (minDiameter,maxDiameter,volume,code) VALUES (108.0,111.99,13.1,'24')");
     
-
+*/
 
     await database.execute("""
     CREATE TABLE IF NOT EXISTS campaign(

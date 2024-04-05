@@ -118,7 +118,7 @@ print("**initState**");
 
   _loadCampaign() 
   {
-    CampaignList.getAll().then((value) {
+    CampaignList.getAll(CampaignGen.COLUMN_CAMPAIGNDATE+" DESC").then((value) {
       setState(() {
         _campaignList = value; 
         if (_campaignList.length >0 )
