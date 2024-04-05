@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../businessObj/list/trunkSizeList.dart';
 import '../businessObj/trunkSize.dart';
+import '../businessObj/trunkSizeList.dart';
 import 'trunkSizePage.dart';
 
 class TrunkSizeListPage extends StatefulWidget {

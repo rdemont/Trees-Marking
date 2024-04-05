@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
 
-
-
-
 import '../businessObj/campaign.dart';
-
-import '../businessObj/list/campaignList.dart';
-import '../businessObj/list/markedTreeList.dart';
+import '../businessObj/campaignList.dart';
 import '../businessObj/markedTree.dart';
 
+import '../businessObj/markedTreeList.dart';
 import '../generate/businessObj/campaignGen.dart';
 import '../widget/campaignWidget.dart';
 import '../widget/settingsWidget.dart';

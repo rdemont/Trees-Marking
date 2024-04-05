@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:treesmarking/businessObj/species.dart';
 
-
-import '../businessObj/list/speciesList.dart';
+import '../businessObj/speciesList.dart';
 import 'speciesPage.dart';
 
 

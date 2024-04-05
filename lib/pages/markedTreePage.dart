@@ -2,14 +2,15 @@
 
 import 'package:flutter/material.dart';
 import 'package:treesmarking/businessObj/campaign.dart';
-import 'package:treesmarking/businessObj/list/speciesList.dart';
-import 'package:treesmarking/businessObj/list/trunkSizeList.dart';
+
 
 
 import '../businessObj/markedTree.dart';
 
 import '../businessObj/species.dart';
+import '../businessObj/speciesList.dart';
 import '../businessObj/trunkSize.dart';
+import '../businessObj/trunkSizeList.dart';
 import '../generate/businessObj/markedTreeGen.dart';
 
 
