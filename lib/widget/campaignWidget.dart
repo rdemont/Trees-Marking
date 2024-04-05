@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:treesmarking/businessObj/campaign.dart';
 
+import '../businessObj/campaignList.dart';
 import '../generate/businessObj/campaignGen.dart';
 
 
@@ -12,14 +13,14 @@ import '../generate/businessObj/campaignGen.dart';
 
 class CampaignWidget extends StatefulWidget {
 
-  final List<Campaign> campaignList;
+  //List<Campaign> campaignList;
   
   final Function onCamaignChange; 
 
   CampaignWidget(
   {
     super.key,
-    required this.campaignList,
+    //required this.campaignList,
     //required this.selectedCampaignId,
     required this.onCamaignChange,
     
@@ -37,36 +38,21 @@ class _CampaignWidgetState extends State<CampaignWidget> {
   //final TextEditingController groupItemController = TextEditingController();
   Offset _tapPosition = Offset.zero;
   int? selectedCampaignId;
+  List<Campaign> campaignList = [];
+
+
+  @override
+  void initState() {
+    loadCampaign();
+    super.initState();
+  }
+
 
   void _getTapPosition(TapDownDetails details) {
     final RenderBox referenceBox = context.findRenderObject() as RenderBox;
     setState(() {
       _tapPosition = referenceBox.globalToLocal(details.globalPosition);
     });
-  }
-
-  void showContextMenu(BuildContext context, int taskId) async {
-    final RenderObject? overlay =
-        Overlay.of(context).context.findRenderObject();
-
-    showMenu(
-        context: context,
-        position: RelativeRect.fromRect(
-            Rect.fromLTWH(_tapPosition.dx, _tapPosition.dy, 30, 30),
-            Rect.fromLTWH(0, 0, overlay!.paintBounds.size.width,
-                overlay.paintBounds.size.height)),
-        items: [
-          PopupMenuItem(
-            value: "delete",
-            child: const Text("Delete"),
-            onTap: () {}
-            ,
-          ),
-          const PopupMenuItem(
-            value: "rename",
-            child: Text("Rename"),
-          ),
-        ]);
   }
 
   @override
@@ -86,23 +72,27 @@ class _CampaignWidgetState extends State<CampaignWidget> {
           ListView.builder(
             padding: EdgeInsets.zero,
             shrinkWrap: true,
-            itemCount: widget.campaignList.length,
+            itemCount: campaignList.length,
             itemBuilder: (BuildContext context, int index) {
               return GestureDetector(
                 onTapDown: (details) => _getTapPosition(details),
-                onLongPress: () {
-                  showContextMenu(context, widget.campaignList[index].id);
-                },
                 child: ListTile(
-                  title: Text(widget.campaignList[index].name+"/"+DateFormat("dd.MM.yyyy").format(widget.campaignList[index].campaignDate)),
+                  title: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                    Text(campaignList[index].name,
+                      overflow: TextOverflow.ellipsis,),
+                    Text(DateFormat("dd.MM.yyyy HH:mm").format(campaignList[index].campaignDate),
+                      style: TextStyle(fontSize: 10),),
+                  ]),
                   selected:
-                      selectedCampaignId == widget.campaignList[index].id,
+                      selectedCampaignId == campaignList[index].id,
                   onTap: () {
                     Navigator.pop(context);
                     setState(() {
-                      selectedCampaignId = widget.campaignList[index].id;
+                      selectedCampaignId = campaignList[index].id;
                       //widget.onListChange;
-                      widget.onCamaignChange(widget.campaignList[index].id);
+                      widget.onCamaignChange(campaignList[index].id);
                     });
                   },
                 ),
@@ -138,15 +128,12 @@ class _CampaignWidgetState extends State<CampaignWidget> {
           ),
           TextButton(
             onPressed: () {
-debugPrint("Test Debug Pring");
-print(textFieldController.text);
               Campaign campaign = CampaignGen.newObj();
               campaign.name = textFieldController.text;
-print("Campaign Save 1");
               campaign.save().then((value){
                 int tmpid = campaign.id ;
-print("Campaign Save DONE with Value $value and ID: $tmpid");              
                 widget.onCamaignChange(campaign.id);
+                loadCampaign();
               });
 
               
@@ -160,6 +147,15 @@ print("Campaign Save DONE with Value $value and ID: $tmpid");
         ],
       ),
     );
+  }
+
+  loadCampaign()
+  {
+    CampaignList.getAll(CampaignGen.COLUMN_CAMPAIGNDATE+" DESC").then((value) {
+      setState(() {
+        campaignList = value; 
+      });
+    });
   }
 }
 

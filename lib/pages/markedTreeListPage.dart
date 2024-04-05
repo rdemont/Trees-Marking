@@ -29,8 +29,6 @@ class _MarkedTreeListPageState extends State<MarkedTreeListPage> {
 
   @override
   void initState() {
-    
-print("**initState**");
     _loadCampaign();
     super.initState();
   }
@@ -65,11 +63,14 @@ print("**initState**");
       ),
       body: Stack(
         children: [ListView.builder(
+            scrollDirection: Axis.vertical,
             padding: EdgeInsets.zero,
             shrinkWrap: true,
             itemCount: _markedTreeList.length,
             itemBuilder: (BuildContext context, int index) {
-              return ListTile(
+              return Container(
+                color:(index%2 == 0 ) ? Colors.grey[50] : Colors.grey[350],
+                child: ListTile(
                   title: Text(_markedTreeList[index].species.name+" - "+_markedTreeList[index].trunkSize.toString()), 
                   //+"\n"+DateFormat("dd.MM.yyyy HH:mm:ss").format(_markedTreeList[index].insertTime)
                   onTap: () {
@@ -82,7 +83,8 @@ print("**initState**");
                       });
                     });
                   },
-                );
+                )
+              );
             }
           ),
           ]
@@ -92,7 +94,6 @@ print("**initState**");
       endDrawer:  Drawer(child:  SettingsWidget()), 
       
       drawer: Drawer(child: CampaignWidget(
-        campaignList: _campaignList,
         onCamaignChange: _loadMarkedTreeFromCampaign,
       ),),
     );

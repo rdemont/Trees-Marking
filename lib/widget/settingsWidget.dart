@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 
-
+import '../pages/campaignListPage.dart';
 import '../pages/speciesListPage.dart';
 import '../pages/trunkSizeListPage.dart';
 
@@ -67,7 +67,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
               onTap: () {
                 setDisplayedTab(2);
               },
-              title: const Text("Config data"),
+              title: const Text("Data"),
             ),
             Visibility(
               visible: _displayedTabIndex == 2,
@@ -85,7 +85,11 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                        onTap: openTrunkSizeListPage,
                       
                     ),
-
+                    ListTile(
+                      title: Text("Campaign"),
+                       onTap: openCampaignListPage,
+                      
+                    ),
                   ],
                 ),
               ),
@@ -140,5 +144,13 @@ class _SettingsWidgetState extends State<SettingsWidget> {
     );
 
   }
-  
+
+
+  openCampaignListPage(){    
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) =>  CampaignListPage()  )
+    );
+
+  }
 }
