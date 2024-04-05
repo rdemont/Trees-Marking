@@ -1,13 +1,7 @@
-import 'gen/trunkSizeImpl.dart';
+import '../generate/businessObj/trunkSizeGen.dart';
 
-class TrunkSize extends TrunkSizeImpl
+class TrunkSize extends TrunkSizeGen
 {
   TrunkSize(super.dbObj);
-
-
-  @override
-  String toString() {
-    return this.code +" - "+this.minDiameter.toString()+" cm - "+this.maxDiameter.toString()+" cm ["+this.volume.toString()+"sv]";
-  }
 
 }

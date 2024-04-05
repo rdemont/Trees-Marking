@@ -2,9 +2,10 @@
 
 
 
+import '../../generate/businessObj/campaignGen.dart';
 import '../../services/databaseService.dart';
 import '../campaign.dart';
-import '../gen/campaignImpl.dart';
+
 
 class CampaignList
 {
@@ -16,7 +17,7 @@ class CampaignList
         List<Campaign> result = [];
         for (int i = 0 ; i< raws.length;i++)
         {
-          result.add(await CampaignImpl.fromMap(raws[i]));
+          result.add(await CampaignGen.fromMap(raws[i]));
         }
         return result ; 
       });

@@ -1,8 +1,9 @@
-import '../businessObj/campaign.dart';
-import 'databaseObj.dart';
+import '../../businessObj/campaign.dart';
+import '../businessObj/campaignGen.dart';
+import '../../databaseObj/databaseObj.dart';
 
 
-class CampaignDB extends DatabaseObj {
+class CampaignDBGen extends DatabaseObj {
   
   String _name = '';
   String _remark = '';
@@ -12,7 +13,7 @@ class CampaignDB extends DatabaseObj {
 
 
 
-  CampaignDB()
+  CampaignDBGen()
   {
     tableName = 'campaign';
   }
@@ -91,13 +92,12 @@ class CampaignDB extends DatabaseObj {
   @override
   Map<String, Object?> toMap() 
   {
-    //Map<String, Object?> result = super.toMap();
     return{
-      'name' : _name,
-      'remark' : _remark,
-      'latitude' : _latitude,
-      'longitude' : _longitude,
-      'campaignDate' : _campaignDate.millisecondsSinceEpoch,
+      CampaignGen.COLUMN_NAME : _name,
+      CampaignGen.COLUMN_REMARK : _remark,
+      CampaignGen.COLUMN_LATITUDE : _latitude,
+      CampaignGen.COLUMN_LONGITUDE : _longitude,
+      CampaignGen.COLUMN_CAMPAIGNDATE : _campaignDate.millisecondsSinceEpoch,
 
     };
     
@@ -109,11 +109,11 @@ class CampaignDB extends DatabaseObj {
     Campaign result = Campaign(this) ;
     super.id = map["id"] as int; 
     
-    _name = (map['name']??'') as String;
-    _remark = (map['remark']??'') as String;
-    _latitude = (map['latitude']??0.0) as double;
-    _longitude = (map['longitude']??0.0) as double;
-    _campaignDate = DateTime.fromMillisecondsSinceEpoch((map['campaignDate']??0) as int);
+    _name = (map[CampaignGen.COLUMN_NAME]??'') as String;
+    _remark = (map[CampaignGen.COLUMN_REMARK]??'') as String;
+    _latitude = (map[CampaignGen.COLUMN_LATITUDE]??0.0) as double;
+    _longitude = (map[CampaignGen.COLUMN_LONGITUDE]??0.0) as double;
+    _campaignDate = DateTime.fromMillisecondsSinceEpoch((map[CampaignGen.COLUMN_CAMPAIGNDATE]??0) as int);
 
 
 

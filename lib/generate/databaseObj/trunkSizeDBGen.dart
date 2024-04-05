@@ -1,8 +1,9 @@
-import '../businessObj/trunkSize.dart';
-import 'databaseObj.dart';
+import '../../businessObj/trunkSize.dart';
+import '../businessObj/trunkSizeGen.dart';
+import '../../databaseObj/databaseObj.dart';
 
 
-class TrunkSizeDB extends DatabaseObj {
+class TrunkSizeDBGen extends DatabaseObj {
   
   double _minDiameter = 0.0;
   double _maxDiameter = 0.0;
@@ -12,7 +13,7 @@ class TrunkSizeDB extends DatabaseObj {
 
 
 
-  TrunkSizeDB()
+  TrunkSizeDBGen()
   {
     tableName = 'trunkSize';
   }
@@ -91,13 +92,12 @@ class TrunkSizeDB extends DatabaseObj {
   @override
   Map<String, Object?> toMap() 
   {
-    //Map<String, Object?> result = super.toMap();
     return{
-      'minDiameter' : _minDiameter,
-      'maxDiameter' : _maxDiameter,
-      'volume' : _volume,
-      'code' : _code,
-      'name' : _name,
+      TrunkSizeGen.COLUMN_MINDIAMETER : _minDiameter,
+      TrunkSizeGen.COLUMN_MAXDIAMETER : _maxDiameter,
+      TrunkSizeGen.COLUMN_VOLUME : _volume,
+      TrunkSizeGen.COLUMN_CODE : _code,
+      TrunkSizeGen.COLUMN_NAME : _name,
 
     };
     
@@ -109,11 +109,11 @@ class TrunkSizeDB extends DatabaseObj {
     TrunkSize result = TrunkSize(this) ;
     super.id = map["id"] as int; 
     
-    _minDiameter = (map['minDiameter']??0.0) as double;
-    _maxDiameter = (map['maxDiameter']??0.0) as double;
-    _volume = (map['volume']??0.0) as double;
-    _code = (map['code']??'') as String;
-    _name = (map['name']??'') as String;
+    _minDiameter = (map[TrunkSizeGen.COLUMN_MINDIAMETER]??0.0) as double;
+    _maxDiameter = (map[TrunkSizeGen.COLUMN_MAXDIAMETER]??0.0) as double;
+    _volume = (map[TrunkSizeGen.COLUMN_VOLUME]??0.0) as double;
+    _code = (map[TrunkSizeGen.COLUMN_CODE]??'') as String;
+    _name = (map[TrunkSizeGen.COLUMN_NAME]??'') as String;
 
 
 

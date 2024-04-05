@@ -1,16 +1,27 @@
-import '../../databaseObj/markedTreeDB.dart';
-import '../markedTree.dart';
-import '../businessObj.dart';
-import '../species.dart';
-import '../trunkSize.dart';
-import '../campaign.dart';
+import '../databaseObj/markedTreeDBGen.dart';
+import '../../businessObj/markedTree.dart';
+import '../../businessObj/businessObj.dart';
+import '../../businessObj/species.dart';
+import '../../businessObj/trunkSize.dart';
+import '../../businessObj/campaign.dart';
 
 
-class MarkedTreeImpl extends BusinessObj
+class MarkedTreeGen extends BusinessObj
 {
-  MarkedTreeDB get _localDbObj => dbObj as MarkedTreeDB ;
+  MarkedTreeDBGen get _localDbObj => dbObj as MarkedTreeDBGen ;
 
-  MarkedTreeImpl(super.dbObj);
+  MarkedTreeGen(super.dbObj);
+
+  static const String TABLE_NAME = "markedTree";
+  static const String COLUMN_SPECIESID = "speciesId";
+  static const String COLUMN_TRUNKSIZEID = "trunkSizeId";
+  static const String COLUMN_CAMPAIGNID = "campaignId";
+  static const String COLUMN_REMARK = "remark";
+  static const String COLUMN_LATITUDE = "latitude";
+  static const String COLUMN_LONGITUDE = "longitude";
+  static const String COLUMN_INSERTTIME = "insertTime";
+
+
 
   Species get species => _localDbObj.species;
   int get speciesId => _localDbObj.speciesId;
@@ -55,17 +66,17 @@ class MarkedTreeImpl extends BusinessObj
 
 
   static MarkedTree newObj(){
-    MarkedTreeDB objDb = MarkedTreeDB();
+    MarkedTreeDBGen objDb = MarkedTreeDBGen();
     return objDb.newObj();
   }
 
   static Future<MarkedTree> openObj(int id){
-    MarkedTreeDB objDb = MarkedTreeDB();
+    MarkedTreeDBGen objDb = MarkedTreeDBGen();
     return objDb.open(id);
   }
 
   static Future<MarkedTree> fromMap(Map<String,Object?>map){
-    MarkedTreeDB objDb = MarkedTreeDB();
+    MarkedTreeDBGen objDb = MarkedTreeDBGen();
     return objDb.fromMap(map);
   }
 

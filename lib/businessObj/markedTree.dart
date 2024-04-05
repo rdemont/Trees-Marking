@@ -1,6 +1,6 @@
-import 'gen/markedTreeImpl.dart';
+import '../generate/businessObj/markedTreeGen.dart';
 
-class MarkedTree extends MarkedTreeImpl
+class MarkedTree extends MarkedTreeGen
 {
   MarkedTree(super.dbObj);
 

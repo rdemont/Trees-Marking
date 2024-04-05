@@ -1,13 +1,22 @@
-import '../../databaseObj/campaignDB.dart';
-import '../campaign.dart';
-import '../businessObj.dart';
+import '../databaseObj/campaignDBGen.dart';
+import '../../businessObj/campaign.dart';
+import '../../businessObj/businessObj.dart';
 
 
-class CampaignImpl extends BusinessObj
+class CampaignGen extends BusinessObj
 {
-  CampaignDB get _localDbObj => dbObj as CampaignDB ;
+  CampaignDBGen get _localDbObj => dbObj as CampaignDBGen ;
 
-  CampaignImpl(super.dbObj);
+  CampaignGen(super.dbObj);
+
+  static const String TABLE_NAME = "campaign";
+  static const String COLUMN_NAME = "name";
+  static const String COLUMN_REMARK = "remark";
+  static const String COLUMN_LATITUDE = "latitude";
+  static const String COLUMN_LONGITUDE = "longitude";
+  static const String COLUMN_CAMPAIGNDATE = "campaignDate";
+
+
 
   String get name => _localDbObj.name;
   String get remark => _localDbObj.remark;
@@ -39,17 +48,17 @@ class CampaignImpl extends BusinessObj
 
 
   static Campaign newObj(){
-    CampaignDB objDb = CampaignDB();
+    CampaignDBGen objDb = CampaignDBGen();
     return objDb.newObj();
   }
 
   static Future<Campaign> openObj(int id){
-    CampaignDB objDb = CampaignDB();
+    CampaignDBGen objDb = CampaignDBGen();
     return objDb.open(id);
   }
 
   static Future<Campaign> fromMap(Map<String,Object?>map){
-    CampaignDB objDb = CampaignDB();
+    CampaignDBGen objDb = CampaignDBGen();
     return objDb.fromMap(map);
   }
 

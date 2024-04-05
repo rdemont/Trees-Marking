@@ -1,15 +1,16 @@
-import '../businessObj/species.dart';
-import 'databaseObj.dart';
+import '../../businessObj/species.dart';
+import '../businessObj/speciesGen.dart';
+import '../../databaseObj/databaseObj.dart';
 
 
-class SpeciesDB extends DatabaseObj {
+class SpeciesDBGen extends DatabaseObj {
   
   String _name = '';
   bool _communUse = true;
 
 
 
-  SpeciesDB()
+  SpeciesDBGen()
   {
     tableName = 'species';
   }
@@ -61,10 +62,9 @@ class SpeciesDB extends DatabaseObj {
   @override
   Map<String, Object?> toMap() 
   {
-    //Map<String, Object?> result = super.toMap();
     return{
-      'name' : _name,
-      'communUse' : _communUse,
+      SpeciesGen.COLUMN_NAME : _name,
+      SpeciesGen.COLUMN_COMMUNUSE : _communUse,
 
     };
     
@@ -76,8 +76,8 @@ class SpeciesDB extends DatabaseObj {
     Species result = Species(this) ;
     super.id = map["id"] as int; 
     
-    _name = (map['name']??'') as String;
-    _communUse = ((map['communUse']??0) as int) == 1;
+    _name = (map[SpeciesGen.COLUMN_NAME]??'') as String;
+    _communUse = ((map[SpeciesGen.COLUMN_COMMUNUSE]??0) as int) == 1;
 
 
 

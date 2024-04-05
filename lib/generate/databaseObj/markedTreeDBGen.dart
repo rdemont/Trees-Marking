@@ -1,20 +1,21 @@
-import '../businessObj/markedTree.dart';
-import 'databaseObj.dart';
-import '../businessObj/species.dart';
-import '../businessObj/gen/speciesImpl.dart';
-import '../businessObj/trunkSize.dart';
-import '../businessObj/gen/trunkSizeImpl.dart';
-import '../businessObj/campaign.dart';
-import '../businessObj/gen/campaignImpl.dart';
+import '../../businessObj/markedTree.dart';
+import '../businessObj/markedTreeGen.dart';
+import '../../databaseObj/databaseObj.dart';
+import '../../businessObj/species.dart';
+import '../businessObj/speciesGen.dart';
+import '../../businessObj/trunkSize.dart';
+import '../businessObj/trunkSizeGen.dart';
+import '../../businessObj/campaign.dart';
+import '../businessObj/campaignGen.dart';
 
 
-class MarkedTreeDB extends DatabaseObj {
+class MarkedTreeDBGen extends DatabaseObj {
   
-  Species _species = SpeciesImpl.newObj();
+  Species _species = SpeciesGen.newObj();
   int _speciesId = 0;
-  TrunkSize _trunkSize = TrunkSizeImpl.newObj();
+  TrunkSize _trunkSize = TrunkSizeGen.newObj();
   int _trunkSizeId = 0;
-  Campaign _campaign = CampaignImpl.newObj();
+  Campaign _campaign = CampaignGen.newObj();
   int _campaignId = 0;
   String _remark = '';
   double _latitude = 0.0;
@@ -23,7 +24,7 @@ class MarkedTreeDB extends DatabaseObj {
 
 
 
-  MarkedTreeDB()
+  MarkedTreeDBGen()
   {
     tableName = 'markedTree';
   }
@@ -107,13 +108,13 @@ class MarkedTreeDB extends DatabaseObj {
       if (!obj.isEmpty)
       {
         fromMap(obj[0]);
-        SpeciesImpl.openObj(_speciesId).then((value){
+        SpeciesGen.openObj(_speciesId).then((value){
           _species = value ;
         });
-        TrunkSizeImpl.openObj(_trunkSizeId).then((value){
+        TrunkSizeGen.openObj(_trunkSizeId).then((value){
           _trunkSize = value ;
         });
-        CampaignImpl.openObj(_campaignId).then((value){
+        CampaignGen.openObj(_campaignId).then((value){
           _campaign = value ;
         });
 
@@ -132,15 +133,14 @@ class MarkedTreeDB extends DatabaseObj {
   @override
   Map<String, Object?> toMap() 
   {
-    //Map<String, Object?> result = super.toMap();
     return{
-      'speciesId' : _speciesId,
-      'trunkSizeId' : _trunkSizeId,
-      'campaignId' : _campaignId,
-      'remark' : _remark,
-      'latitude' : _latitude,
-      'longitude' : _longitude,
-      'insertTime' : _insertTime.millisecondsSinceEpoch,
+      MarkedTreeGen.COLUMN_SPECIESID : _speciesId,
+      MarkedTreeGen.COLUMN_TRUNKSIZEID : _trunkSizeId,
+      MarkedTreeGen.COLUMN_CAMPAIGNID : _campaignId,
+      MarkedTreeGen.COLUMN_REMARK : _remark,
+      MarkedTreeGen.COLUMN_LATITUDE : _latitude,
+      MarkedTreeGen.COLUMN_LONGITUDE : _longitude,
+      MarkedTreeGen.COLUMN_INSERTTIME : _insertTime.millisecondsSinceEpoch,
 
     };
     
@@ -152,25 +152,25 @@ class MarkedTreeDB extends DatabaseObj {
     MarkedTree result = MarkedTree(this) ;
     super.id = map["id"] as int; 
     
-    _speciesId = (map['speciesId']??0) as int;
+    _speciesId = (map[MarkedTreeGen.COLUMN_SPECIESID]??0) as int;
     if (_speciesId >0 )
     {
-      _species = await SpeciesImpl.openObj(_speciesId);
+      _species = await SpeciesGen.openObj(_speciesId);
     }
-    _trunkSizeId = (map['trunkSizeId']??0) as int;
+    _trunkSizeId = (map[MarkedTreeGen.COLUMN_TRUNKSIZEID]??0) as int;
     if (_trunkSizeId >0 )
     {
-      _trunkSize = await TrunkSizeImpl.openObj(_trunkSizeId);
+      _trunkSize = await TrunkSizeGen.openObj(_trunkSizeId);
     }
-    _campaignId = (map['campaignId']??0) as int;
+    _campaignId = (map[MarkedTreeGen.COLUMN_CAMPAIGNID]??0) as int;
     if (_campaignId >0 )
     {
-      _campaign = await CampaignImpl.openObj(_campaignId);
+      _campaign = await CampaignGen.openObj(_campaignId);
     }
-    _remark = (map['remark']??'') as String;
-    _latitude = (map['latitude']??0.0) as double;
-    _longitude = (map['longitude']??0.0) as double;
-    _insertTime = DateTime.fromMillisecondsSinceEpoch((map['insertTime']??0) as int);
+    _remark = (map[MarkedTreeGen.COLUMN_REMARK]??'') as String;
+    _latitude = (map[MarkedTreeGen.COLUMN_LATITUDE]??0.0) as double;
+    _longitude = (map[MarkedTreeGen.COLUMN_LONGITUDE]??0.0) as double;
+    _insertTime = DateTime.fromMillisecondsSinceEpoch((map[MarkedTreeGen.COLUMN_INSERTTIME]??0) as int);
 
 
 

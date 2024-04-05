@@ -1,6 +1,6 @@
-import 'gen/campaignImpl.dart';
+import '../generate/businessObj/campaignGen.dart';
 
-class Campaign extends CampaignImpl
+class Campaign extends CampaignGen
 {
   Campaign(super.dbObj);
 

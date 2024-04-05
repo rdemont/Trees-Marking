@@ -4,7 +4,8 @@ import 'package:treesmarking/businessObj/campaign.dart';
 import 'package:treesmarking/pages/markedTreePage.dart';
 import '../businessObj/list/markedTreeList.dart';
 import '../businessObj/markedTree.dart';
-import '../businessObj/gen/markedTreeImpl.dart';
+import '../generate/businessObj/markedTreeGen.dart';
+
 
 class MarkedTreeWidget extends StatefulWidget {
 
@@ -102,7 +103,7 @@ class _MarkedTreeWidgetState extends State<MarkedTreeWidget> {
             onPressed: () {
 debugPrint("Test Debug Pring");
 print(textFieldController.text);
-              MarkedTree markedTree = MarkedTreeImpl.newObj();
+              MarkedTree markedTree = MarkedTreeGen.newObj();
               markedTree.remark = textFieldController.text;
               markedTree.campaignId = widget.campaign.id ;
 print("markedTree Save 1");

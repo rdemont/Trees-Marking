@@ -1,13 +1,22 @@
-import '../../databaseObj/trunkSizeDB.dart';
-import '../trunkSize.dart';
-import '../businessObj.dart';
+import '../databaseObj/trunkSizeDBGen.dart';
+import '../../businessObj/trunkSize.dart';
+import '../../businessObj/businessObj.dart';
 
 
-class TrunkSizeImpl extends BusinessObj
+class TrunkSizeGen extends BusinessObj
 {
-  TrunkSizeDB get _localDbObj => dbObj as TrunkSizeDB ;
+  TrunkSizeDBGen get _localDbObj => dbObj as TrunkSizeDBGen ;
 
-  TrunkSizeImpl(super.dbObj);
+  TrunkSizeGen(super.dbObj);
+
+  static const String TABLE_NAME = "trunkSize";
+  static const String COLUMN_MINDIAMETER = "minDiameter";
+  static const String COLUMN_MAXDIAMETER = "maxDiameter";
+  static const String COLUMN_VOLUME = "volume";
+  static const String COLUMN_CODE = "code";
+  static const String COLUMN_NAME = "name";
+
+
 
   double get minDiameter => _localDbObj.minDiameter;
   double get maxDiameter => _localDbObj.maxDiameter;
@@ -39,17 +48,17 @@ class TrunkSizeImpl extends BusinessObj
 
 
   static TrunkSize newObj(){
-    TrunkSizeDB objDb = TrunkSizeDB();
+    TrunkSizeDBGen objDb = TrunkSizeDBGen();
     return objDb.newObj();
   }
 
   static Future<TrunkSize> openObj(int id){
-    TrunkSizeDB objDb = TrunkSizeDB();
+    TrunkSizeDBGen objDb = TrunkSizeDBGen();
     return objDb.open(id);
   }
 
   static Future<TrunkSize> fromMap(Map<String,Object?>map){
-    TrunkSizeDB objDb = TrunkSizeDB();
+    TrunkSizeDBGen objDb = TrunkSizeDBGen();
     return objDb.fromMap(map);
   }
 

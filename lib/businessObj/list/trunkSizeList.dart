@@ -2,9 +2,10 @@
 
 
 
+import '../../generate/businessObj/trunkSizeGen.dart';
 import '../../services/databaseService.dart';
 import '../trunkSize.dart';
-import '../gen/trunkSizeImpl.dart';
+
 
 class TrunkSizeList
 {
@@ -15,7 +16,7 @@ class TrunkSizeList
         List<TrunkSize> result = [];
         for (int i = 0 ; i< raws.length;i++)
         {
-          result.add(await TrunkSizeImpl.fromMap(raws[i]));
+          result.add(await TrunkSizeGen.fromMap(raws[i]));
         }
         return result ; 
       });

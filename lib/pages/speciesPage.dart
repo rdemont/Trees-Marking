@@ -2,13 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:treesmarking/businessObj/species.dart';
 
-import '../businessObj/gen/speciesImpl.dart';
+import '../generate/businessObj/speciesGen.dart';
+
+
 
 class SpeciesPage extends StatefulWidget {
   
   final Species species;
 
-  SpeciesPage({super.key, Species? species}):this.species=species ?? SpeciesImpl.newObj();
+  SpeciesPage({super.key, Species? species}):this.species=species ?? SpeciesGen.newObj();
 
   @override
   State<SpeciesPage> createState() => _SpeciesPageState();

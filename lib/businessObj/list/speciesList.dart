@@ -1,6 +1,6 @@
+import '../../generate/businessObj/speciesGen.dart';
 import '../../services/databaseService.dart';
 import '../species.dart';
-import '../gen/speciesImpl.dart';
 
 
 class SpeciesList
@@ -13,7 +13,7 @@ class SpeciesList
         List<Species> result = [];
         for (int i = 0 ; i< raws.length;i++)
         {
-          result.add(await SpeciesImpl.fromMap(raws[i]));
+          result.add(await SpeciesGen.fromMap(raws[i]));
         }
         return result ; 
       });
