@@ -4,6 +4,7 @@
 import 'package:treesmarking/businessObj/markedTree.dart';
 
 import '../../services/databaseService.dart';
+import '../gen/markedTreeImpl.dart';
 
 
 class MarkedTreeList
@@ -16,7 +17,7 @@ class MarkedTreeList
         List<MarkedTree> result = [];
         for (int i = 0 ; i< raws.length;i++)
         {
-          result.add(await MarkedTree.fromMap(raws[i]));
+          result.add(await MarkedTreeImpl.fromMap(raws[i]));
         }
         return result ; 
       });
@@ -30,7 +31,7 @@ class MarkedTreeList
         List<MarkedTree> result = [];      
         for(int i=0;i<raws.length;i++)
         {
-          result.add(await MarkedTree.fromMap(raws[i]));
+          result.add(await MarkedTreeImpl.fromMap(raws[i]));
           
         }
         return result;

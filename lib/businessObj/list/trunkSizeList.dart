@@ -4,19 +4,24 @@
 
 import '../../services/databaseService.dart';
 import '../trunkSize.dart';
-import '../trunkSizeImpl.dart';
+import '../gen/trunkSizeImpl.dart';
 
 class TrunkSizeList
 {
 
   static Future<List<TrunkSize>> getAll(){
     return DatabaseService.initializeDb().then((db) {
-      return db.query("trunkSize",orderBy: "minDiameter").then((raws){
-        return raws.map((e) => TrunkSizeImpl.fromMap(e)).toList();
+      return db.query("trunkSize",orderBy: "minDiameter").then((raws)async {
+        List<TrunkSize> result = [];
+        for (int i = 0 ; i< raws.length;i++)
+        {
+          result.add(await TrunkSizeImpl.fromMap(raws[i]));
+        }
+        return result ; 
       });
     });
   }
-
+/*
   static Future<Map<int, TrunkSize>> getObjectsMap(){
     return DatabaseService.initializeDb().then((db) {
       return db.query("campaign",orderBy: "id").then((raws){
@@ -32,5 +37,5 @@ class TrunkSizeList
       });
     });
   }
-
+*/
 }

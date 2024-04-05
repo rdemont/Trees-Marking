@@ -7,6 +7,7 @@ import 'package:treesmarking/businessObj/list/trunkSizeList.dart';
 
 
 import '../businessObj/markedTree.dart';
+import '../businessObj/gen/markedTreeImpl.dart';
 import '../businessObj/species.dart';
 import '../businessObj/trunkSize.dart';
 
@@ -16,7 +17,7 @@ class MarkedTreePage extends StatefulWidget {
   final MarkedTree markedTree;
   final Campaign campaign;
 
-  MarkedTreePage({super.key, MarkedTree? marketTree, required this.campaign}):this.markedTree=marketTree ?? MarkedTree.newObj();
+  MarkedTreePage({super.key, MarkedTree? marketTree, required this.campaign}):this.markedTree=marketTree ?? MarkedTreeImpl.newObj();
 
   @override
   State<MarkedTreePage> createState() => _MarkedTreePageState();

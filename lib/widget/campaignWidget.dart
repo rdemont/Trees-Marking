@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:treesmarking/businessObj/campaign.dart';
 
+import '../businessObj/gen/campaignImpl.dart';
+
 
 class CampaignWidget extends StatefulWidget {
 
@@ -136,7 +138,7 @@ class _CampaignWidgetState extends State<CampaignWidget> {
             onPressed: () {
 debugPrint("Test Debug Pring");
 print(textFieldController.text);
-              Campaign campaign = Campaign.newObj();
+              Campaign campaign = CampaignImpl.newObj();
               campaign.name = textFieldController.text;
 print("Campaign Save 1");
               campaign.save().then((value){

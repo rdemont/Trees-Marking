@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 
 import '../businessObj/campaign.dart';
+import '../businessObj/gen/campaignImpl.dart';
 import '../businessObj/list/campaignList.dart';
 import '../businessObj/list/markedTreeList.dart';
 import '../businessObj/markedTree.dart';
@@ -27,7 +28,7 @@ class _MarkedTreeListPageState extends State<MarkedTreeListPage> {
   List<MarkedTree> _markedTreeList = [];
   List<Campaign> _campaignList = [];
   
-  Campaign _campaignSelected = Campaign.newObj(); 
+  Campaign _campaignSelected = CampaignImpl.newObj(); 
 
   @override
   void initState() {
@@ -104,7 +105,7 @@ print("**initState**");
 
 
   void _loadMarkedTreeFromCampaign(int campaignId) async {
-    Campaign.openObj(campaignId).then((campaign) {
+    CampaignImpl.openObj(campaignId).then((campaign) {
       setState(() {
         _campaignSelected = campaign;
       });

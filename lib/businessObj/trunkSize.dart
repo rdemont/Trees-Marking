@@ -1,4 +1,4 @@
-import 'trunkSizeImpl.dart';
+import 'gen/trunkSizeImpl.dart';
 
 class TrunkSize extends TrunkSizeImpl
 {
