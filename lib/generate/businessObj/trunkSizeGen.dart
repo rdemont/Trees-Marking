@@ -10,6 +10,7 @@ class TrunkSizeGen extends BusinessObj
   TrunkSizeGen(super.dbObj);
 
   static const String TABLE_NAME = "trunkSize";
+  static const String COLUMN_ID = "id";
   static const String COLUMN_MINDIAMETER = "minDiameter";
   static const String COLUMN_MAXDIAMETER = "maxDiameter";
   static const String COLUMN_VOLUME = "volume";

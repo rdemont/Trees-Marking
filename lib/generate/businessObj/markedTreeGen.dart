@@ -13,6 +13,7 @@ class MarkedTreeGen extends BusinessObj
   MarkedTreeGen(super.dbObj);
 
   static const String TABLE_NAME = "markedTree";
+  static const String COLUMN_ID = "id";
   static const String COLUMN_SPECIESID = "speciesId";
   static const String COLUMN_TRUNKSIZEID = "trunkSizeId";
   static const String COLUMN_CAMPAIGNID = "campaignId";

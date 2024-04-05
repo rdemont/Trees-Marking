@@ -40,7 +40,7 @@ class SpeciesDBGen extends DatabaseObj {
 
   Future<Species> open(int id)
   {
-    return query(tableName,where: "id = $id").then((obj)
+    return query(SpeciesGen.TABLE_NAME,where: SpeciesGen.COLUMN_ID+" = $id").then((obj)
     {
       Species result = Species(this);
       if (!obj.isEmpty)
@@ -74,7 +74,7 @@ class SpeciesDBGen extends DatabaseObj {
   Future<Species> fromMap(Map<String,Object?> map)
   async {
     Species result = Species(this) ;
-    super.id = map["id"] as int; 
+    super.id = map[SpeciesGen.COLUMN_ID] as int; 
     
     _name = (map[SpeciesGen.COLUMN_NAME]??'') as String;
     _communUse = ((map[SpeciesGen.COLUMN_COMMUNUSE]??0) as int) == 1;

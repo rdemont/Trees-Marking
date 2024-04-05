@@ -10,6 +10,7 @@ class SpeciesGen extends BusinessObj
   SpeciesGen(super.dbObj);
 
   static const String TABLE_NAME = "species";
+  static const String COLUMN_ID = "id";
   static const String COLUMN_NAME = "name";
   static const String COLUMN_COMMUNUSE = "communUse";
 

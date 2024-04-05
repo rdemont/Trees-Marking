@@ -70,7 +70,7 @@ class CampaignDBGen extends DatabaseObj {
 
   Future<Campaign> open(int id)
   {
-    return query(tableName,where: "id = $id").then((obj)
+    return query(CampaignGen.TABLE_NAME,where: CampaignGen.COLUMN_ID+" = $id").then((obj)
     {
       Campaign result = Campaign(this);
       if (!obj.isEmpty)
@@ -107,7 +107,7 @@ class CampaignDBGen extends DatabaseObj {
   Future<Campaign> fromMap(Map<String,Object?> map)
   async {
     Campaign result = Campaign(this) ;
-    super.id = map["id"] as int; 
+    super.id = map[CampaignGen.COLUMN_ID] as int; 
     
     _name = (map[CampaignGen.COLUMN_NAME]??'') as String;
     _remark = (map[CampaignGen.COLUMN_REMARK]??'') as String;

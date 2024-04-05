@@ -71,7 +71,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name:  Tree-Marked :${{ steps.version.outputs.version }}
+          tag_name:  release/Tree-Marked:${{ steps.version.outputs.version }}
           release_name: Daily Release ${{ steps.version.outputs.version }}
           draft: true
           prerelease: false

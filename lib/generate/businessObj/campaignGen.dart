@@ -10,6 +10,7 @@ class CampaignGen extends BusinessObj
   CampaignGen(super.dbObj);
 
   static const String TABLE_NAME = "campaign";
+  static const String COLUMN_ID = "id";
   static const String COLUMN_NAME = "name";
   static const String COLUMN_REMARK = "remark";
   static const String COLUMN_LATITUDE = "latitude";

@@ -102,7 +102,7 @@ class MarkedTreeDBGen extends DatabaseObj {
 
   Future<MarkedTree> open(int id)
   {
-    return query(tableName,where: "id = $id").then((obj)
+    return query(MarkedTreeGen.TABLE_NAME,where: MarkedTreeGen.COLUMN_ID+" = $id").then((obj)
     {
       MarkedTree result = MarkedTree(this);
       if (!obj.isEmpty)
@@ -150,7 +150,7 @@ class MarkedTreeDBGen extends DatabaseObj {
   Future<MarkedTree> fromMap(Map<String,Object?> map)
   async {
     MarkedTree result = MarkedTree(this) ;
-    super.id = map["id"] as int; 
+    super.id = map[MarkedTreeGen.COLUMN_ID] as int; 
     
     _speciesId = (map[MarkedTreeGen.COLUMN_SPECIESID]??0) as int;
     if (_speciesId >0 )

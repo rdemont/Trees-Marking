@@ -70,7 +70,7 @@ class TrunkSizeDBGen extends DatabaseObj {
 
   Future<TrunkSize> open(int id)
   {
-    return query(tableName,where: "id = $id").then((obj)
+    return query(TrunkSizeGen.TABLE_NAME,where: TrunkSizeGen.COLUMN_ID+" = $id").then((obj)
     {
       TrunkSize result = TrunkSize(this);
       if (!obj.isEmpty)
@@ -107,7 +107,7 @@ class TrunkSizeDBGen extends DatabaseObj {
   Future<TrunkSize> fromMap(Map<String,Object?> map)
   async {
     TrunkSize result = TrunkSize(this) ;
-    super.id = map["id"] as int; 
+    super.id = map[TrunkSizeGen.COLUMN_ID] as int; 
     
     _minDiameter = (map[TrunkSizeGen.COLUMN_MINDIAMETER]??0.0) as double;
     _maxDiameter = (map[TrunkSizeGen.COLUMN_MAXDIAMETER]??0.0) as double;
