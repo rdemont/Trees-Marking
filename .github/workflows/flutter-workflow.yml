@@ -12,6 +12,7 @@ on:
 jobs:
   build:
     # This job will run on ubuntu virtual machine
+    permissions: write-all
     runs-on: ubuntu-latest
     steps:
 
