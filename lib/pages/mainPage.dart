@@ -1,18 +1,13 @@
 import 'package:flutter/material.dart';
 
-import 'package:treesmarking/businessObj/species.dart';
-import 'package:treesmarking/businessObj/speciesList.dart';
-import 'package:treesmarking/businessObj/trunkSize.dart';
-import 'package:treesmarking/businessObj/trunkSizeList.dart';
-import 'package:treesmarking/generate/businessObj/campaignListGen.dart';
-import 'package:treesmarking/generate/businessObj/speciesListGen.dart';
-import 'package:treesmarking/pages/markedTreeListPage.dart';
-
-
-
 import '../businessObj/campaign.dart';
 import '../businessObj/campaignList.dart';
+import '../businessObj/species.dart';
+import '../businessObj/speciesList.dart';
+import '../businessObj/trunkSize.dart';
+import '../businessObj/trunkSizeList.dart';
 import '../services/databaseService.dart';
+import 'markedTreeListPage.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key, required this.title});
