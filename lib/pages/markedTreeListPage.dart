@@ -49,7 +49,7 @@ print("**initState**");
             tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip, ),)
          ],
       ),
-      bottomNavigationBar: SizedBox(height: 50, child:BottomAppBar(child: getBottomInfo(),)),
+      bottomNavigationBar: SizedBox(height: 75, child:BottomAppBar(child: getBottomInfo(),)),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add_circle_outline),
         onPressed: () {
@@ -132,65 +132,66 @@ print("**initState**");
 
 
 
-Widget getBottomInfo() {
-  double sv = 0; 
-  Map<String,int> speciesCount = {};
-  Map<String,double> speciesSv = {};
-  
+  Widget getBottomInfo() {
+    double sv = 0; 
+    Map<String,int> speciesCount = {};
+    Map<String,double> speciesSv = {};
+    
 
-  for (int i = 0;i<_markedTreeList.length;i++)
-  {
-    sv += _markedTreeList[i].trunkSize.volume; 
-    String speciesName = _markedTreeList[i].species.name;
-    speciesCount[speciesName] = (speciesCount[speciesName]??0) +1;  
-    speciesSv[speciesName] = (speciesSv[speciesName]??0) + _markedTreeList[i].trunkSize.volume;  
+    for (int i = 0;i<_markedTreeList.length;i++)
+    {
+      sv += _markedTreeList[i].trunkSize.volume; 
+      String speciesName = _markedTreeList[i].species.name;
+      speciesCount[speciesName] = (speciesCount[speciesName]??0) +1;  
+      speciesSv[speciesName] = (speciesSv[speciesName]??0) + _markedTreeList[i].trunkSize.volume;  
 
-  }
+    }
 
-  List<DataRow> dataRow = []; 
-  
-  
-  for (String key in speciesCount.keys)
-  {
-    dataRow.add(DataRow(cells: [
-      DataCell(Text(key)),
-      DataCell(Text(speciesCount[key].toString())),
-      DataCell(Text((speciesSv[key]??0.0).toStringAsFixed(2))),
-      ]));
-  }
-  
+    List<DataRow> dataRow = []; 
+    
+    
+    for (String key in speciesCount.keys)
+    {
+      dataRow.add(DataRow(cells: [
+        DataCell(Text(key)),
+        DataCell(Text(speciesCount[key].toString())),
+        DataCell(Text((speciesSv[key]??0.0).toStringAsFixed(2))),
+        ]));
+    }
+    
 
-  return GestureDetector(
-    onTap: () {   
-      final infoBar = SnackBar(backgroundColor: Colors.grey,
-        content: DataTable(
-          columns: [
-            DataColumn(label: Expanded(child: Text("Species",style: TextStyle(fontStyle: FontStyle.italic),))),
-            DataColumn(label: Expanded(child: Text("Count",style: TextStyle(fontStyle: FontStyle.italic),))),
-            DataColumn(label: Expanded(child: Text("Sv",style: TextStyle(fontStyle: FontStyle.italic),))),
-          ],
-          rows: dataRow,
+    return GestureDetector(
+      onTap: () {   
+        final infoBar = SnackBar(backgroundColor: Colors.grey,
+          content: DataTable(
+            columns: [
+              DataColumn(label: Text("Species",style: TextStyle(fontStyle: FontStyle.italic),)),
+              DataColumn(label: Text("Count",style: TextStyle(fontStyle: FontStyle.italic),)),
+              DataColumn(label: Text("Sv",style: TextStyle(fontStyle: FontStyle.italic),)),
+            ],
+            rows: dataRow,
 
-          
-        ),
-  
+            
+          ),
+    
 
-        action: SnackBarAction(label: 'Hide', onPressed: () {;},),
-      );
-      ScaffoldMessenger.of(context).showSnackBar(infoBar);
-    }, 
-    child: Expanded(
+          action: SnackBarAction(label: 'Hide', onPressed: () {;},),
+        );
+        ScaffoldMessenger.of(context).showSnackBar(infoBar);
+      }, 
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Expanded(child: Text(""),),
+          
           Text("Species: " +speciesCount.length.toString()),
           VerticalDivider(),
           Text("Count:"+_markedTreeList.length.toString()),
           VerticalDivider(),
           Text("SV: "+sv.toStringAsFixed(2)),
-          Expanded(child: Text(""),),
-        ],)  
+          
+        ],
       )
     );
   }
+
 }
