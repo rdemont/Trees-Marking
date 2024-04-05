@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../businessObj/campaign.dart';
 import '../generate/businessObj/campaignGen.dart';
@@ -27,7 +28,7 @@ class _CampaignPageState extends State<CampaignPage> {
     super.initState();
     nameController.text = widget.campaign.name.toString();
     remarkController.text = widget.campaign.remark.toString();
-    
+    dateController.text = DateFormat("dd.MM.yyyy HH:mm").format(widget.campaign.campaignDate);
   }
 
   @override
@@ -45,9 +46,11 @@ class _CampaignPageState extends State<CampaignPage> {
             Row(
               children: [
                 Text("Name : "),
-                TextField(
-                  controller: nameController,
-                  decoration: const InputDecoration(hintText: "name"), 
+                Expanded(
+                  child:TextField(
+                    controller: nameController,
+                    decoration: const InputDecoration(hintText: "name"), 
+                  )
                 )
               ],
             ),
@@ -58,7 +61,7 @@ class _CampaignPageState extends State<CampaignPage> {
                   child: TextField(
                     controller: dateController,
                     decoration: InputDecoration(
-                      labelText: "Date",
+                      //labelText: "Date",
                       filled: true,
                       prefixIcon: Icon(Icons.calendar_today_rounded),
                       enabledBorder: OutlineInputBorder(
@@ -66,6 +69,9 @@ class _CampaignPageState extends State<CampaignPage> {
                       )
                     ),
                     readOnly: true,
+                    onTap: () {
+                      _selectDate();
+                    },
                   )
                 )
               ],
@@ -73,15 +79,14 @@ class _CampaignPageState extends State<CampaignPage> {
             Row(
               children: [
                 Text("Remark : "),
-                TextField(
-                  controller: remarkController,
-                  decoration: const InputDecoration(hintText: "remark"), 
-                  keyboardType: TextInputType.multiline,
-                  minLines: 1,
-                  maxLines: 5,
-                  onTap: () {
-                    _selectDate();
-                  },
+                Expanded(
+                  child: TextField(
+                    controller: remarkController,
+                    decoration: const InputDecoration(hintText: "remark"), 
+                    keyboardType: TextInputType.multiline,
+                    minLines: 1,
+                    maxLines: 5,
+                  )
                 )
                 
               ],
@@ -136,7 +141,8 @@ class _CampaignPageState extends State<CampaignPage> {
   Future<void> _selectDate() async {
     DateTime? _picked =  await showDatePicker(
       context: context, 
-      initialDate: DateTime.now(),
+      initialEntryMode: DatePickerEntryMode.calendarOnly,
+      initialDate: widget.campaign.campaignDate,
       firstDate: DateTime(2000), 
       lastDate: DateTime(2100)
     );
@@ -144,7 +150,9 @@ class _CampaignPageState extends State<CampaignPage> {
     if (_picked != null)
     {
       setState(() {
-        dateController.text = _picked.toString().split("")[0];
+        widget.campaign.campaignDate = _picked.add( Duration(hours:widget.campaign.campaignDate.hour,minutes: widget.campaign.campaignDate.minute ));
+         
+        dateController.text = DateFormat("dd.MM.yyyy HH:mm").format(widget.campaign.campaignDate);
       });
     }
   }
