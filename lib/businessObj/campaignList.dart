@@ -7,6 +7,6 @@ class CampaignList extends CampaignListGen
 {
 
   static Future<List<Campaign>> getAll([String? order]){
-    return CampaignList.getAll(order);
+    return CampaignListGen.getAll(order);
   }
 }

@@ -9,7 +9,7 @@ class MarkedTreeList extends MarkedTreeListGen
 {
 
   static Future<List<MarkedTree>> getAll([String? order]){
-    return MarkedTreeList.getAll(order);
+    return MarkedTreeListGen.getAll(order);
   }
 
 

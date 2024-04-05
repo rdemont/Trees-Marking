@@ -7,6 +7,6 @@ class SpeciesList extends SpeciesListGen
 {
 
   static Future<List<Species>> getAll([String? order]){
-    return SpeciesList.getAll(order);
+    return SpeciesListGen.getAll(order);
   }
 }

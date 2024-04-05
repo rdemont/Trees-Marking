@@ -7,6 +7,6 @@ class TrunkSizeList extends TrunkSizeListGen
 {
 
   static Future<List<TrunkSize>> getAll([String? order]){
-    return TrunkSizeList.getAll(order);
+    return TrunkSizeListGen.getAll(order);
   }
 }
