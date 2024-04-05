@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:treesmarking/pages/mainPage.dart';
 
 
-import 'pages/markedTreeListPage.dart';
+
 import 'services/databaseService.dart';
 
 void main() {
