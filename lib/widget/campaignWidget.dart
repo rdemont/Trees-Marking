@@ -36,7 +36,7 @@ class CampaignWidget extends StatefulWidget {
 
 class _CampaignWidgetState extends State<CampaignWidget> {
   //final TextEditingController groupItemController = TextEditingController();
-  Offset _tapPosition = Offset.zero;
+  //Offset _tapPosition = Offset.zero;
   int? selectedCampaignId;
   List<Campaign> campaignList = [];
 
@@ -51,7 +51,7 @@ class _CampaignWidgetState extends State<CampaignWidget> {
   void _getTapPosition(TapDownDetails details) {
     final RenderBox referenceBox = context.findRenderObject() as RenderBox;
     setState(() {
-      _tapPosition = referenceBox.globalToLocal(details.globalPosition);
+      referenceBox.globalToLocal(details.globalPosition);
     });
   }
 
@@ -131,7 +131,7 @@ class _CampaignWidgetState extends State<CampaignWidget> {
               Campaign campaign = CampaignGen.newObj();
               campaign.name = textFieldController.text;
               campaign.save().then((value){
-                int tmpid = campaign.id ;
+                //int tmpid = campaign.id ;
                 widget.onCamaignChange(campaign.id);
                 loadCampaign();
               });
