@@ -16,16 +16,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-      - name: Get next version
-        uses: reecetech/version-increment@2023.9.3
-        id: version
-        #with:
-        #  scheme: semver
-        #  increment: patch
-
       - uses: actions/checkout@v2
         with:
           fetch-deap: 0 
+
+      - name: Get next version
+        uses: reecetech/version-increment@2023.9.3
+        id: version
+        with:
+          scheme: semver
+          increment: patch
 
       - name: Set up JDK 17.0
         uses: actions/setup-java@v1
