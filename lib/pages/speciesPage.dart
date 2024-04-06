@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:treesmarking/businessObj/species.dart';
 
 import '../generate/businessObj/speciesGen.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 
 class SpeciesPage extends StatefulWidget {
@@ -31,7 +31,7 @@ class _SpeciesPageState extends State<SpeciesPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text('Spacies Page'),
+        title: Text(AppLocalizations.of(context)!.species),
       ),
       body: Container(
         margin: const EdgeInsets.only(left: 20.0, right: 20.0, top: 20.0, bottom: 10.0),
@@ -40,18 +40,18 @@ class _SpeciesPageState extends State<SpeciesPage> {
           children: [
             Row(
               children: [
-                Text("Name : "),
+                Text(AppLocalizations.of(context)!.name+" : "),
                 Flexible(
                   child: TextField(
                       controller: nameController,
-                      decoration: const InputDecoration(hintText: "Spacies name"), 
+                      decoration:  InputDecoration(hintText: AppLocalizations.of(context)!.speciesName), 
                     )
                 )              
               ],
             ),
             Row(
               children: [
-                Text("Commun use : "),
+                Text(AppLocalizations.of(context)!.communUse+" : "),
                 Checkbox(
                   value: widget.species.communUse, 
                   onChanged: (value) {
@@ -66,18 +66,18 @@ class _SpeciesPageState extends State<SpeciesPage> {
               ElevatedButton(onPressed: (){
                 save();
               }, 
-              child: Text("Save")),
+              child: Text(AppLocalizations.of(context)!.save)),
 
               Expanded(child: Container()),
               
               ElevatedButton(onPressed: (){
                 delete();
               }, 
-              child: Text("Delete")),
+              child: Text(AppLocalizations.of(context)!.delete)),
               ElevatedButton(onPressed: () {
                 cancel();
               },
-              child: Text("Cancel")),
+              child: Text(AppLocalizations.of(context)!.cancel)),
             ],)
           ],
         )

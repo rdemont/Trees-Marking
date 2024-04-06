@@ -12,7 +12,7 @@ import '../businessObj/speciesList.dart';
 import '../businessObj/trunkSize.dart';
 import '../businessObj/trunkSizeList.dart';
 import '../generate/businessObj/markedTreeGen.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MarkedTreePage extends StatefulWidget {
   
@@ -80,7 +80,7 @@ class _MarkedTreePageState extends State<MarkedTreePage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text('Marked tree Page'),
+        title:  Text(AppLocalizations.of(context)!.markedTree),
       ),
       body: Container(
         margin: const EdgeInsets.only(left: 20.0, right: 20.0, top: 20.0, bottom: 10.0),
@@ -89,7 +89,7 @@ class _MarkedTreePageState extends State<MarkedTreePage> {
           children: [
             Row(
               children: [
-                Text("Species : "),
+                Text(AppLocalizations.of(context)!.species+" : "),
                 DropdownButton(
                   value: widget.markedTree.speciesId.toString(),
                   icon: const Icon(Icons.arrow_downward),
@@ -112,7 +112,7 @@ class _MarkedTreePageState extends State<MarkedTreePage> {
             ),
             Row(
               children: [
-                Text("Trunk size : "),
+                Text(AppLocalizations.of(context)!.trunkSize+" : "),
                 DropdownButton(
                   value: widget.markedTree.trunkSizeId.toString(),
                   icon: const Icon(Icons.arrow_downward),
@@ -136,11 +136,11 @@ class _MarkedTreePageState extends State<MarkedTreePage> {
 
             Row(
               children: [
-                Text("Remark : "),
+                Text(AppLocalizations.of(context)!.remark+" : "),
                 Flexible(
                   child: TextField(
                       controller: remarkController,
-                      decoration: const InputDecoration(hintText: "Remark"), 
+                      decoration: InputDecoration(hintText: AppLocalizations.of(context)!.remark), 
                     )
                 )              
               ],
@@ -151,18 +151,18 @@ class _MarkedTreePageState extends State<MarkedTreePage> {
               ElevatedButton(onPressed: (){
                 save();
               }, 
-              child: Text("Save")),
+              child: Text(AppLocalizations.of(context)!.save)),
 
               Expanded(child: Container()),
               
               ElevatedButton(onPressed: (){
                 delete();
               }, 
-              child: Text("Delete")),
+              child: Text(AppLocalizations.of(context)!.delete)),
               ElevatedButton(onPressed: () {
                 cancel();
               },
-              child: Text("Cancel")),
+              child: Text(AppLocalizations.of(context)!.cancel)),
             ],)
           ],
         )

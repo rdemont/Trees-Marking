@@ -7,7 +7,7 @@ import 'package:treesmarking/businessObj/campaign.dart';
 
 import '../businessObj/campaignList.dart';
 import '../generate/businessObj/campaignGen.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 
 
@@ -64,8 +64,8 @@ class _CampaignWidgetState extends State<CampaignWidget> {
         children: [
           Container(
             margin: const EdgeInsets.only(top: 50, bottom: 40, left: 20),
-            child: const Text(
-              "Campaign :",
+            child: Text(
+              AppLocalizations.of(context)!.campaign+" :",
               style: TextStyle(fontSize: 30),
             ),
           ),
@@ -116,15 +116,15 @@ class _CampaignWidgetState extends State<CampaignWidget> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text("New campaign"),
+        title: Text(AppLocalizations.of(context)!.newCampaign),
         content: TextField(
           controller: textFieldController,
-          decoration: const InputDecoration(hintText: "Campaign name"),
+          decoration: InputDecoration(hintText: AppLocalizations.of(context)!.campaignName),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, 'Cancel'),
-            child: const Text('Cancel'),
+            child: Text(AppLocalizations.of(context)!.cancel),
           ),
           TextButton(
             onPressed: () {
@@ -142,7 +142,7 @@ class _CampaignWidgetState extends State<CampaignWidget> {
               Navigator.pop(context, 'OK');
               
             },
-            child: const Text('OK'),
+            child: Text(AppLocalizations.of(context)!.oK),
           ),
         ],
       ),

@@ -11,7 +11,7 @@ import 'markedTreeListPage.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MainPage extends StatefulWidget {
-  const MainPage({super.key, required this.title});
+  const MainPage({super.key});
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
@@ -22,7 +22,7 @@ class MainPage extends StatefulWidget {
   // used by the build method of the State. Fields in a Widget subclass are
   // always marked "final".
 
-  final String title;
+
 
   @override
   State<MainPage> createState() => _MainPageState();
@@ -58,10 +58,10 @@ class _MainPageState extends State<MainPage> {
     if (_speciesList.isEmpty)
     {
       speciesBody = ElevatedButton(
-        child: Text("Create species from VD") ,
+        child: Text(AppLocalizations.of(context)!.createSpeciesFromVD) ,
         onPressed: () {
           setState(() {
-            body = Text("Please waite ....loading ");  
+            body = Text(AppLocalizations.of(context)!.pleaseWaite);  
           });
           loadSpeciesFromVD().then((value){
             _speciesList = value ; 
@@ -74,10 +74,10 @@ class _MainPageState extends State<MainPage> {
     if (_trunkSizeList.isEmpty)
     {
       trunkSizeBody = ElevatedButton(
-        child: Text("Create trunk size from VD") ,
+        child: Text(AppLocalizations.of(context)!.createTrunkSizeFromVD) ,
         onPressed: () {
           setState(() {
-            body = Text("Please waite ....loading ");  
+            body = Text(AppLocalizations.of(context)!.pleaseWaite);  
           });
           loadTrunkSizeFromVD().then((value) {
             _trunkSizeList = value ; 
@@ -91,10 +91,10 @@ class _MainPageState extends State<MainPage> {
     if (_campaignList.isEmpty)
     {
       campaignBody = ElevatedButton(
-        child: Text("Create campaign") ,
+        child: Text(AppLocalizations.of(context)!.createCampaign) ,
         onPressed: () {
           setState(() {
-            body = Text("Please waite ....loading ");  
+            body = Text(AppLocalizations.of(context)!.pleaseWaite);  
           });
           createCampaign().then((value){
             _campaignList = value ; 
@@ -147,7 +147,7 @@ class _MainPageState extends State<MainPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Tree-marking"),
+        title: Text(AppLocalizations.of(context)!.appTitle),
       ),
       body: Center(
         child: body,

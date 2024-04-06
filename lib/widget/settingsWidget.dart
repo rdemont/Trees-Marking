@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import '../pages/campaignListPage.dart';
 import '../pages/speciesListPage.dart';
 import '../pages/trunkSizeListPage.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SettingsWidget extends StatefulWidget {
   const SettingsWidget({Key? key});
@@ -31,7 +32,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Settings'),
+        title: Text(AppLocalizations.of(context)!.settings),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -41,22 +42,22 @@ class _SettingsWidgetState extends State<SettingsWidget> {
               onTap: () {
                 setDisplayedTab(1);
               },
-              title: const Text("Import/Export"),
+              title: Text(AppLocalizations.of(context)!.importExport),
             ),
             Visibility(
               visible: _displayedTabIndex == 1,
               child: Container(
                 margin: const EdgeInsets.only(left: 20),
-                child: const Column(
+                child: Column(
                   children: [
                     ListTile(
-                      title: Text("Import from file"),
+                      title: Text(AppLocalizations.of(context)!.importFromFile),
                     ),
                     ListTile(
-                      title: Text("Export file"),
+                      title: Text(AppLocalizations.of(context)!.exportToFile),
                     ),
                     ListTile(
-                      title: Text("Export by e-mail"),
+                      title: Text(AppLocalizations.of(context)!.exportByEMail),
                     ),
                   ],
                 ),
@@ -67,7 +68,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
               onTap: () {
                 setDisplayedTab(2);
               },
-              title: const Text("Data"),
+              title: Text(AppLocalizations.of(context)!.data),
             ),
             Visibility(
               visible: _displayedTabIndex == 2,
@@ -76,17 +77,17 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                 child: Column(
                   children: [
                     ListTile(
-                      title: Text("Species"),
+                      title: Text(AppLocalizations.of(context)!.species),
                       onTap: openSpeciesListPage,
                     )
                     ,
                     ListTile(
-                      title: Text("Trunk Size"),
+                      title: Text(AppLocalizations.of(context)!.trunkSize),
                        onTap: openTrunkSizeListPage,
                       
                     ),
                     ListTile(
-                      title: Text("Campaign"),
+                      title: Text(AppLocalizations.of(context)!.campaign),
                        onTap: openCampaignListPage,
                       
                     ),
@@ -99,7 +100,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
               onTap: () {
                 setDisplayedTab(3);
               },
-              title: const Text("About"),
+              title: Text(AppLocalizations.of(context)!.about),
             ),
             Visibility(
               visible: _displayedTabIndex == 3,
@@ -107,8 +108,8 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                 margin: const EdgeInsets.only(left: 20),
                 child: Column(
                   children: [
-                    const ListTile(
-                      title: Text("Tree marking is an open source, simple, offline, privacy friendly To-Do app developed with love by Judemont and Rdemont"),
+                    ListTile(
+                      title: Text(AppLocalizations.of(context)!.aboutText),
                     ),
                     ListTile(
                       title: const Text(

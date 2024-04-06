@@ -3,7 +3,7 @@ import 'package:treesmarking/businessObj/species.dart';
 
 import '../businessObj/speciesList.dart';
 import 'speciesPage.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 
 class SpeciesListPage extends StatefulWidget {
@@ -33,7 +33,7 @@ class _SpeciesListPageState extends State<SpeciesListPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text('Spacies list Page'),
+        title: Text(AppLocalizations.of(context)!.species),
       ),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add_circle_outline),

@@ -1,8 +1,11 @@
+
+
 import 'package:flutter/material.dart';
 import 'package:treesmarking/pages/mainPage.dart';
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+
 import 'services/databaseService.dart';
 
 void main() {
@@ -20,7 +23,7 @@ class MyApp extends StatelessWidget {
     DatabaseService.initializeDb();
 
     return MaterialApp(
-      title: 'Trees-Marking',
+      title: "Tree-Marking",
 
       
       localizationsDelegates: [
@@ -29,29 +32,6 @@ class MyApp extends StatelessWidget {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-/*
-localeListResolutionCallback: (locales, supportedLocales) {
-
-      print('***************device locales=$locales supported locales=$supportedLocales');
-
-      for (Locale locale in locales!) {
-         // if device language is supported by the app,
-         // just return it to set it as current app language
-         if (supportedLocales.contains(locale)) {
-            return locale;
-         }
-      }
-
-      // if device language is not supported by the app,
-      // the app will set it to english but return this to set to Bahasa instead
-      return Locale('id', 'ID');
-   },
-
-   supportedLocales: [Locale('id', 'ID'), Locale('en', 'US')],
-   locale: Locale('en', 'US'),
-*/
-
-
 
 
       supportedLocales: [
@@ -86,7 +66,7 @@ print("++++++++++++++++System local : $locale");
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MainPage(title: 'Trees marking apps'),
+      home: const MainPage(),
       //home: const  MarkedTreeListPage(),
     );
   }

@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 
 import '../businessObj/campaign.dart';
 import '../generate/businessObj/campaignGen.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 
 
@@ -36,7 +36,7 @@ class _CampaignPageState extends State<CampaignPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text('Campaign Page'),
+        title: Text(AppLocalizations.of(context)!.campaign),
       ),
       body: Container(
         
@@ -45,18 +45,18 @@ class _CampaignPageState extends State<CampaignPage> {
           children: [
             Row(
               children: [
-                Text("Name : "),
+                Text(AppLocalizations.of(context)!.name+" : "),
                 Expanded(
                   child:TextField(
                     controller: nameController,
-                    decoration: const InputDecoration(hintText: "name"), 
+                    decoration: InputDecoration(hintText: AppLocalizations.of(context)!.name), 
                   )
                 )
               ],
             ),
             Row(
               children: [
-                Text("Date : "),
+                Text(AppLocalizations.of(context)!.date+" : "),
                 Expanded(
                   child: TextField(
                     controller: dateController,
@@ -78,11 +78,11 @@ class _CampaignPageState extends State<CampaignPage> {
             ),
             Row(
               children: [
-                Text("Remark : "),
+                Text(AppLocalizations.of(context)!.remark+" : "),
                 Expanded(
                   child: TextField(
                     controller: remarkController,
-                    decoration: const InputDecoration(hintText: "remark"), 
+                    decoration: InputDecoration(hintText: AppLocalizations.of(context)!.remark), 
                     keyboardType: TextInputType.multiline,
                     minLines: 1,
                     maxLines: 5,
@@ -96,18 +96,18 @@ class _CampaignPageState extends State<CampaignPage> {
               ElevatedButton(onPressed: (){
                 save();
               }, 
-              child: Text("Save")),
+              child: Text(AppLocalizations.of(context)!.save)),
 
               Expanded(child: Container()),
               
               ElevatedButton(onPressed: (){
                 delete();
               }, 
-              child: Text("Delete")),
+              child: Text(AppLocalizations.of(context)!.delete)),
               ElevatedButton(onPressed: () {
                 cancel();
               },
-              child: Text("Cancel")),
+              child: Text(AppLocalizations.of(context)!.cancel)),
             ],)
           ],
         )

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../businessObj/trunkSize.dart';
 import '../generate/businessObj/trunkSizeGen.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 
 class TrunkSizePage extends StatefulWidget {
@@ -39,7 +40,7 @@ class _TrunkSizePageState extends State<TrunkSizePage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text('Trunk size Page'),
+        title:  Text(AppLocalizations.of(context)!.trunkSize),
       ),
       body: Container(
         margin: const EdgeInsets.only(left: 20.0, right: 20.0, top: 20.0, bottom: 10.0),
@@ -48,11 +49,11 @@ class _TrunkSizePageState extends State<TrunkSizePage> {
           children: [
             Row(
               children: [
-                Text("Code : "),
+                Text(AppLocalizations.of(context)!.code+" : "),
                 Flexible(
                   child: TextField(
                       controller: codeController,
-                      decoration: const InputDecoration(hintText: "Trunk size code"), 
+                      decoration: InputDecoration(hintText: AppLocalizations.of(context)!.code), 
                     )
                 )              
               ],
@@ -60,11 +61,11 @@ class _TrunkSizePageState extends State<TrunkSizePage> {
             
             Row(
               children: [
-                Text("Min dimeter  : "),
+                Text(AppLocalizations.of(context)!.minDiameter+" : "),
                 Flexible(
                   child: TextField(
                       controller: minController,
-                      decoration: const InputDecoration(hintText: "min diameter"), 
+                      decoration:  InputDecoration(hintText: AppLocalizations.of(context)!.maxDiameter), 
                       keyboardType: TextInputType.number,
                     )
                 )      
@@ -72,11 +73,11 @@ class _TrunkSizePageState extends State<TrunkSizePage> {
             ),
             Row(
               children: [
-                Text("Max dimeter  : "),
+                Text(AppLocalizations.of(context)!.maxDiameter+" : "),
                 Flexible(
                   child: TextField(
                       controller: maxController,
-                      decoration: const InputDecoration(hintText: "max diameter"), 
+                      decoration:  InputDecoration(hintText: AppLocalizations.of(context)!.maxDiameter), 
                       keyboardType: TextInputType.number,
                     )
                 )      
@@ -84,11 +85,11 @@ class _TrunkSizePageState extends State<TrunkSizePage> {
             ),
             Row(
               children: [
-                Text("Volume  : "),
+                Text(AppLocalizations.of(context)!.volume+" : "),
                 Flexible(
                   child: TextField(
                       controller: volumeController,
-                      decoration: const InputDecoration(hintText: "Volume"), 
+                      decoration: InputDecoration(hintText: AppLocalizations.of(context)!.volume), 
                       keyboardType: TextInputType.number,
                     )
                 )      
@@ -96,11 +97,11 @@ class _TrunkSizePageState extends State<TrunkSizePage> {
             ),            
             Row(
               children: [
-                Text("Name : "),
+                Text(AppLocalizations.of(context)!.name+" : "),
                 Flexible(
                   child: TextField(
                       controller: nameController,
-                      decoration: const InputDecoration(hintText: "Trunk size name"), 
+                      decoration: InputDecoration(hintText: AppLocalizations.of(context)!.name), 
                     )
                 )              
               ],
@@ -110,18 +111,18 @@ class _TrunkSizePageState extends State<TrunkSizePage> {
               ElevatedButton(onPressed: (){
                 save();
               }, 
-              child: Text("Save")),
+              child: Text(AppLocalizations.of(context)!.save)),
 
               Expanded(child: Container()),
               
               ElevatedButton(onPressed: (){
                 delete();
               }, 
-              child: Text("Delete")),
+              child: Text(AppLocalizations.of(context)!.delete)),
               ElevatedButton(onPressed: () {
                 cancel();
               },
-              child: Text("Cancel")),
+              child: Text(AppLocalizations.of(context)!.cancel)),
             ],)
           ],
         )

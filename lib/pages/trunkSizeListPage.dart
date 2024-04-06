@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../businessObj/trunkSize.dart';
 import '../businessObj/trunkSizeList.dart';
 import 'trunkSizePage.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class TrunkSizeListPage extends StatefulWidget {
   const TrunkSizeListPage({super.key});
@@ -31,7 +32,7 @@ class _TrunkSizeListPageState extends State<TrunkSizeListPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text('Trunk size list Page'),
+        title: Text(AppLocalizations.of(context)!.trunkSize),
       ),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add_circle_outline),
