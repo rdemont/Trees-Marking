@@ -8,6 +8,7 @@ import '../businessObj/trunkSize.dart';
 import '../businessObj/trunkSizeList.dart';
 import '../services/databaseService.dart';
 import 'markedTreeListPage.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key, required this.title});
@@ -32,12 +33,12 @@ class _MainPageState extends State<MainPage> {
   List<TrunkSize> _trunkSizeList = [];
   List<Campaign> _campaignList = [];    
   List<Species> _speciesList = [];    
-  Widget body = Text("Please waite ....loading ");
+  Widget body = Text("Please waite ....loading ");  
 
   loadData()
   {
     setState(() {
-      body = Text("Please waite ....loading ");  
+      body = Text(AppLocalizations.of(context)!.pleaseWaite);
     });
       
     if ((!_campaignList.isEmpty)

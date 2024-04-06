@@ -9,7 +9,7 @@ import '../generate/businessObj/campaignGen.dart';
 import '../widget/campaignWidget.dart';
 import '../widget/settingsWidget.dart';
 import 'markedTreePage.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MarkedTreeListPage extends StatefulWidget {
   const MarkedTreeListPage({super.key});
@@ -150,45 +150,54 @@ class _MarkedTreeListPageState extends State<MarkedTreeListPage> {
 
     List<DataRow> dataRow = []; 
     
-    
+    int i = 0 ; 
     for (String key in speciesCount.keys)
     {
-      dataRow.add(DataRow(cells: [
+      dataRow.add(DataRow(color: ((i % 2) == 0) ? MaterialStateProperty.all(Colors.grey[100]):MaterialStateProperty.all(Colors.grey[350]),cells: [
         DataCell(Text(key)),
         DataCell(Text(speciesCount[key].toString())),
         DataCell(Text((speciesSv[key]??0.0).toStringAsFixed(2))),
         ]));
+        i++;
     }
     
+    dataRow.add(DataRow(cells: [
+      DataCell(Text(speciesCount.length.toString(),style: TextStyle(fontWeight: FontWeight.bold),)),
+      DataCell(Text(_markedTreeList.length.toString(),style: TextStyle(fontWeight: FontWeight.bold),)),
+      DataCell(Text(sv.toStringAsFixed(2),style: TextStyle(fontWeight: FontWeight.bold),))
+    ]));
 
     return GestureDetector(
       onTap: () {   
-        final infoBar = SnackBar(backgroundColor: Colors.grey,
-          content: DataTable(
-            columns: [
-              DataColumn(label: Text("Species",style: TextStyle(fontStyle: FontStyle.italic),)),
-              DataColumn(label: Text("Count",style: TextStyle(fontStyle: FontStyle.italic),)),
-              DataColumn(label: Text("Sv",style: TextStyle(fontStyle: FontStyle.italic),)),
-            ],
-            rows: dataRow,
-
-            
-          ),
-    
-
-          action: SnackBarAction(label: 'Hide', onPressed: () {;},),
+        showModalBottomSheet(context: context,
+          builder: (context) {
+            return Container(
+                width: MediaQuery.of(context).size.width,
+                //height: 200,
+                color: Colors.grey,
+                child: DataTable(
+                  columns: [
+                    DataColumn(label: Text(AppLocalizations.of(context)!.species,style: TextStyle(fontStyle: FontStyle.italic),)),
+                    DataColumn(label: Text(AppLocalizations.of(context)!.count,style: TextStyle(fontStyle: FontStyle.italic),)),
+                    DataColumn(label: Text(AppLocalizations.of(context)!.sv,style: TextStyle(fontStyle: FontStyle.italic),)),
+                  ],
+                  rows: dataRow,
+                    
+                )
+            );
+          },
         );
-        ScaffoldMessenger.of(context).showSnackBar(infoBar);
-      }, 
+      },
+
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           
-          Text("Species: " +speciesCount.length.toString()),
+          Text("${AppLocalizations.of(context)!.species}: ${speciesCount.length}"),
           VerticalDivider(),
-          Text("Count:"+_markedTreeList.length.toString()),
+          Text("${AppLocalizations.of(context)!.count}: ${_markedTreeList.length}"),
           VerticalDivider(),
-          Text("SV: "+sv.toStringAsFixed(2)),
+          Text("${AppLocalizations.of(context)!.sv}: ${sv.toStringAsFixed(2)}"),
           
         ],
       )

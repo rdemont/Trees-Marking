@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:treesmarking/pages/mainPage.dart';
 
-
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'services/databaseService.dart';
 
 void main() {
@@ -21,6 +21,52 @@ class MyApp extends StatelessWidget {
 
     return MaterialApp(
       title: 'Trees-Marking',
+
+      
+      localizationsDelegates: [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+/*
+localeListResolutionCallback: (locales, supportedLocales) {
+
+      print('***************device locales=$locales supported locales=$supportedLocales');
+
+      for (Locale locale in locales!) {
+         // if device language is supported by the app,
+         // just return it to set it as current app language
+         if (supportedLocales.contains(locale)) {
+            return locale;
+         }
+      }
+
+      // if device language is not supported by the app,
+      // the app will set it to english but return this to set to Bahasa instead
+      return Locale('id', 'ID');
+   },
+
+   supportedLocales: [Locale('id', 'ID'), Locale('en', 'US')],
+   locale: Locale('en', 'US'),
+*/
+
+
+
+
+      supportedLocales: [
+        Locale('en'), // English
+        Locale('fr'), // French
+      ],
+      localeListResolutionCallback: (allLocales, supportedLocales) {
+    final locale = allLocales?.first.languageCode;
+print("++++++++++++++++System local : $locale");    
+    if (locale == 'en') {
+      return const Locale('en','US');
+    }
+    // The default locale
+    return const Locale('fr','FR');    
+  },
       theme: ThemeData(
         // This is the theme of your application.
         //
