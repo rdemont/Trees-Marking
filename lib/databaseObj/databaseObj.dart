@@ -41,13 +41,11 @@ class DatabaseObj{
     if (_id == 0){
       mode = mode | MODE_ISNEW; 
     }
-  print("databaseObj SAVE mode :$mode");
     if ((mode & MODE_ISDELETE) == MODE_ISDELETE)
     {
       //DELETE 
       if ((mode & MODE_ISNEW) != MODE_ISNEW) 
       {
-print("databaseObj SAVE - DELETE");   
         return DatabaseService.initializeDb().then((db){
           return db.delete(tableName,where: "id = $id").then((value){
               if (value == 1 ) return SAVE_RESULT_OK ; 
@@ -55,25 +53,23 @@ print("databaseObj SAVE - DELETE");
           });
         });
       }{
-print("databaseObj SAVE - DELETE - NO DELETE  IF ID = 0");                
       }
 
     }else {
-print("databaseObj NOT DELETES ")      ;
       if ((mode & MODE_ISUPDATE) == MODE_ISUPDATE)
       {
-print("databaseObj SAVE - ISUPDATED");           
 
         if ((mode & MODE_ISNEW) == MODE_ISNEW)
         {
           //INSERT 
-print("databaseObj SAVE - INSERT");                  
           return DatabaseService.initializeDb().then((db){
-print("databaseObj SAVE - INSERT Step DB");                            
             return db.insert(tableName,toMap()).then((value){
               _id = value ; 
-print("databaseObj SAVE - INSERT - ID: $_id");                                        
-              if (_id >0 ) return SAVE_RESULT_OK ; 
+              if (_id >0 )
+              {
+                mode = MODE_NONE;
+                return SAVE_RESULT_OK ; 
+              } 
               return SAVE_RESULT_ERROR ; 
             });
           });
@@ -81,10 +77,13 @@ print("databaseObj SAVE - INSERT - ID: $_id");
         
         }else {
           //UPDATE
-print("databaseObj SAVE - UPDATE");                            
           return DatabaseService.initializeDb().then((db){
             return db.update(tableName, toMap(),where: "id = $id").then((value){
-              if (value == 1 ) return SAVE_RESULT_OK ; 
+              if (value == 1 ) 
+              {
+                mode = MODE_NONE;
+                return SAVE_RESULT_OK ; 
+              }
               return SAVE_RESULT_ERROR ; 
             });
           });
