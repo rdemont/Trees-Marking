@@ -8,7 +8,7 @@ import '../businessObj/speciesList.dart';
 import '../businessObj/trunkSize.dart';
 import '../businessObj/trunkSizeList.dart';
 import '../services/databaseService.dart';
-import 'markedTreeListPage.dart';
+
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:geolocator/geolocator.dart';
 
