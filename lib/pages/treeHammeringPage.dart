@@ -18,15 +18,15 @@ import '../businessObj/trunkSize.dart';
 import '../businessObj/trunkSizeList.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import '../generate/businessObj/campaignGen.dart';
+
 import '../generate/businessObj/markedTreeGen.dart';
 import '../generate/businessObj/speciesGen.dart';
 import '../widget/settingsWidget.dart';
 
 class TreeHammeringPage extends StatefulWidget {
 
-  final Campaign? campaign;
-  TreeHammeringPage({super.key,Campaign? campaign}):this.campaign = campaign;
+  final Campaign campaign;
+  TreeHammeringPage({super.key,required Campaign campaign}):this.campaign = campaign;
 
   @override
   State<TreeHammeringPage> createState() => _TreeHammeringPageState();
@@ -35,7 +35,7 @@ class TreeHammeringPage extends StatefulWidget {
 
 class _TreeHammeringPageState extends State<TreeHammeringPage> {
 
-  TextEditingController nameController = TextEditingController();
+  //TextEditingController nameController = TextEditingController();
   List<TrunkSize> _trunkSizeList = [] ; 
   List<Species> _speciesList = [] ; 
   List<MarkedTree> _markedTreeList = []; 
@@ -43,7 +43,7 @@ class _TreeHammeringPageState extends State<TreeHammeringPage> {
   Widget body = Text("Please waite ....loading ");  
   int _btnSpeciesOn = 0 ; 
   int _btnTrunkSizeOn = 0;
-  late Campaign _campaign ;
+  
   
   MarkedTree? _markedTree = null ; 
 
@@ -51,16 +51,18 @@ class _TreeHammeringPageState extends State<TreeHammeringPage> {
 
   @override
   void initState() {
-    _campaign = widget.campaign??CampaignGen.newObj();
+    
     super.initState();
 
-    nameController.text = _campaign.name;
+    //nameController.text = _campaign.name;
+    /*
     if (widget.campaign != null)
     {
       MarkedTreeList.getFromCampaign(widget.campaign!.id).then((value) {
         _markedTreeList = value ;
       });
     }
+    */
   }
 
 
@@ -140,13 +142,7 @@ class _TreeHammeringPageState extends State<TreeHammeringPage> {
       children: [
         Text("Localization :"),
         Flexible(
-          child: TextField(
-            controller: nameController,
-            decoration:  InputDecoration(
-              hintText: "Localization",   
-              errorText: _validate ? "Value Can't Be Empty" : null,
-            )
-          )
+          child: Text(widget.campaign.name)
         )  
       ],
     );
@@ -201,7 +197,7 @@ class _TreeHammeringPageState extends State<TreeHammeringPage> {
           FocusManager.instance.primaryFocus?.unfocus();
           setState(() {
             _btnTrunkSizeOn = cell;             
-            _validate = nameController.text.isEmpty ; 
+            //_validate = nameController.text.isEmpty ; 
           });
           if (!_validate)
           {
@@ -251,7 +247,7 @@ class _TreeHammeringPageState extends State<TreeHammeringPage> {
             child:ElevatedButton(onPressed: () {
               FocusManager.instance.primaryFocus?.unfocus();
               setState(() {
-                _validate = nameController.text.isEmpty ; 
+                //_validate = nameController.text.isEmpty ; 
               });
               if (!_validate)
               {
@@ -274,7 +270,7 @@ class _TreeHammeringPageState extends State<TreeHammeringPage> {
                 FocusManager.instance.primaryFocus?.unfocus();
                 _markedTree!.delete();
                 _markedTree!.save().then((value){
-                  MarkedTreeList.getFromCampaign(_campaign.id).then((value) {
+                  MarkedTreeList.getFromCampaign(widget.campaign.id).then((value) {
                     setState(() {
                       _markedTreeList = value ; 
                       _markedTree = null; 
@@ -348,22 +344,20 @@ class _TreeHammeringPageState extends State<TreeHammeringPage> {
   save()
   {
   
-    _campaign.campaignDate = DateTime.now(); 
-    _campaign.name = nameController.text; 
-    _campaign.save().then((value){
-      MarkedTree markedTree = _markedTree?? MarkedTreeGen.newObj();
-      markedTree.campaignId = _campaign.id ; 
-      markedTree.speciesId = _speciesList[_btnSpeciesOn].id;
-      markedTree.trunkSizeId = _trunkSizeList[_btnTrunkSizeOn].id;
-      markedTree.save().then((value){
-        MarkedTreeList.getFromCampaign(_campaign.id).then((value) {
-          setState(() {
-            _markedTreeList = value ; 
-            _markedTree = null; 
-          });
-        }); 
-      });
+    
+    MarkedTree markedTree = _markedTree?? MarkedTreeGen.newObj();
+    markedTree.campaignId = widget.campaign.id ; 
+    markedTree.speciesId = _speciesList[_btnSpeciesOn].id;
+    markedTree.trunkSizeId = _trunkSizeList[_btnTrunkSizeOn].id;
+    markedTree.save().then((value){
+      MarkedTreeList.getFromCampaign(widget.campaign.id).then((value) {
+        setState(() {
+          _markedTreeList = value ; 
+          _markedTree = null; 
+        });
+      }); 
     });
+
   }
 
   
@@ -454,36 +448,53 @@ class _TreeHammeringPageState extends State<TreeHammeringPage> {
   exportData()
   {
     ExcelLib.Excel excel = ExcelLib.Excel.createExcel();
-    excel.rename("Sheet1", "Marquage");
-    ExcelLib.Sheet sheet = excel["Marquage"]; 
+    excel.copy("Sheet1","PV martelage");
+    excel.rename("Sheet1", "liste de marquage");
+    excel.setDefaultSheet("PV martelage");
+    ExcelLib.Sheet sheet = excel["liste de marquage"]; 
     
-    sheet.merge(ExcelLib.CellIndex.indexByString('A1'), ExcelLib.CellIndex.indexByString('D1'), customValue: ExcelLib.TextCellValue(nameController.text));
-    sheet.cell(ExcelLib.CellIndex.indexByString("A2")).value = ExcelLib.TextCellValue("Date de la saisie") ; 
-    sheet.cell(ExcelLib.CellIndex.indexByString("B2")).value = ExcelLib.TextCellValue("Essence") ; 
-    sheet.cell(ExcelLib.CellIndex.indexByString("C2")).value = ExcelLib.TextCellValue("taille du tronc") ; 
-    sheet.cell(ExcelLib.CellIndex.indexByString("D2")).value = ExcelLib.TextCellValue("Sylve") ; 
+    //sheet.merge(ExcelLib.CellIndex.indexByString('A1'), ExcelLib.CellIndex.indexByString('D1'), customValue: ExcelLib.TextCellValue(nameController.text));
+    sheet.cell(ExcelLib.CellIndex.indexByString("A1")).value = ExcelLib.TextCellValue("Date de la saisie") ; 
+    sheet.cell(ExcelLib.CellIndex.indexByString("B1")).value = ExcelLib.TextCellValue("Essence") ; 
+    sheet.cell(ExcelLib.CellIndex.indexByString("C1")).value = ExcelLib.TextCellValue("taille du tronc") ; 
+    sheet.cell(ExcelLib.CellIndex.indexByString("D1")).value = ExcelLib.TextCellValue("Sylve") ; 
 
     ExcelLib.CellStyle cellTitle = ExcelLib.CellStyle(bold: true);
-    sheet.cell(ExcelLib.CellIndex.indexByString("A2")).cellStyle = cellTitle ;
-    sheet.cell(ExcelLib.CellIndex.indexByString("B2")).cellStyle = cellTitle ;
-    sheet.cell(ExcelLib.CellIndex.indexByString("C2")).cellStyle = cellTitle ;
-    sheet.cell(ExcelLib.CellIndex.indexByString("D2")).cellStyle = cellTitle ;
+    sheet.cell(ExcelLib.CellIndex.indexByString("A1")).cellStyle = cellTitle ;
+    sheet.cell(ExcelLib.CellIndex.indexByString("B1")).cellStyle = cellTitle ;
+    sheet.cell(ExcelLib.CellIndex.indexByString("C1")).cellStyle = cellTitle ;
+    sheet.cell(ExcelLib.CellIndex.indexByString("D1")).cellStyle = cellTitle ;
 
 
     for (int i = 0;i<_markedTreeList.length;i++)
     {
-      sheet.cell(ExcelLib.CellIndex.indexByString("A${i+3}")).value = ExcelLib.TextCellValue(_markedTreeList[i].insertTime.toString()) ; 
-      sheet.cell(ExcelLib.CellIndex.indexByString("B${i+3}")).value = ExcelLib.TextCellValue(_markedTreeList[i].species.name) ; 
-      sheet.cell(ExcelLib.CellIndex.indexByString("C${i+3}")).value = ExcelLib.TextCellValue(_markedTreeList[i].trunkSize.code) ; 
-      sheet.cell(ExcelLib.CellIndex.indexByString("D${i+3}")).value = ExcelLib.TextCellValue(_markedTreeList[i].trunkSize.volume.toStringAsFixed(2)) ; 
+      sheet.cell(ExcelLib.CellIndex.indexByString("A${i+2}")).value = ExcelLib.TextCellValue(_markedTreeList[i].insertTime.toString()) ; 
+      sheet.cell(ExcelLib.CellIndex.indexByString("B${i+2}")).value = ExcelLib.TextCellValue(_markedTreeList[i].species.name) ; 
+      sheet.cell(ExcelLib.CellIndex.indexByString("C${i+2}")).value = ExcelLib.TextCellValue(_markedTreeList[i].trunkSize.code) ; 
+      sheet.cell(ExcelLib.CellIndex.indexByString("D${i+2}")).value = ExcelLib.TextCellValue(_markedTreeList[i].trunkSize.volume.toStringAsFixed(2)) ; 
     }
+
+
+    sheet = excel["PV martelage"]; 
+    sheet.cell(ExcelLib.CellIndex.indexByString("A1")).value = ExcelLib.TextCellValue("Propriétaire") ; 
+    sheet.cell(ExcelLib.CellIndex.indexByString("C1")).value = ExcelLib.TextCellValue("Chantier") ; 
+    sheet.cell(ExcelLib.CellIndex.indexByString("E1")).value = ExcelLib.TextCellValue("Martelage") ; 
+
+    ExcelLib.CellStyle cellPVTitle = ExcelLib.CellStyle(bold: true,backgroundColorHex: ExcelLib.ExcelColor.fromHexString("#f59842"));    
+    sheet.cell(ExcelLib.CellIndex.indexByString("A1")).cellStyle = cellPVTitle;
+    sheet.cell(ExcelLib.CellIndex.indexByString("C1")).cellStyle = cellPVTitle;
+    sheet.cell(ExcelLib.CellIndex.indexByString("E1")).cellStyle = cellPVTitle;
+
+    sheet.cell(ExcelLib.CellIndex.indexByString("A2")).value = ExcelLib.TextCellValue(widget.campaign.owner) ; 
+    sheet.cell(ExcelLib.CellIndex.indexByString("C2")).value = ExcelLib.TextCellValue(widget.campaign.yard) ; 
+    sheet.cell(ExcelLib.CellIndex.indexByString("E2")).value = ExcelLib.TextCellValue(widget.campaign.name) ; 
 
 
     List<int>? fileBytes = excel.save();
     getApplicationDocumentsDirectory().then((value){
       Directory appDocumentsDirectory = value ; // 1
       String appDocumentsPath = appDocumentsDirectory.path;
-      String filePath = '$appDocumentsPath/markedTree_Export_${DateFormat("yyyyMMddhhmmss").format(DateTime.now())}.xlsx';
+      String filePath = '$appDocumentsPath/PV_martelage_${DateFormat("yyyyMMddhhmmss").format(DateTime.now())}.xlsx';
       File file = File(filePath);
       file.writeAsBytesSync(fileBytes!);
 

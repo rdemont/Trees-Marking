@@ -6,6 +6,8 @@ import '../../databaseObj/databaseObj.dart';
 class CampaignDBGen extends DatabaseObj {
   
   String _name = '';
+  String _owner = '';
+  String _yard = '';
   String _remark = '';
   double _latitude = 0.0;
   double _longitude = 0.0;
@@ -19,6 +21,8 @@ class CampaignDBGen extends DatabaseObj {
   }
 
   String get name => _name;
+  String get owner => _owner;
+  String get yard => _yard;
   String get remark => _remark;
   double get latitude => _latitude;
   double get longitude => _longitude;
@@ -32,6 +36,22 @@ class CampaignDBGen extends DatabaseObj {
     {
       dataUpdated(); 
       _name = value;
+    }
+  }
+  set owner(String value)
+  {
+    if (_owner != value)
+    {
+      dataUpdated(); 
+      _owner = value;
+    }
+  }
+  set yard(String value)
+  {
+    if (_yard != value)
+    {
+      dataUpdated(); 
+      _yard = value;
     }
   }
   set remark(String value)
@@ -94,6 +114,8 @@ class CampaignDBGen extends DatabaseObj {
   {
     return{
       CampaignGen.COLUMN_NAME : _name,
+      CampaignGen.COLUMN_OWNER : _owner,
+      CampaignGen.COLUMN_YARD : _yard,
       CampaignGen.COLUMN_REMARK : _remark,
       CampaignGen.COLUMN_LATITUDE : _latitude,
       CampaignGen.COLUMN_LONGITUDE : _longitude,
@@ -110,6 +132,8 @@ class CampaignDBGen extends DatabaseObj {
     super.id = map[CampaignGen.COLUMN_ID] as int; 
     
     _name = (map[CampaignGen.COLUMN_NAME]??'') as String;
+    _owner = (map[CampaignGen.COLUMN_OWNER]??'') as String;
+    _yard = (map[CampaignGen.COLUMN_YARD]??'') as String;
     _remark = (map[CampaignGen.COLUMN_REMARK]??'') as String;
     _latitude = (map[CampaignGen.COLUMN_LATITUDE]??0.0) as double;
     _longitude = (map[CampaignGen.COLUMN_LONGITUDE]??0.0) as double;

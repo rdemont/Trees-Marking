@@ -6,6 +6,8 @@ import '../../databaseObj/databaseObj.dart';
 class SpeciesDBGen extends DatabaseObj {
   
   String _name = '';
+  String _code = '';
+  int _type = 0;
   bool _communUse = true;
 
 
@@ -16,6 +18,8 @@ class SpeciesDBGen extends DatabaseObj {
   }
 
   String get name => _name;
+  String get code => _code;
+  int get type => _type;
   bool get communUse => _communUse;
 
 
@@ -26,6 +30,22 @@ class SpeciesDBGen extends DatabaseObj {
     {
       dataUpdated(); 
       _name = value;
+    }
+  }
+  set code(String value)
+  {
+    if (_code != value)
+    {
+      dataUpdated(); 
+      _code = value;
+    }
+  }
+  set type(int value)
+  {
+    if (_type != value)
+    {
+      dataUpdated(); 
+      _type = value;
     }
   }
   set communUse(bool value)
@@ -64,6 +84,8 @@ class SpeciesDBGen extends DatabaseObj {
   {
     return{
       SpeciesGen.COLUMN_NAME : _name,
+      SpeciesGen.COLUMN_CODE : _code,
+      SpeciesGen.COLUMN_TYPE : _type,
       SpeciesGen.COLUMN_COMMUNUSE : _communUse,
 
     };
@@ -77,6 +99,8 @@ class SpeciesDBGen extends DatabaseObj {
     super.id = map[SpeciesGen.COLUMN_ID] as int; 
     
     _name = (map[SpeciesGen.COLUMN_NAME]??'') as String;
+    _code = (map[SpeciesGen.COLUMN_CODE]??'') as String;
+    _type = (map[SpeciesGen.COLUMN_TYPE]??0) as int;
     _communUse = ((map[SpeciesGen.COLUMN_COMMUNUSE]??0) as int) == 1;
 
 

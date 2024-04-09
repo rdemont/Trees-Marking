@@ -56,6 +56,7 @@ class _SpeciesListPageState extends State<SpeciesListPage> {
                     margin: const EdgeInsets.only(left: 10.0, right: 5.0, top: 2.0, bottom: 2.0),
                     child: Row(
                       children: [
+                      Text("["+_speciesList[index].code+"] "),  
                       Text(_speciesList[index].name),
                       Expanded(child: Container()),
                       Icon(_speciesList[index].communUse ? Icons.check :Icons.cancel_outlined)

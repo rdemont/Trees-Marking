@@ -12,6 +12,8 @@ class CampaignGen extends BusinessObj
   static const String TABLE_NAME = "campaign";
   static const String COLUMN_ID = "id";
   static const String COLUMN_NAME = "name";
+  static const String COLUMN_OWNER = "owner";
+  static const String COLUMN_YARD = "yard";
   static const String COLUMN_REMARK = "remark";
   static const String COLUMN_LATITUDE = "latitude";
   static const String COLUMN_LONGITUDE = "longitude";
@@ -20,6 +22,8 @@ class CampaignGen extends BusinessObj
 
 
   String get name => _localDbObj.name;
+  String get owner => _localDbObj.owner;
+  String get yard => _localDbObj.yard;
   String get remark => _localDbObj.remark;
   double get latitude => _localDbObj.latitude;
   double get longitude => _localDbObj.longitude;
@@ -29,6 +33,14 @@ class CampaignGen extends BusinessObj
   set name(String value)
   {
     _localDbObj.name = value;
+  }
+  set owner(String value)
+  {
+    _localDbObj.owner = value;
+  }
+  set yard(String value)
+  {
+    _localDbObj.yard = value;
   }
   set remark(String value)
   {

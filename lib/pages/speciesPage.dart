@@ -6,6 +6,7 @@ import '../generate/businessObj/speciesGen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 
+
 class SpeciesPage extends StatefulWidget {
   
   final Species species;
@@ -19,11 +20,13 @@ class SpeciesPage extends StatefulWidget {
 
 class _SpeciesPageState extends State<SpeciesPage> {
   TextEditingController nameController = TextEditingController();
+  TextEditingController codeController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
     nameController.text = widget.species.name.toString();
+    codeController.text = widget.species.code.toString();
   }
 
   @override
@@ -33,6 +36,7 @@ class _SpeciesPageState extends State<SpeciesPage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(AppLocalizations.of(context)!.species),
       ),
+      
       body: Container(
         margin: const EdgeInsets.only(left: 20.0, right: 20.0, top: 20.0, bottom: 10.0),
         child:Column(
@@ -49,6 +53,31 @@ class _SpeciesPageState extends State<SpeciesPage> {
                 )              
               ],
             ),
+            Row(
+              children: [
+                Text("Abréviation : "),
+                Flexible(
+                  child: TextField(
+                      controller: codeController,
+                      decoration:  InputDecoration(hintText: "Abréviation"), 
+                    )
+                )              
+              ],
+            ),       
+            Row(
+              children: [
+                Text("Type d'essence : "),
+                Flexible(
+                  child: ElevatedButton(onPressed: () {
+                    setState(() {
+                      widget.species.type = widget.species.type==Species.TYPE_LEAFY?Species.TYPE_SOFTWOOD:Species.TYPE_LEAFY;   
+                    });
+                    
+                  }, 
+                  child: Text(widget.species.type==Species.TYPE_LEAFY?"Feuillu":"Résineux"))
+                )              
+              ],
+            ),     
             Row(
               children: [
                 Text(AppLocalizations.of(context)!.communUse+" : "),
@@ -88,9 +117,10 @@ class _SpeciesPageState extends State<SpeciesPage> {
   save()
   {
     widget.species.name = nameController.text;
-print("species page add");
+    widget.species.code = codeController.text;
+
     widget.species.save().then((value){
-print("species page add -- POP");      
+
       Navigator.pop(context);
     });
   }

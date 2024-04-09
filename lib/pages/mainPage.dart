@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:treesmarking/pages/treeHammeringPage.dart';
+import 'package:treesmarking/pages/campaignListPage.dart';
+
 
 import '../businessObj/campaign.dart';
 import '../businessObj/campaignList.dart';
@@ -33,7 +34,7 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
     
   List<TrunkSize> _trunkSizeList = [];
-  List<Campaign> _campaignList = [];    
+  //List<Campaign> _campaignList = [];    
   List<Species> _speciesList = [];    
   Widget body = Text("Please waite ....loading ");  
   bool _hasPositionPermission = false ; 
@@ -44,8 +45,7 @@ class _MainPageState extends State<MainPage> {
       body = Text(AppLocalizations.of(context)!.pleaseWaite);
     });
       
-    if ((!_campaignList.isEmpty)
-      && (!_speciesList.isEmpty)
+    if ((!_speciesList.isEmpty)
       && (!_trunkSizeList.isEmpty)
       && (_hasPositionPermission))
     {
@@ -53,7 +53,7 @@ class _MainPageState extends State<MainPage> {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (BuildContext context) => TreeHammeringPage())
+            builder: (BuildContext context) => CampaignListPage())
         );
       });
     }
@@ -90,24 +90,6 @@ class _MainPageState extends State<MainPage> {
         },
       );
     }
-
-    Widget campaignBody = Text("");
-    if (_campaignList.isEmpty)
-    {
-      campaignBody = ElevatedButton(
-        child: Text(AppLocalizations.of(context)!.createCampaign) ,
-        onPressed: () {
-          setState(() {
-            body = Text(AppLocalizations.of(context)!.pleaseWaite);  
-          });
-          createCampaign().then((value){
-            _campaignList = value ; 
-            loadData(); 
-          });
-        },
-      );
-    }
-
 
     if (!_hasPositionPermission)
     {
@@ -147,7 +129,6 @@ print("POSITION **** "+value.latitude.toString());
           children: [
             speciesBody,
             trunkSizeBody,
-            campaignBody,
             //positionBody
           ],
         )
@@ -165,10 +146,7 @@ print("POSITION **** "+value.latitude.toString());
         _trunkSizeList = value ;  
         return ;
       }),
-      CampaignList.getAll().then((value) {
-        _campaignList = value ;  
-        return ;
-      }),
+
       SpeciesList.getAll().then((value) {
         _speciesList = value ;  
         return ;
@@ -198,9 +176,9 @@ print("POSITION **** "+value.latitude.toString());
   Future<List<Species>> loadSpeciesFromVD() {
     return DatabaseService.initializeDb().then((db) {
       return Future.wait([
-        db.execute("INSERT INTO species (name,communUse) VALUES ('Sapin',1)"),
-        db.execute("INSERT INTO species (name,communUse) VALUES ('Sapin blanc',1)"),
-        db.execute("INSERT INTO species (name,communUse) VALUES ('Chêne',1)"),
+        db.execute("INSERT INTO species (name,code,type,communUse) VALUES ('Sapin','SA',2,1)"),
+        db.execute("INSERT INTO species (name,code,type,communUse) VALUES ('Sapin blanc','SB',2,1)"),
+        db.execute("INSERT INTO species (name,code,type,communUse) VALUES ('Chêne','CH',1,1)"),
       ]).then((value) {
         return SpeciesList.getAll();
       });

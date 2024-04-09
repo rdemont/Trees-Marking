@@ -172,6 +172,8 @@ class DatabaseService {
     CREATE TABLE IF NOT EXISTS species(
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       name TEXT NOT NULL,
+      code TEXT NOT NULL,
+      type INT NOT NULL, 
       communUse BOOLEAN
     )          
     """);
@@ -220,6 +222,8 @@ class DatabaseService {
     CREATE TABLE IF NOT EXISTS campaign(
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       name TEXT NOT NULL,
+      owner TEXT NOT NULL,
+      yard TEXT NOT NULL, 
       remark TEXT,
       latitude FLOAT,
       longitude FLOAT,
