@@ -42,6 +42,7 @@ dependencies:
   encrypt: ^5.0.3
   intl: any
   geolocator: ^11.0.0
+  share_plus: ^8.0.3
 
 dev_dependencies:
   flutter_test:

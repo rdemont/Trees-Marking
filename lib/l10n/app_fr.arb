@@ -27,7 +27,7 @@
     "maxDiameter":"Diamètre max",
     "volume":"Volume",
     "settings":"Paramètres",
-    "importExport":"Import/Export",
+    "importExport":"Sauvegarde",
     "importFromFile":"Importation depuis un fichier",
     "exportToFile":"Exportation dans un fichier",
     "exportByEMail":"Envoi par e-mail",

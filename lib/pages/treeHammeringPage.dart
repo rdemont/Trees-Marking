@@ -2,6 +2,7 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:treesmarking/pages/markedTreePage.dart';
 
 
 import '../businessObj/campaign.dart';
@@ -20,7 +21,8 @@ import '../widget/settingsWidget.dart';
 
 class TreeHammeringPage extends StatefulWidget {
 
-  TreeHammeringPage({super.key});
+  final Campaign? campaign;
+  TreeHammeringPage({super.key,Campaign? campaign}):this.campaign = campaign;
 
   @override
   State<TreeHammeringPage> createState() => _TreeHammeringPageState();
@@ -37,14 +39,24 @@ class _TreeHammeringPageState extends State<TreeHammeringPage> {
   Widget body = Text("Please waite ....loading ");  
   int _btnSpeciesOn = 0 ; 
   int _btnTrunkSizeOn = 0;
-  Campaign _campaign = CampaignGen.newObj();
+  late Campaign _campaign ;
   
+  MarkedTree? _markedTree = null ; 
+
   bool _validate = false ;
 
   @override
   void initState() {
+    _campaign = widget.campaign??CampaignGen.newObj();
     super.initState();
-    nameController.text = "";
+
+    nameController.text = _campaign.name;
+    if (widget.campaign != null)
+    {
+      MarkedTreeList.getFromCampaign(widget.campaign!.id).then((value) {
+        _markedTreeList = value ;
+      });
+    }
   }
 
 
@@ -72,6 +84,7 @@ class _TreeHammeringPageState extends State<TreeHammeringPage> {
       ),
       body:body,
       endDrawer:  Drawer(child:  SettingsWidget()), 
+      bottomNavigationBar: SizedBox(height: 75, child:BottomAppBar(child: getBottomInfo(),)),
     ) ;
   }
 
@@ -106,7 +119,7 @@ class _TreeHammeringPageState extends State<TreeHammeringPage> {
         Divider(),
         getTrunkSizePart(), 
         Divider(),
-        getFooter(),
+        getButton(),
         Divider(),
         getList(),
       ],
@@ -211,59 +224,111 @@ class _TreeHammeringPageState extends State<TreeHammeringPage> {
   }
 
 
-  Widget getFooter()
+  Widget getButton()
   {
     return Row(
-      children: [
-      ElevatedButton(onPressed: () {
-          setState(() {
-            _validate = nameController.text.isEmpty ; 
-          });
-          if (!_validate)
-          {
-            save();
-          }
-            
-        }, 
-        child: Text("Save")
-        )
-        
-      ]
-    );
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          ElevatedButton(onPressed: () {
+            setState(() {
+              _validate = nameController.text.isEmpty ; 
+            });
+            if (!_validate)
+            {
+              save();
+            }
+              
+          }, 
+          child: Text("Save",
+            style: new TextStyle(
+            fontSize: 30.0,
+            fontStyle: FontStyle.italic
+            ),)
+          ),
+          Visibility(
+            maintainSize: false,
+            visible: _markedTree != null,
+            child: ElevatedButton(
+              onPressed: () {
+                _markedTree!.delete();
+                _markedTree!.save().then((value){
+                  MarkedTreeList.getFromCampaign(_campaign.id).then((value) {
+                    setState(() {
+                      _markedTreeList = value ; 
+                      _markedTree = null; 
+                    });
+                  }); 
+                });
+              },
+              child: Text("Delete",
+                style: new TextStyle(
+                fontSize: 20.0,
+                fontStyle: FontStyle.italic
+                ),
+              )
+            ),
+          ),
+          Visibility(
+            maintainSize: false,
+            visible: _markedTree != null,
+            child: ElevatedButton(
+              onPressed: () {
+                _markedTree = null; 
+              },
+              child: Text("Cancel",
+                style: new TextStyle(
+                fontSize: 20.0,
+                fontStyle: FontStyle.italic
+                ),
+              )
+            ),
+          )
+
+        ]
+      );
+    
   }
 
 
   Widget getList()
   {
-    return Stack(
-        children: [ListView.builder(
-            scrollDirection: Axis.vertical,
-            padding: EdgeInsets.zero,
-            shrinkWrap: true,
-            itemCount: _markedTreeList.length,
-            itemBuilder: (BuildContext context, int index) {
-              return Container(
-                color:(index%2 == 0 ) ? Colors.grey[50] : Colors.grey[350],
-                child: ListTile(
-                  title: Text(_markedTreeList[index].species.name+" - "+_markedTreeList[index].trunkSize.toString()), 
-                  onTap: () {
-                    ;
-                  },
-                )
-              );
-            }
-          ),
-          ]
-    );
+    return Expanded(
+      child: ListView.builder(
+        scrollDirection: Axis.vertical,
+        padding: EdgeInsets.zero,
+        shrinkWrap: true,
+        itemCount: _markedTreeList.length,
+        itemBuilder: (BuildContext context, int index) {
+          return Container(
+            color:(index%2 == 0 ) ? Colors.grey[50] : Colors.grey[350],
+            child: ListTile(
+              title: Text(_markedTreeList[index].species.name+" - "+_markedTreeList[index].trunkSize.toString()), 
+              onLongPress: () {
+                // edit 
+                setState(() {
+                  _markedTree =  _markedTreeList[index];
+                  _btnSpeciesOn = _speciesList.indexWhere((element) => element.id == _markedTree!.species.id);
+                  _btnTrunkSizeOn = _trunkSizeList.indexWhere((element) => element.id == _markedTree!.trunkSize.id);
+
+                });
+              },
+              onTap: () {
+                ;
+              },
+            )
+          );
+        }
+      )
+    );  
   }
 
   save()
   {
-print("****SAVE****");    
+  
     _campaign.campaignDate = DateTime.now(); 
     _campaign.name = nameController.text; 
     _campaign.save().then((value){
-       MarkedTree markedTree = MarkedTreeGen.newObj();
+      MarkedTree markedTree = _markedTree?? MarkedTreeGen.newObj();
       markedTree.campaignId = _campaign.id ; 
       markedTree.speciesId = _speciesList[_btnSpeciesOn].id;
       markedTree.trunkSizeId = _trunkSizeList[_btnTrunkSizeOn].id;
@@ -271,10 +336,94 @@ print("****SAVE****");
         MarkedTreeList.getFromCampaign(_campaign.id).then((value) {
           setState(() {
             _markedTreeList = value ; 
+            _markedTree = null; 
           });
         }); 
       });
     });
   }
 
+  
+
+  Widget getBottomInfo() {
+    double sv = 0; 
+    Map<String,int> speciesCount = {};
+    Map<String,double> speciesSv = {};
+    
+
+    for (int i = 0;i<_markedTreeList.length;i++)
+    {
+      sv += _markedTreeList[i].trunkSize.volume; 
+      String speciesName = _markedTreeList[i].species.name;
+      speciesCount[speciesName] = (speciesCount[speciesName]??0) +1;  
+      speciesSv[speciesName] = (speciesSv[speciesName]??0) + _markedTreeList[i].trunkSize.volume;  
+
+    }
+
+    List<DataRow> dataRow = []; 
+    
+    int i = 0 ; 
+    for (String key in speciesCount.keys)
+    {
+      dataRow.add(DataRow(color: ((i % 2) == 0) ? MaterialStateProperty.all(Colors.grey[100]):MaterialStateProperty.all(Colors.grey[350]),cells: [
+        DataCell(Text(key)),
+        DataCell(Text(speciesCount[key].toString())),
+        DataCell(Text((speciesSv[key]??0.0).toStringAsFixed(2))),
+        ]));
+        i++;
+    }
+    
+    dataRow.add(DataRow(cells: [
+      DataCell(Text(speciesCount.length.toString(),style: TextStyle(fontWeight: FontWeight.bold),)),
+      DataCell(Text(_markedTreeList.length.toString(),style: TextStyle(fontWeight: FontWeight.bold),)),
+      DataCell(Text(sv.toStringAsFixed(2),style: TextStyle(fontWeight: FontWeight.bold),))
+    ]));
+
+    return GestureDetector(
+      onTap: () {   
+        showModalBottomSheet(context: context,
+          builder: (context) {
+            return Container(
+                width: MediaQuery.of(context).size.width,
+                //height: 200,
+                color: Colors.grey,
+                child: DataTable(
+                  columns: [
+                    DataColumn(label: Text(AppLocalizations.of(context)!.species,style: TextStyle(fontStyle: FontStyle.italic),)),
+                    DataColumn(label: Text(AppLocalizations.of(context)!.count,style: TextStyle(fontStyle: FontStyle.italic),)),
+                    DataColumn(label: Text(AppLocalizations.of(context)!.sv,style: TextStyle(fontStyle: FontStyle.italic),)),
+                  ],
+                  rows: dataRow,
+                    
+                )
+            );
+          },
+        );
+      },
+
+      child: 
+      Row(
+      children: [
+        IconButton(onPressed: () {
+                ;
+          }, icon: Icon(Icons.attach_email_rounded)
+        ),
+        Expanded(child: 
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              VerticalDivider(),
+              Text("${AppLocalizations.of(context)!.species}: ${speciesCount.length}"),
+              VerticalDivider(),
+              Text("${AppLocalizations.of(context)!.count}: ${_markedTreeList.length}"),
+              VerticalDivider(),
+              Text("${AppLocalizations.of(context)!.sv}: ${sv.toStringAsFixed(2)}"),
+              VerticalDivider(),
+            ],
+          )
+        )
+      ],
+      )
+    );
+  }
 }

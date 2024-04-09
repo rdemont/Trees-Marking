@@ -7,6 +7,8 @@ import '../generate/businessObj/campaignGen.dart';
 import 'campaignPage.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import 'treeHammeringPage.dart';
+
 
 
 class CampaignListPage extends StatefulWidget {
@@ -53,7 +55,7 @@ class _CampaignListPageState extends State<CampaignListPage> {
             itemCount: _campaignList.length,
             itemBuilder: (BuildContext context, int index) {
               return GestureDetector(
-                onTap: () => showSpecies(_campaignList[index]),
+                onTap: () => showCampaign(_campaignList[index]),
                 child: Card(
                   child: Container(
                     margin: const EdgeInsets.only(left: 10.0, right: 5.0, top: 2.0, bottom: 2.0),
@@ -76,11 +78,11 @@ class _CampaignListPageState extends State<CampaignListPage> {
   }
   
 
-  showSpecies(Campaign campaign)
+  showCampaign(Campaign campaign)
   {   
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) =>  CampaignPage(campaign :campaign))
+      MaterialPageRoute(builder: (context) =>  TreeHammeringPage(campaign :campaign))
     ).then((value){
       setState(() {
         _loadCampaign();
@@ -91,7 +93,7 @@ class _CampaignListPageState extends State<CampaignListPage> {
   addCampaign() {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) =>  CampaignPage()  )
+      MaterialPageRoute(builder: (context) =>  TreeHammeringPage()  )
     ).then((value){
       setState(() {
         _loadCampaign();
