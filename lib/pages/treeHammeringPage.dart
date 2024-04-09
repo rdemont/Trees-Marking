@@ -1,6 +1,7 @@
 
 
 
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:excel/excel.dart' as ExcelLib;
@@ -482,10 +483,58 @@ class _TreeHammeringPageState extends State<TreeHammeringPage> {
     sheet.cell(ExcelLib.CellIndex.indexByString("C1")).cellStyle = cellPVTitle;
     sheet.cell(ExcelLib.CellIndex.indexByString("E1")).cellStyle = cellPVTitle;
 
-    sheet.cell(ExcelLib.CellIndex.indexByString("A2")).value = ExcelLib.TextCellValue(widget.campaign.owner) ; 
-    sheet.cell(ExcelLib.CellIndex.indexByString("C2")).value = ExcelLib.TextCellValue(widget.campaign.yard) ; 
-    sheet.cell(ExcelLib.CellIndex.indexByString("E2")).value = ExcelLib.TextCellValue(widget.campaign.name) ; 
 
+    List<String> listOwner = LineSplitter().convert(widget.campaign.owner);
+    List<String> listyard = LineSplitter().convert(widget.campaign.yard);
+    List<String> listName = LineSplitter().convert(widget.campaign.name);
+
+    int nextLine = listOwner.length + 2 ;
+    if ((listyard.length+2) > nextLine)
+    {
+      nextLine = listyard.length + 2 ;
+    }
+    if ((listName.length+3) > nextLine)
+    {
+      nextLine = listName.length + 3 ;
+    }
+    
+    for (int i=0;i<listOwner.length;i++)
+    {
+      sheet.cell(ExcelLib.CellIndex.indexByString("A($i+2)")).value = ExcelLib.TextCellValue(listOwner[i]) ; 
+    }
+    
+    for (int i=0;i<listyard.length;i++)
+    {
+      sheet.cell(ExcelLib.CellIndex.indexByString("C($i+2)")).value = ExcelLib.TextCellValue(listyard[i]) ; 
+    }
+
+    sheet.cell(ExcelLib.CellIndex.indexByString("E2")).value = ExcelLib.TextCellValue(widget.campaign.campaignDate.toString()) ; 
+    for (int i=0;i<listName.length;i++)
+    {
+      sheet.cell(ExcelLib.CellIndex.indexByString("E($i+3)")).value = ExcelLib.TextCellValue(listName[i]) ; 
+    }
+
+    sheet.cell(ExcelLib.CellIndex.indexByString("A($nextLine)")).value = ExcelLib.TextCellValue("Röcapitulatif par essence") ;
+    nextLine++; 
+    sheet.cell(ExcelLib.CellIndex.indexByString("A($nextLine)")).value = ExcelLib.TextCellValue("Nb tige : ") ;
+    sheet.cell(ExcelLib.CellIndex.indexByString("A($nextLine)")).cellStyle = cellPVTitle;
+    sheet.cell(ExcelLib.CellIndex.indexByString("B($nextLine)")).value = ExcelLib.TextCellValue("??") ;
+
+    sheet.cell(ExcelLib.CellIndex.indexByString("C($nextLine)")).value = ExcelLib.TextCellValue("Vol. moyen : ") ;
+    sheet.cell(ExcelLib.CellIndex.indexByString("C($nextLine)")).cellStyle = cellPVTitle;
+    sheet.cell(ExcelLib.CellIndex.indexByString("D($nextLine)")).value = ExcelLib.TextCellValue("??") ;
+
+    nextLine++; 
+    nextLine++; 
+
+    sheet.cell(ExcelLib.CellIndex.indexByString("A($nextLine)")).value = ExcelLib.TextCellValue("Essence") ;
+    sheet.cell(ExcelLib.CellIndex.indexByString("A($nextLine)")).cellStyle = cellPVTitle;
+    sheet.cell(ExcelLib.CellIndex.indexByString("B($nextLine)")).value = ExcelLib.TextCellValue("Nb tige") ;
+    sheet.cell(ExcelLib.CellIndex.indexByString("B($nextLine)")).cellStyle = cellPVTitle;
+    sheet.cell(ExcelLib.CellIndex.indexByString("C($nextLine)")).value = ExcelLib.TextCellValue("Volume") ;
+    sheet.cell(ExcelLib.CellIndex.indexByString("C($nextLine)")).cellStyle = cellPVTitle;
+
+  
 
     List<int>? fileBytes = excel.save();
     getApplicationDocumentsDirectory().then((value){
