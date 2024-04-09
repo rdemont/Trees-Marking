@@ -1,7 +1,13 @@
 
 
 
+import 'dart:io';
+
+import 'package:excel/excel.dart' as ExcelLib;
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../businessObj/campaign.dart';
 import '../businessObj/markedTree.dart';
@@ -403,7 +409,7 @@ class _TreeHammeringPageState extends State<TreeHammeringPage> {
       Row(
       children: [
         IconButton(onPressed: () {
-                ;
+            exportData();
           }, icon: Icon(Icons.attach_email_rounded)
         ),
         Expanded(child: 
@@ -423,5 +429,32 @@ class _TreeHammeringPageState extends State<TreeHammeringPage> {
       ],
       )
     );
+  }
+
+
+  exportData()
+  {
+    ExcelLib.Excel excel = ExcelLib.Excel.createExcel();
+    excel.rename("Sheet1", "Marquage");
+    ExcelLib.Sheet sheet = excel["Marquage"]; 
+    sheet.merge(ExcelLib.CellIndex.indexByString('A1'), ExcelLib.CellIndex.indexByString('A4'), customValue: ExcelLib.TextCellValue(nameController.text));
+    
+    for (int i = 0;i<_markedTreeList.length;i++)
+    {
+      sheet.cell(ExcelLib.CellIndex.indexByString("A${i+3}")).value = ExcelLib.TextCellValue(_markedTreeList[i].insertTime.toString()) ; 
+      sheet.cell(ExcelLib.CellIndex.indexByString("B${i+3}")).value = ExcelLib.TextCellValue(_markedTreeList[i].species.name) ; 
+      sheet.cell(ExcelLib.CellIndex.indexByString("B${i+3}")).value = ExcelLib.TextCellValue(_markedTreeList[i].trunkSize.toString()) ; 
+    }
+
+    List<int>? fileBytes = excel.save();
+    getApplicationDocumentsDirectory().then((value){
+      Directory appDocumentsDirectory = value ; // 1
+      String appDocumentsPath = appDocumentsDirectory.path;
+      String filePath = '$appDocumentsPath/markedTree_Export_${DateFormat("yyyyMMddhhmmss").format(DateTime.now())}.xlsx';
+      File file = File(filePath);
+      file.writeAsBytesSync(fileBytes!);
+
+      Share.shareXFiles([XFile(filePath)]);
+    });
   }
 }
