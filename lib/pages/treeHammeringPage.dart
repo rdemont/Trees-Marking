@@ -437,7 +437,7 @@ class _TreeHammeringPageState extends State<TreeHammeringPage> {
     ExcelLib.Excel excel = ExcelLib.Excel.createExcel();
     excel.rename("Sheet1", "Marquage");
     ExcelLib.Sheet sheet = excel["Marquage"]; 
-    sheet.merge(ExcelLib.CellIndex.indexByString('A1'), ExcelLib.CellIndex.indexByString('A4'), customValue: ExcelLib.TextCellValue(nameController.text));
+    sheet.merge(ExcelLib.CellIndex.indexByString('A1'), ExcelLib.CellIndex.indexByString('D1'), customValue: ExcelLib.TextCellValue(nameController.text));
     
     for (int i = 0;i<_markedTreeList.length;i++)
     {
