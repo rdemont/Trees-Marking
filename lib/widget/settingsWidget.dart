@@ -1,6 +1,12 @@
 
 
+import 'dart:io';
+import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:share_plus/share_plus.dart';
+import 'package:treesmarking/services/databaseService.dart';
 
 import '../pages/campaignListPage.dart';
 import '../pages/speciesListPage.dart';
@@ -52,13 +58,42 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                   children: [
                     ListTile(
                       title: Text(AppLocalizations.of(context)!.importFromFile),
+                      onTap: () {
+                        const XTypeGroup typeGroup = XTypeGroup(
+                          label: 'Marked Tree backup file',
+                          extensions: <String>['json'],
+                        );
+
+                        openFile(acceptedTypeGroups: <XTypeGroup>[typeGroup]).then((value) {
+                          final XFile? file = value; 
+                          if (file != null )
+                          {
+                            file.readAsString().then((value){
+                              DatabaseService.restoreBackup(value);
+                            }) ;
+                            
+                          }
+                        }) ;                       
+                      },
                     ),
                     ListTile(
                       title: Text(AppLocalizations.of(context)!.exportToFile),
+                      onTap: () {
+                        getApplicationDocumentsDirectory().then((value) {
+                          Directory appDocumentsDirectory = value ; // 1
+                          String appDocumentsPath = appDocumentsDirectory.path;
+                          String filePath = '$appDocumentsPath/markedTree_Export_${DateFormat("yyyyMMddhhmmss").format(DateTime.now())}.json';
+
+                          File file = File(filePath);
+
+                          DatabaseService.generateBackup().then((value){
+                            file.writeAsString(value);
+                            Share.shareXFiles([XFile(filePath)]);
+                          });
+                        });
+                      },
                     ),
-                    ListTile(
-                      title: Text(AppLocalizations.of(context)!.exportByEMail),
-                    ),
+
                   ],
                 ),
               ),

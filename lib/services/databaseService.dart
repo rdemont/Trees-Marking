@@ -10,9 +10,7 @@ class DatabaseService {
   static Database? db;
 
   static const DATABASE_VERSION = 1;
-  List<String> tables =[
-   
-  ];
+  
 
   static const SECRET_KEY = "2021_PRIVATE_KEY_ENCRYPT_2021";
 
@@ -34,6 +32,28 @@ class DatabaseService {
             await openDB(db);
           },
         );
+  }
+
+  static Future<void> emptyTables()
+  {
+    print("** empty tables **");
+    return DatabaseService.initializeDb().then((db){
+      return db.rawQuery('SELECT * FROM sqlite_master ORDER BY name;').then((tables) 
+      {
+        if (tables.length > 0) 
+        {
+          for (int i = 0; i < tables.length; i++) 
+          {
+
+            String tableName = tables[i]['name'].toString() ; 
+            if ((tableName != "sqlite_sequence") && (tableName != "android_metadata"))
+            {
+              db.execute("DELETE FROM '$tableName' ");
+            }
+          }
+        }
+      });
+    });
   }
 
   static openDB(Database db) {
@@ -320,14 +340,15 @@ class DatabaseService {
 
 */
 
-    Future<String>generateBackup({bool isEncrypted = false}) async {
+    static Future<String> generateBackup({bool isEncrypted = false}) async {
 
     print('GENERATE BACKUP');
    
     var dbs = await DatabaseService.initializeDb();
 
     List data =[];
-
+    List<String> tables =[];
+    
     List<Map<String,dynamic>> listMaps=[];
 
     for (var i = 0; i < tables.length; i++)
@@ -359,10 +380,14 @@ class DatabaseService {
     }
   }
 
-  Future<void>restoreBackup(String backup,{ bool isEncrypted = false}) async {
+  static Future<void>restoreBackup(String backup,{ bool isEncrypted = false}) async {
+
+    await DatabaseService.emptyTables();
 
     var dbs = await DatabaseService.initializeDb();
     
+
+
     Batch batch = dbs.batch();
     
     var key = encrypt.Key.fromUtf8(SECRET_KEY);

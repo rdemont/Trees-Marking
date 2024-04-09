@@ -2,8 +2,6 @@
 
 
 import 'package:flutter/material.dart';
-import 'package:treesmarking/pages/markedTreePage.dart';
-
 
 import '../businessObj/campaign.dart';
 import '../businessObj/markedTree.dart';

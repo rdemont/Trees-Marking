@@ -4,7 +4,6 @@ import 'package:intl/intl.dart';
 import '../businessObj/campaign.dart';
 import '../businessObj/campaignList.dart';
 import '../generate/businessObj/campaignGen.dart';
-import 'campaignPage.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'treeHammeringPage.dart';
