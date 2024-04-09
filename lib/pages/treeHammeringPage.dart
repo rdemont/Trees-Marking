@@ -122,7 +122,11 @@ class _TreeHammeringPageState extends State<TreeHammeringPage> {
         getSpeciesPart(),
         Divider(),
         getTrunkSizePart(), 
-        Divider(),
+        Visibility(
+            maintainSize: false,
+            visible: _markedTree != null,
+            child: Divider(),
+        ),
         getButton(),
         Divider(),
         getList(),
@@ -197,8 +201,14 @@ class _TreeHammeringPageState extends State<TreeHammeringPage> {
           FocusManager.instance.primaryFocus?.unfocus();
           setState(() {
             _btnTrunkSizeOn = cell;             
+            _validate = nameController.text.isEmpty ; 
           });
-        },
+          if (!_validate)
+          {
+            save();
+          }
+                
+        }, 
         style: ElevatedButton.styleFrom(backgroundColor:cell==_btnTrunkSizeOn?Colors.blue:Colors.grey,),
         child: Text(_trunkSizeList[cell].code),
       );
@@ -235,22 +245,26 @@ class _TreeHammeringPageState extends State<TreeHammeringPage> {
     return Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          ElevatedButton(onPressed: () {
-            FocusManager.instance.primaryFocus?.unfocus();
-            setState(() {
-              _validate = nameController.text.isEmpty ; 
-            });
-            if (!_validate)
-            {
-              save();
-            }
-              
-          }, 
-          child: Text("Save",
-            style: new TextStyle(
-            fontSize: 30.0,
-            fontStyle: FontStyle.italic
-            ),)
+          Visibility(
+            maintainSize: false,
+            visible: _markedTree != null,
+            child:ElevatedButton(onPressed: () {
+              FocusManager.instance.primaryFocus?.unfocus();
+              setState(() {
+                _validate = nameController.text.isEmpty ; 
+              });
+              if (!_validate)
+              {
+                save();
+              }
+                
+            }, 
+            child: Text("Save",
+              style: new TextStyle(
+              fontSize: 30.0,
+              fontStyle: FontStyle.italic
+              ),)
+            ),
           ),
           Visibility(
             maintainSize: false,
@@ -442,14 +456,28 @@ class _TreeHammeringPageState extends State<TreeHammeringPage> {
     ExcelLib.Excel excel = ExcelLib.Excel.createExcel();
     excel.rename("Sheet1", "Marquage");
     ExcelLib.Sheet sheet = excel["Marquage"]; 
-    sheet.merge(ExcelLib.CellIndex.indexByString('A1'), ExcelLib.CellIndex.indexByString('D1'), customValue: ExcelLib.TextCellValue(nameController.text));
     
+    sheet.merge(ExcelLib.CellIndex.indexByString('A1'), ExcelLib.CellIndex.indexByString('D1'), customValue: ExcelLib.TextCellValue(nameController.text));
+    sheet.cell(ExcelLib.CellIndex.indexByString("A2")).value = ExcelLib.TextCellValue("Date de la saisie") ; 
+    sheet.cell(ExcelLib.CellIndex.indexByString("B2")).value = ExcelLib.TextCellValue("Essence") ; 
+    sheet.cell(ExcelLib.CellIndex.indexByString("C2")).value = ExcelLib.TextCellValue("taille du tronc") ; 
+    sheet.cell(ExcelLib.CellIndex.indexByString("D2")).value = ExcelLib.TextCellValue("Sylve") ; 
+
+    ExcelLib.CellStyle cellTitle = ExcelLib.CellStyle(bold: true);
+    sheet.cell(ExcelLib.CellIndex.indexByString("A2")).cellStyle = cellTitle ;
+    sheet.cell(ExcelLib.CellIndex.indexByString("B2")).cellStyle = cellTitle ;
+    sheet.cell(ExcelLib.CellIndex.indexByString("C2")).cellStyle = cellTitle ;
+    sheet.cell(ExcelLib.CellIndex.indexByString("D2")).cellStyle = cellTitle ;
+
+
     for (int i = 0;i<_markedTreeList.length;i++)
     {
       sheet.cell(ExcelLib.CellIndex.indexByString("A${i+3}")).value = ExcelLib.TextCellValue(_markedTreeList[i].insertTime.toString()) ; 
       sheet.cell(ExcelLib.CellIndex.indexByString("B${i+3}")).value = ExcelLib.TextCellValue(_markedTreeList[i].species.name) ; 
-      sheet.cell(ExcelLib.CellIndex.indexByString("C${i+3}")).value = ExcelLib.TextCellValue(_markedTreeList[i].trunkSize.toString()) ; 
+      sheet.cell(ExcelLib.CellIndex.indexByString("C${i+3}")).value = ExcelLib.TextCellValue(_markedTreeList[i].trunkSize.code) ; 
+      sheet.cell(ExcelLib.CellIndex.indexByString("D${i+3}")).value = ExcelLib.TextCellValue(_markedTreeList[i].trunkSize.volume.toStringAsFixed(2)) ; 
     }
+
 
     List<int>? fileBytes = excel.save();
     getApplicationDocumentsDirectory().then((value){
