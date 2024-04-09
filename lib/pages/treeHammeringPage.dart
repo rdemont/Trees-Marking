@@ -55,14 +55,11 @@ class _TreeHammeringPageState extends State<TreeHammeringPage> {
     super.initState();
 
     //nameController.text = _campaign.name;
-    /*
-    if (widget.campaign != null)
-    {
-      MarkedTreeList.getFromCampaign(widget.campaign!.id).then((value) {
-        _markedTreeList = value ;
-      });
-    }
-    */
+    
+    MarkedTreeList.getFromCampaign(widget.campaign.id).then((value) {
+      _markedTreeList = value ;
+    });
+
   }
 
 
