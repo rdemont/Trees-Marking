@@ -154,6 +154,7 @@ class _TreeHammeringPageState extends State<TreeHammeringPage> {
     {
       return ElevatedButton(
         onPressed: () {
+          FocusManager.instance.primaryFocus?.unfocus();
           setState(() {
             _btnSpeciesOn = cell;             
           });
@@ -193,6 +194,7 @@ class _TreeHammeringPageState extends State<TreeHammeringPage> {
     {
       return ElevatedButton(
         onPressed: () {
+          FocusManager.instance.primaryFocus?.unfocus();
           setState(() {
             _btnTrunkSizeOn = cell;             
           });
@@ -234,6 +236,7 @@ class _TreeHammeringPageState extends State<TreeHammeringPage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           ElevatedButton(onPressed: () {
+            FocusManager.instance.primaryFocus?.unfocus();
             setState(() {
               _validate = nameController.text.isEmpty ; 
             });
@@ -254,6 +257,7 @@ class _TreeHammeringPageState extends State<TreeHammeringPage> {
             visible: _markedTree != null,
             child: ElevatedButton(
               onPressed: () {
+                FocusManager.instance.primaryFocus?.unfocus();
                 _markedTree!.delete();
                 _markedTree!.save().then((value){
                   MarkedTreeList.getFromCampaign(_campaign.id).then((value) {
@@ -277,6 +281,7 @@ class _TreeHammeringPageState extends State<TreeHammeringPage> {
             visible: _markedTree != null,
             child: ElevatedButton(
               onPressed: () {
+                FocusManager.instance.primaryFocus?.unfocus();
                 _markedTree = null; 
               },
               child: Text("Cancel",
@@ -443,7 +448,7 @@ class _TreeHammeringPageState extends State<TreeHammeringPage> {
     {
       sheet.cell(ExcelLib.CellIndex.indexByString("A${i+3}")).value = ExcelLib.TextCellValue(_markedTreeList[i].insertTime.toString()) ; 
       sheet.cell(ExcelLib.CellIndex.indexByString("B${i+3}")).value = ExcelLib.TextCellValue(_markedTreeList[i].species.name) ; 
-      sheet.cell(ExcelLib.CellIndex.indexByString("B${i+3}")).value = ExcelLib.TextCellValue(_markedTreeList[i].trunkSize.toString()) ; 
+      sheet.cell(ExcelLib.CellIndex.indexByString("C${i+3}")).value = ExcelLib.TextCellValue(_markedTreeList[i].trunkSize.toString()) ; 
     }
 
     List<int>? fileBytes = excel.save();
