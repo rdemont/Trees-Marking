@@ -500,39 +500,39 @@ class _TreeHammeringPageState extends State<TreeHammeringPage> {
     
     for (int i=0;i<listOwner.length;i++)
     {
-      sheet.cell(ExcelLib.CellIndex.indexByString("A($i+2)")).value = ExcelLib.TextCellValue(listOwner[i]) ; 
+      sheet.cell(ExcelLib.CellIndex.indexByString("A${i+2}")).value = ExcelLib.TextCellValue(listOwner[i]) ; 
     }
     
     for (int i=0;i<listyard.length;i++)
     {
-      sheet.cell(ExcelLib.CellIndex.indexByString("C($i+2)")).value = ExcelLib.TextCellValue(listyard[i]) ; 
+      sheet.cell(ExcelLib.CellIndex.indexByString("C${i+2}")).value = ExcelLib.TextCellValue(listyard[i]) ; 
     }
 
     sheet.cell(ExcelLib.CellIndex.indexByString("E2")).value = ExcelLib.TextCellValue(widget.campaign.campaignDate.toString()) ; 
     for (int i=0;i<listName.length;i++)
     {
-      sheet.cell(ExcelLib.CellIndex.indexByString("E($i+3)")).value = ExcelLib.TextCellValue(listName[i]) ; 
+      sheet.cell(ExcelLib.CellIndex.indexByString("E${i+3}")).value = ExcelLib.TextCellValue(listName[i]) ; 
     }
 
-    sheet.cell(ExcelLib.CellIndex.indexByString("A($nextLine)")).value = ExcelLib.TextCellValue("Röcapitulatif par essence") ;
+    sheet.cell(ExcelLib.CellIndex.indexByString("A$nextLine")).value = ExcelLib.TextCellValue("Röcapitulatif par essence") ;
     nextLine++; 
-    sheet.cell(ExcelLib.CellIndex.indexByString("A($nextLine)")).value = ExcelLib.TextCellValue("Nb tige : ") ;
-    sheet.cell(ExcelLib.CellIndex.indexByString("A($nextLine)")).cellStyle = cellPVTitle;
-    sheet.cell(ExcelLib.CellIndex.indexByString("B($nextLine)")).value = ExcelLib.TextCellValue("??") ;
+    sheet.cell(ExcelLib.CellIndex.indexByString("A$nextLine")).value = ExcelLib.TextCellValue("Nb tige : ") ;
+    sheet.cell(ExcelLib.CellIndex.indexByString("A$nextLine")).cellStyle = cellPVTitle;
+    sheet.cell(ExcelLib.CellIndex.indexByString("B$nextLine")).value = ExcelLib.TextCellValue("??") ;
 
-    sheet.cell(ExcelLib.CellIndex.indexByString("C($nextLine)")).value = ExcelLib.TextCellValue("Vol. moyen : ") ;
-    sheet.cell(ExcelLib.CellIndex.indexByString("C($nextLine)")).cellStyle = cellPVTitle;
-    sheet.cell(ExcelLib.CellIndex.indexByString("D($nextLine)")).value = ExcelLib.TextCellValue("??") ;
+    sheet.cell(ExcelLib.CellIndex.indexByString("C$nextLine")).value = ExcelLib.TextCellValue("Vol. moyen : ") ;
+    sheet.cell(ExcelLib.CellIndex.indexByString("C$nextLine")).cellStyle = cellPVTitle;
+    sheet.cell(ExcelLib.CellIndex.indexByString("D$nextLine")).value = ExcelLib.TextCellValue("??") ;
 
     nextLine++; 
     nextLine++; 
 
-    sheet.cell(ExcelLib.CellIndex.indexByString("A($nextLine)")).value = ExcelLib.TextCellValue("Essence") ;
-    sheet.cell(ExcelLib.CellIndex.indexByString("A($nextLine)")).cellStyle = cellPVTitle;
-    sheet.cell(ExcelLib.CellIndex.indexByString("B($nextLine)")).value = ExcelLib.TextCellValue("Nb tige") ;
-    sheet.cell(ExcelLib.CellIndex.indexByString("B($nextLine)")).cellStyle = cellPVTitle;
-    sheet.cell(ExcelLib.CellIndex.indexByString("C($nextLine)")).value = ExcelLib.TextCellValue("Volume") ;
-    sheet.cell(ExcelLib.CellIndex.indexByString("C($nextLine)")).cellStyle = cellPVTitle;
+    sheet.cell(ExcelLib.CellIndex.indexByString("A$nextLine")).value = ExcelLib.TextCellValue("Essence") ;
+    sheet.cell(ExcelLib.CellIndex.indexByString("A$nextLine")).cellStyle = cellPVTitle;
+    sheet.cell(ExcelLib.CellIndex.indexByString("B$nextLine")).value = ExcelLib.TextCellValue("Nb tige") ;
+    sheet.cell(ExcelLib.CellIndex.indexByString("B$nextLine")).cellStyle = cellPVTitle;
+    sheet.cell(ExcelLib.CellIndex.indexByString("C$nextLine")).value = ExcelLib.TextCellValue("Volume") ;
+    sheet.cell(ExcelLib.CellIndex.indexByString("C$nextLine")).cellStyle = cellPVTitle;
 
   
 
