@@ -457,6 +457,10 @@ class _TreeHammeringPageState extends State<TreeHammeringPage> {
     excel.rename("Sheet1", "liste de marquage");
     excel.setDefaultSheet("PV martelage");
     ExcelLib.Sheet sheet = excel["liste de marquage"]; 
+
+    ExcelLib.CellStyle cellPVTitle = ExcelLib.CellStyle(bold: true,backgroundColorHex: ExcelLib.ExcelColor.fromHexString("#f59842"));   
+    ExcelLib.CellStyle cellPVSubTitle = ExcelLib.CellStyle(bold: true,backgroundColorHex: ExcelLib.ExcelColor.fromHexString("#f5c190"));   
+
     
     //sheet.merge(ExcelLib.CellIndex.indexByString('A1'), ExcelLib.CellIndex.indexByString('D1'), customValue: ExcelLib.TextCellValue(nameController.text));
     sheet.cell(ExcelLib.CellIndex.indexByString("A1")).value = ExcelLib.TextCellValue("Date de la saisie") ; 
@@ -471,8 +475,12 @@ class _TreeHammeringPageState extends State<TreeHammeringPage> {
     sheet.cell(ExcelLib.CellIndex.indexByString("D1")).cellStyle = cellTitle ;
 
 
-    //int sumLeaf = 0 ;
-    //int sumSoftWood = 0 ;
+    Map<String,int> sumNbTrunkLeafy = {};
+    Map<String,double> sumVolumeLeafy = {};
+    Map<String,int> sumNbTrunkSoftWood = {};
+    Map<String,double> sumVolumeSoftWood = {};
+    Map<String,int> sumNbTrunkType = {};
+    Map<String,double> sumVolumeType = {};
 
 
     for (int i = 0;i<_markedTreeList.length;i++)
@@ -481,6 +489,37 @@ class _TreeHammeringPageState extends State<TreeHammeringPage> {
       sheet.cell(ExcelLib.CellIndex.indexByString("B${i+2}")).value = ExcelLib.TextCellValue(_markedTreeList[i].species.name) ; 
       sheet.cell(ExcelLib.CellIndex.indexByString("C${i+2}")).value = ExcelLib.TextCellValue(_markedTreeList[i].trunkSize.code) ; 
       sheet.cell(ExcelLib.CellIndex.indexByString("D${i+2}")).value = ExcelLib.TextCellValue(_markedTreeList[i].trunkSize.volume.toStringAsFixed(2)) ; 
+
+      switch(_markedTreeList[i].species.type)
+      {
+        case Species.TYPE_LEAFY :
+          if (!sumNbTrunkLeafy.containsKey(_markedTreeList[i].species.name))
+          { 
+            sumNbTrunkLeafy[_markedTreeList[i].species.name] = 0;
+            sumVolumeLeafy[_markedTreeList[i].species.name] = 0.0;
+          }
+          sumNbTrunkLeafy[_markedTreeList[i].species.name] = sumNbTrunkLeafy[_markedTreeList[i].species.name]! +1;
+          sumVolumeLeafy[_markedTreeList[i].species.name] = sumVolumeLeafy[_markedTreeList[i].species.name]! + _markedTreeList[i].trunkSize.volume ;
+          break ; 
+        case Species.TYPE_SOFTWOOD : 
+          if (!sumNbTrunkSoftWood.containsKey(_markedTreeList[i].species.name))
+          { 
+            sumNbTrunkSoftWood[_markedTreeList[i].species.name] = 0;
+            sumVolumeSoftWood[_markedTreeList[i].species.name] = 0.0;
+          }
+          sumNbTrunkSoftWood[_markedTreeList[i].species.name] = sumNbTrunkSoftWood[_markedTreeList[i].species.name]! +1;
+          sumVolumeSoftWood[_markedTreeList[i].species.name] = sumVolumeSoftWood[_markedTreeList[i].species.name]! + _markedTreeList[i].trunkSize.volume ;
+          break ; 
+      }
+
+      if (!sumNbTrunkType.containsKey(_markedTreeList[i].species.type.toString()))
+      {
+        sumNbTrunkType[_markedTreeList[i].species.type.toString()] = 0;
+        sumVolumeType[_markedTreeList[i].species.type.toString()] = 0.0;
+      }
+
+      sumNbTrunkType[_markedTreeList[i].species.type.toString()] = sumNbTrunkType[_markedTreeList[i].species.type.toString()]! + 1;
+      sumVolumeType[_markedTreeList[i].species.type.toString()] = sumVolumeType[_markedTreeList[i].species.type.toString()]! + _markedTreeList[i].trunkSize.volume;
     }
 
 
@@ -489,7 +528,7 @@ class _TreeHammeringPageState extends State<TreeHammeringPage> {
     sheet.cell(ExcelLib.CellIndex.indexByString("C1")).value = ExcelLib.TextCellValue("Chantier") ; 
     sheet.cell(ExcelLib.CellIndex.indexByString("E1")).value = ExcelLib.TextCellValue("Martelage") ; 
 
-    ExcelLib.CellStyle cellPVTitle = ExcelLib.CellStyle(bold: true,backgroundColorHex: ExcelLib.ExcelColor.fromHexString("#f59842"));    
+    
     sheet.cell(ExcelLib.CellIndex.indexByString("A1")).cellStyle = cellPVTitle;
     sheet.cell(ExcelLib.CellIndex.indexByString("C1")).cellStyle = cellPVTitle;
     sheet.cell(ExcelLib.CellIndex.indexByString("E1")).cellStyle = cellPVTitle;
@@ -544,8 +583,59 @@ class _TreeHammeringPageState extends State<TreeHammeringPage> {
     sheet.cell(ExcelLib.CellIndex.indexByString("B$nextLine")).cellStyle = cellPVTitle;
     sheet.cell(ExcelLib.CellIndex.indexByString("C$nextLine")).value = ExcelLib.TextCellValue("Volume") ;
     sheet.cell(ExcelLib.CellIndex.indexByString("C$nextLine")).cellStyle = cellPVTitle;
+    
+    int totalNbTrunk = (sumNbTrunkType[Species.TYPE_LEAFY.toString()]?? 0) + (sumNbTrunkType[Species.TYPE_SOFTWOOD.toString()]?? 0);
+    double totalVolume = (sumVolumeType[Species.TYPE_LEAFY.toString()]?? 0) + (sumVolumeType[Species.TYPE_SOFTWOOD.toString()]?? 0);
 
-  
+    if (sumNbTrunkLeafy.isNotEmpty) //Feuillu
+    {
+      nextLine++; 
+      sheet.cell(ExcelLib.CellIndex.indexByString("A$nextLine")).value = ExcelLib.TextCellValue("Feuillu") ;
+      sheet.cell(ExcelLib.CellIndex.indexByString("A$nextLine")).cellStyle = cellPVSubTitle;
+      sheet.cell(ExcelLib.CellIndex.indexByString("B$nextLine")).value = ExcelLib.TextCellValue(sumNbTrunkType[Species.TYPE_LEAFY.toString()].toString()) ;
+      sheet.cell(ExcelLib.CellIndex.indexByString("B$nextLine")).cellStyle = cellPVSubTitle;
+      sheet.cell(ExcelLib.CellIndex.indexByString("C$nextLine")).value = ExcelLib.TextCellValue(sumVolumeType[Species.TYPE_LEAFY.toString()]!.toStringAsFixed(2)) ;
+      sheet.cell(ExcelLib.CellIndex.indexByString("C$nextLine")).cellStyle = cellPVSubTitle;
+
+
+      sumNbTrunkLeafy.forEach((key, value) 
+      {
+        nextLine++; 
+        sheet.cell(ExcelLib.CellIndex.indexByString("A$nextLine")).value = ExcelLib.TextCellValue(key) ;
+        sheet.cell(ExcelLib.CellIndex.indexByString("B$nextLine")).value = ExcelLib.TextCellValue(sumNbTrunkLeafy[key].toString()) ;
+        sheet.cell(ExcelLib.CellIndex.indexByString("C$nextLine")).value = ExcelLib.TextCellValue(sumVolumeLeafy[key]!.toStringAsFixed(2)) ;
+       });
+
+
+    }
+
+
+    if (sumNbTrunkSoftWood.isNotEmpty) //Résineux
+    {
+      nextLine++; 
+      sheet.cell(ExcelLib.CellIndex.indexByString("A$nextLine")).value = ExcelLib.TextCellValue("Résineux") ;
+      sheet.cell(ExcelLib.CellIndex.indexByString("A$nextLine")).cellStyle = cellPVSubTitle;
+      sheet.cell(ExcelLib.CellIndex.indexByString("B$nextLine")).value = ExcelLib.TextCellValue(sumNbTrunkType[Species.TYPE_SOFTWOOD.toString()].toString()) ;
+      sheet.cell(ExcelLib.CellIndex.indexByString("B$nextLine")).cellStyle = cellPVSubTitle;
+      sheet.cell(ExcelLib.CellIndex.indexByString("C$nextLine")).value = ExcelLib.TextCellValue(sumVolumeType[Species.TYPE_SOFTWOOD.toString()]!.toStringAsFixed(2)) ;
+      sheet.cell(ExcelLib.CellIndex.indexByString("C$nextLine")).cellStyle = cellPVSubTitle;
+      
+      sumNbTrunkSoftWood.forEach((key, value) 
+      {
+        nextLine++; 
+        sheet.cell(ExcelLib.CellIndex.indexByString("A$nextLine")).value = ExcelLib.TextCellValue(key) ;
+        sheet.cell(ExcelLib.CellIndex.indexByString("B$nextLine")).value = ExcelLib.TextCellValue(sumNbTrunkSoftWood[key].toString()) ;
+        sheet.cell(ExcelLib.CellIndex.indexByString("C$nextLine")).value = ExcelLib.TextCellValue(sumVolumeSoftWood[key]!.toStringAsFixed(2)) ;
+       });
+    }
+
+    nextLine++; 
+    sheet.cell(ExcelLib.CellIndex.indexByString("A$nextLine")).value = ExcelLib.TextCellValue("Total général") ;
+    sheet.cell(ExcelLib.CellIndex.indexByString("A$nextLine")).cellStyle = cellPVSubTitle;
+    sheet.cell(ExcelLib.CellIndex.indexByString("B$nextLine")).value = ExcelLib.TextCellValue(totalNbTrunk.toString()) ;
+    sheet.cell(ExcelLib.CellIndex.indexByString("B$nextLine")).cellStyle = cellPVSubTitle;
+    sheet.cell(ExcelLib.CellIndex.indexByString("C$nextLine")).value = ExcelLib.TextCellValue(totalVolume.toStringAsFixed(2)) ;
+    sheet.cell(ExcelLib.CellIndex.indexByString("C$nextLine")).cellStyle = cellPVSubTitle;
 
     List<int>? fileBytes = excel.save();
     getApplicationDocumentsDirectory().then((value){
