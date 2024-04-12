@@ -130,15 +130,9 @@ class _CampaignPageState extends State<CampaignPage> {
             Expanded(child: Container()),
             Row(children: [
               ElevatedButton(onPressed: (){
-                save();
-              }, 
-              child: Text(AppLocalizations.of(context)!.save)),
-              Visibility(
-                visible: (hasid) ,
-                child: ElevatedButton(onPressed: (){
                   markedTree();
                 }, 
-                child: Text("Marteler"))
+                child: Text("Marteler")
               ),
               Expanded(child: Container()),
               
@@ -160,13 +154,6 @@ class _CampaignPageState extends State<CampaignPage> {
 
   markedTree()
   {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) =>  TreeHammeringPage(campaign: widget.campaign,)));
-  }
-
-  save()
-  {
     widget.campaign.name = nameController.text;
     widget.campaign.remark = remarkController.text;
     widget.campaign.owner = ownerController.text;
@@ -175,9 +162,13 @@ class _CampaignPageState extends State<CampaignPage> {
       setState(() {
         hasid = widget.campaign.id > 0 ; 
       });
-      //Navigator.pop(context);
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) =>  TreeHammeringPage(campaign: widget.campaign,)));
     });
+
   }
+
 
   delete()
   {

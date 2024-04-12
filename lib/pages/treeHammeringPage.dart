@@ -94,9 +94,11 @@ class _TreeHammeringPageState extends State<TreeHammeringPage> {
 
 
   loadData(){
+    /*
     setState(() {
       body = Text(AppLocalizations.of(context)!.pleaseWaite);
     });
+    */
     if ((!_speciesList.isEmpty)
       && (!_trunkSizeList.isEmpty))
       {
@@ -572,10 +574,6 @@ class _TreeHammeringPageState extends State<TreeHammeringPage> {
 
     nextLine++; 
     int lineMoy = nextLine ; 
-
-    nextLine++; 
-    nextLine++; 
-    nextLine++; 
     sheet.cell(ExcelLib.CellIndex.indexByString("A$nextLine")).value = ExcelLib.TextCellValue("Nb tige : ") ;
     sheet.cell(ExcelLib.CellIndex.indexByString("A$nextLine")).cellStyle = cellPVTitle;
     sheet.cell(ExcelLib.CellIndex.indexByString("C$nextLine")).value = ExcelLib.TextCellValue("Vol. moyen") ;
