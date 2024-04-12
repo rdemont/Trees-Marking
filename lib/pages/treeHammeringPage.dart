@@ -471,6 +471,10 @@ class _TreeHammeringPageState extends State<TreeHammeringPage> {
     sheet.cell(ExcelLib.CellIndex.indexByString("D1")).cellStyle = cellTitle ;
 
 
+    //int sumLeaf = 0 ;
+    //int sumSoftWood = 0 ;
+
+
     for (int i = 0;i<_markedTreeList.length;i++)
     {
       sheet.cell(ExcelLib.CellIndex.indexByString("A${i+2}")).value = ExcelLib.TextCellValue(_markedTreeList[i].insertTime.toString()) ; 
