@@ -18,7 +18,7 @@ import '../businessObj/speciesList.dart';
 import '../businessObj/trunkSize.dart';
 import '../businessObj/trunkSizeList.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
+import 'package:geolocator/geolocator.dart';
 
 import '../generate/businessObj/markedTreeGen.dart';
 import '../generate/businessObj/speciesGen.dart';
@@ -347,15 +347,22 @@ class _TreeHammeringPageState extends State<TreeHammeringPage> {
     markedTree.campaignId = widget.campaign.id ; 
     markedTree.speciesId = _speciesList[_btnSpeciesOn].id;
     markedTree.trunkSizeId = _trunkSizeList[_btnTrunkSizeOn].id;
-    markedTree.save().then((value){
-      MarkedTreeList.getFromCampaign(widget.campaign.id).then((value) {
-        setState(() {
-          _markedTreeList = value ; 
-          _markedTree = null; 
-        });
-      }); 
-    });
 
+
+    Geolocator.getCurrentPosition().then((value) {
+      print("POSITION **** "+value.latitude.toString());              
+      markedTree.latitude =  value.latitude ;
+      markedTree.longitude =  value.longitude ; 
+
+      markedTree.save().then((value){
+        MarkedTreeList.getFromCampaign(widget.campaign.id).then((value) {
+          setState(() {
+            _markedTreeList = value ; 
+            _markedTree = null; 
+          });
+        }); 
+      });
+    });
   }
 
   
