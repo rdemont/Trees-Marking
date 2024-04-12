@@ -485,7 +485,7 @@ class _TreeHammeringPageState extends State<TreeHammeringPage> {
 
     for (int i = 0;i<_markedTreeList.length;i++)
     {
-      sheet.cell(ExcelLib.CellIndex.indexByString("A${i+2}")).value = ExcelLib.TextCellValue(_markedTreeList[i].insertTime.toString()) ; 
+      sheet.cell(ExcelLib.CellIndex.indexByString("A${i+2}")).value = ExcelLib.TextCellValue(DateFormat('dd.MM.yyyy HH:mm:ss').format(_markedTreeList[i].insertTime)) ; 
       sheet.cell(ExcelLib.CellIndex.indexByString("B${i+2}")).value = ExcelLib.TextCellValue(_markedTreeList[i].species.name) ; 
       sheet.cell(ExcelLib.CellIndex.indexByString("C${i+2}")).value = ExcelLib.TextCellValue(_markedTreeList[i].trunkSize.code) ; 
       sheet.cell(ExcelLib.CellIndex.indexByString("D${i+2}")).value = ExcelLib.TextCellValue(_markedTreeList[i].trunkSize.volume.toStringAsFixed(2)) ; 
@@ -558,22 +558,31 @@ class _TreeHammeringPageState extends State<TreeHammeringPage> {
       sheet.cell(ExcelLib.CellIndex.indexByString("C${i+2}")).value = ExcelLib.TextCellValue(listyard[i]) ; 
     }
 
-    sheet.cell(ExcelLib.CellIndex.indexByString("E2")).value = ExcelLib.TextCellValue(widget.campaign.campaignDate.toString()) ; 
+    sheet.cell(ExcelLib.CellIndex.indexByString("E2")).value = ExcelLib.TextCellValue(DateFormat('dd.MM.yyyy HH:mm:ss').format(widget.campaign.campaignDate)) ; 
     for (int i=0;i<listName.length;i++)
     {
       sheet.cell(ExcelLib.CellIndex.indexByString("E${i+3}")).value = ExcelLib.TextCellValue(listName[i]) ; 
     }
 
-    sheet.cell(ExcelLib.CellIndex.indexByString("A$nextLine")).value = ExcelLib.TextCellValue("Röcapitulatif par essence") ;
+    nextLine++; 
+    nextLine++; 
+    nextLine++; 
+
+    sheet.cell(ExcelLib.CellIndex.indexByString("A$nextLine")).value = ExcelLib.TextCellValue("Récapitulatif par essence") ;
+
+    nextLine++; 
+    int lineMoy = nextLine ; 
+
+    nextLine++; 
+    nextLine++; 
     nextLine++; 
     sheet.cell(ExcelLib.CellIndex.indexByString("A$nextLine")).value = ExcelLib.TextCellValue("Nb tige : ") ;
     sheet.cell(ExcelLib.CellIndex.indexByString("A$nextLine")).cellStyle = cellPVTitle;
-    sheet.cell(ExcelLib.CellIndex.indexByString("B$nextLine")).value = ExcelLib.TextCellValue("??") ;
-
-    sheet.cell(ExcelLib.CellIndex.indexByString("C$nextLine")).value = ExcelLib.TextCellValue("Vol. moyen : ") ;
+    sheet.cell(ExcelLib.CellIndex.indexByString("C$nextLine")).value = ExcelLib.TextCellValue("Vol. moyen") ;
     sheet.cell(ExcelLib.CellIndex.indexByString("C$nextLine")).cellStyle = cellPVTitle;
-    sheet.cell(ExcelLib.CellIndex.indexByString("D$nextLine")).value = ExcelLib.TextCellValue("??") ;
+    
 
+    nextLine++; 
     nextLine++; 
     nextLine++; 
 
@@ -586,6 +595,12 @@ class _TreeHammeringPageState extends State<TreeHammeringPage> {
     
     int totalNbTrunk = (sumNbTrunkType[Species.TYPE_LEAFY.toString()]?? 0) + (sumNbTrunkType[Species.TYPE_SOFTWOOD.toString()]?? 0);
     double totalVolume = (sumVolumeType[Species.TYPE_LEAFY.toString()]?? 0) + (sumVolumeType[Species.TYPE_SOFTWOOD.toString()]?? 0);
+
+    sheet.cell(ExcelLib.CellIndex.indexByString("B$lineMoy")).value = ExcelLib.TextCellValue(totalNbTrunk.toString()) ;
+    sheet.cell(ExcelLib.CellIndex.indexByString("B$lineMoy")).cellStyle = cellPVSubTitle;
+    sheet.cell(ExcelLib.CellIndex.indexByString("D$lineMoy")).value = ExcelLib.TextCellValue((totalVolume/totalNbTrunk).toStringAsFixed(3)) ;
+    sheet.cell(ExcelLib.CellIndex.indexByString("D$lineMoy")).cellStyle = cellPVSubTitle;
+
 
     if (sumNbTrunkLeafy.isNotEmpty) //Feuillu
     {
