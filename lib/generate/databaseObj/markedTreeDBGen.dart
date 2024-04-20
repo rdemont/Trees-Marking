@@ -21,6 +21,7 @@ class MarkedTreeDBGen extends DatabaseObj {
   double _latitude = 0.0;
   double _longitude = 0.0;
   DateTime _insertTime = DateTime.now();
+  double _altitude = 0.0;
 
 
 
@@ -39,31 +40,35 @@ class MarkedTreeDBGen extends DatabaseObj {
   double get latitude => _latitude;
   double get longitude => _longitude;
   DateTime get insertTime => _insertTime;
+  double get altitude => _altitude;
 
 
 
-  set speciesId(int value)
+  set species(Species value)
   {
-    if (_speciesId != value)
+    if (_speciesId != value.id)
     {
       dataUpdated(); 
-      _speciesId = value;
+      _speciesId = value.id;
+      _species = value;
     }
   }
-  set trunkSizeId(int value)
+  set trunkSize(TrunkSize value)
   {
-    if (_trunkSizeId != value)
+    if (_trunkSizeId != value.id)
     {
       dataUpdated(); 
-      _trunkSizeId = value;
+      _trunkSizeId = value.id;
+      _trunkSize = value;
     }
   }
-  set campaignId(int value)
+  set campaign(Campaign value)
   {
-    if (_campaignId != value)
+    if (_campaignId != value.id)
     {
       dataUpdated(); 
-      _campaignId = value;
+      _campaignId = value.id;
+      _campaign = value;
     }
   }
   set remark(String value)
@@ -96,6 +101,14 @@ class MarkedTreeDBGen extends DatabaseObj {
     {
       dataUpdated(); 
       _insertTime = value;
+    }
+  }
+  set altitude(double value)
+  {
+    if (_altitude != value)
+    {
+      dataUpdated(); 
+      _altitude = value;
     }
   }
 
@@ -141,6 +154,7 @@ class MarkedTreeDBGen extends DatabaseObj {
       MarkedTreeGen.COLUMN_LATITUDE : _latitude,
       MarkedTreeGen.COLUMN_LONGITUDE : _longitude,
       MarkedTreeGen.COLUMN_INSERTTIME : _insertTime.millisecondsSinceEpoch,
+      MarkedTreeGen.COLUMN_ALTITUDE : _altitude,
 
     };
     
@@ -171,6 +185,7 @@ class MarkedTreeDBGen extends DatabaseObj {
     _latitude = (map[MarkedTreeGen.COLUMN_LATITUDE]??0.0) as double;
     _longitude = (map[MarkedTreeGen.COLUMN_LONGITUDE]??0.0) as double;
     _insertTime = DateTime.fromMillisecondsSinceEpoch((map[MarkedTreeGen.COLUMN_INSERTTIME]??0) as int);
+    _altitude = (map[MarkedTreeGen.COLUMN_ALTITUDE]??0.0) as double;
 
 
 
@@ -178,6 +193,19 @@ class MarkedTreeDBGen extends DatabaseObj {
 
   }
 
+ 
+  @override
+  clone(DatabaseObj value)
+  {
+    super.clone(value);
+    (value as MarkedTreeDBGen)._speciesId = speciesId;
+    (value as MarkedTreeDBGen)._trunkSizeId = trunkSizeId;
+    (value as MarkedTreeDBGen)._campaignId = campaignId;
+    (value as MarkedTreeDBGen)._remark = remark;
+    (value as MarkedTreeDBGen)._latitude = latitude;
+    (value as MarkedTreeDBGen)._longitude = longitude;
+    (value as MarkedTreeDBGen)._insertTime = insertTime;
+    (value as MarkedTreeDBGen)._altitude = altitude;
 
-
+  }
 }

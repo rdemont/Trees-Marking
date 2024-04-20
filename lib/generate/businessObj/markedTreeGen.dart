@@ -21,6 +21,7 @@ class MarkedTreeGen extends BusinessObj
   static const String COLUMN_LATITUDE = "latitude";
   static const String COLUMN_LONGITUDE = "longitude";
   static const String COLUMN_INSERTTIME = "insertTime";
+  static const String COLUMN_ALTITUDE = "altitude";
 
 
 
@@ -34,19 +35,20 @@ class MarkedTreeGen extends BusinessObj
   double get latitude => _localDbObj.latitude;
   double get longitude => _localDbObj.longitude;
   DateTime get insertTime => _localDbObj.insertTime;
+  double get altitude => _localDbObj.altitude;
 
 
-  set speciesId(int value)
+  set species(Species value)
   {
-    _localDbObj.speciesId = value;
+    _localDbObj.species = value;
   }
-  set trunkSizeId(int value)
+  set trunkSize(TrunkSize value)
   {
-    _localDbObj.trunkSizeId = value;
+    _localDbObj.trunkSize = value;
   }
-  set campaignId(int value)
+  set campaign(Campaign value)
   {
-    _localDbObj.campaignId = value;
+    _localDbObj.campaign = value;
   }
   set remark(String value)
   {
@@ -63,6 +65,10 @@ class MarkedTreeGen extends BusinessObj
   set insertTime(DateTime value)
   {
     _localDbObj.insertTime = value;
+  }
+  set altitude(double value)
+  {
+    _localDbObj.altitude = value;
   }
 
 
@@ -81,5 +87,13 @@ class MarkedTreeGen extends BusinessObj
     return objDb.fromMap(map);
   }
 
+  @override
+  MarkedTree clone() {
+    MarkedTree result = MarkedTreeGen.newObj(); 
+
+    super.cloneDB(result._localDbObj);
+    
+    return result ; 
+  }
 
 }

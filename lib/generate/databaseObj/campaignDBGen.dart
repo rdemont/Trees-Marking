@@ -12,6 +12,7 @@ class CampaignDBGen extends DatabaseObj {
   double _latitude = 0.0;
   double _longitude = 0.0;
   DateTime _campaignDate = DateTime.now();
+  double _altitude = 0.0;
 
 
 
@@ -27,6 +28,7 @@ class CampaignDBGen extends DatabaseObj {
   double get latitude => _latitude;
   double get longitude => _longitude;
   DateTime get campaignDate => _campaignDate;
+  double get altitude => _altitude;
 
 
 
@@ -86,6 +88,14 @@ class CampaignDBGen extends DatabaseObj {
       _campaignDate = value;
     }
   }
+  set altitude(double value)
+  {
+    if (_altitude != value)
+    {
+      dataUpdated(); 
+      _altitude = value;
+    }
+  }
 
 
   Future<Campaign> open(int id)
@@ -120,6 +130,7 @@ class CampaignDBGen extends DatabaseObj {
       CampaignGen.COLUMN_LATITUDE : _latitude,
       CampaignGen.COLUMN_LONGITUDE : _longitude,
       CampaignGen.COLUMN_CAMPAIGNDATE : _campaignDate.millisecondsSinceEpoch,
+      CampaignGen.COLUMN_ALTITUDE : _altitude,
 
     };
     
@@ -138,6 +149,7 @@ class CampaignDBGen extends DatabaseObj {
     _latitude = (map[CampaignGen.COLUMN_LATITUDE]??0.0) as double;
     _longitude = (map[CampaignGen.COLUMN_LONGITUDE]??0.0) as double;
     _campaignDate = DateTime.fromMillisecondsSinceEpoch((map[CampaignGen.COLUMN_CAMPAIGNDATE]??0) as int);
+    _altitude = (map[CampaignGen.COLUMN_ALTITUDE]??0.0) as double;
 
 
 
@@ -145,6 +157,19 @@ class CampaignDBGen extends DatabaseObj {
 
   }
 
+ 
+  @override
+  clone(DatabaseObj value)
+  {
+    super.clone(value);
+    (value as CampaignDBGen)._name = name;
+    (value as CampaignDBGen)._owner = owner;
+    (value as CampaignDBGen)._yard = yard;
+    (value as CampaignDBGen)._remark = remark;
+    (value as CampaignDBGen)._latitude = latitude;
+    (value as CampaignDBGen)._longitude = longitude;
+    (value as CampaignDBGen)._campaignDate = campaignDate;
+    (value as CampaignDBGen)._altitude = altitude;
 
-
+  }
 }

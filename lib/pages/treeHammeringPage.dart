@@ -6,9 +6,11 @@ import 'dart:io';
 
 import 'package:excel/excel.dart' as ExcelLib;
 import 'package:flutter/material.dart';
+
 import 'package:intl/intl.dart';
 import 'package:lv95/lv95.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../businessObj/campaign.dart';
@@ -45,22 +47,30 @@ class _TreeHammeringPageState extends State<TreeHammeringPage> {
   Widget body = Text("Please waite ....loading ");  
   int _btnSpeciesOn = 0 ; 
   int _btnTrunkSizeOn = 0;
+  bool _isLoaded = false  ; 
   
-  
-  MarkedTree? _markedTree = null ; 
+  late MarkedTree _markedTree; 
+  MarkedTree? _markedTreeLastChange = null ; 
 
-  bool _validate = false ;
+  
+  bool _btnEditOn = false ; 
+
+  final ItemScrollController _itemScrollController = ItemScrollController();
+  final ScrollOffsetController _scrollOffsetController = ScrollOffsetController();
+  final ItemPositionsListener _itemPositionsListener = ItemPositionsListener.create();
+  final ScrollOffsetListener _scrollOffsetListener = ScrollOffsetListener.create();
+
 
   @override
   void initState() {
     
     super.initState();
 
-    //nameController.text = _campaign.name;
-    
-    MarkedTreeList.getFromCampaign(widget.campaign.id).then((value) {
-      _markedTreeList = value ;
-    });
+
+    _markedTree = MarkedTreeGen.newObj();
+    //nameController.text = _campaign.name;§
+
+
 
   }
 
@@ -68,55 +78,71 @@ class _TreeHammeringPageState extends State<TreeHammeringPage> {
   @override
   Widget build(BuildContext context) {
 
-    Future.wait([
-      TrunkSizeList.getAll().then((value) {
-        _trunkSizeList = value ;  
-        return ;
-      }),
+    if (!_isLoaded)
+    {
+      Future.wait([
+        MarkedTreeList.getFromCampaign(widget.campaign.id).then((value) {
+          _markedTreeList = value ;
+          return ;
+        }),
+        TrunkSizeList.getAll().then((value) {
+          _trunkSizeList = value ;  
+          return ; 
+        }),
 
-      SpeciesList.getAll().then((value) {
-        _speciesList = value ;  
-        return ;
-      }),
-    ]).then((value) {
-      loadData();
-    });
+        SpeciesList.getAll().then((value) {
+          _speciesList = value ;  
+          return ; 
+        })
+      ]).then((value) {
+        setState(() {
+          _isLoaded = true ;   
+        });
+        
+      });
+    }
 
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text("Martelage"),
       ),
-      body:body,
+      body:getScreen(), //body,
       endDrawer:  Drawer(child:  SettingsWidget()), 
       bottomNavigationBar: SizedBox(height: 75, child:BottomAppBar(child: getBottomInfo(),)),
     ) ;
   }
 
-  loadData(){
+
+/*
+  loadData(){              
     if ((!_speciesList.isEmpty)
       && (!_trunkSizeList.isEmpty))
       {
+print("*****SETSTATE LOADDATA **** ");                            
         setState(() {
           body = getScreen();
         });
         
       }
   }
-
-
-  
+*/
 
 
   Widget getScreen()
   {
+    if (!_isLoaded)
+    {
+      return Text("Please waite ....loading ");  
+    }
+print("***********speciesList.length :"+_speciesList.length.toString());
     return Column(
       children: [
         getHeadrePart(),
         Divider(),
         getSpeciesPart(),
         Divider(),
-        getTrunkSizePart(), 
+        getTrunkSizePart(),
         Visibility(
             maintainSize: false,
             visible: _markedTree != null,
@@ -148,8 +174,10 @@ class _TreeHammeringPageState extends State<TreeHammeringPage> {
       return ElevatedButton(
         onPressed: () {
           FocusManager.instance.primaryFocus?.unfocus();
+print("*****SETSTATE SPECIESCELL   **** ");                              
           setState(() {
-            _btnSpeciesOn = cell;             
+            _btnSpeciesOn = cell;    
+            //body = getScreen();        
           });
         },
         style: ElevatedButton.styleFrom(backgroundColor:cell==_btnSpeciesOn?Colors.blue:Colors.grey,),
@@ -202,15 +230,12 @@ class _TreeHammeringPageState extends State<TreeHammeringPage> {
       return ElevatedButton(
         onPressed: () {
           FocusManager.instance.primaryFocus?.unfocus();
+print("*****SETSTATE TRUNKSIZECELL   **** ");                              
           setState(() {
             _btnTrunkSizeOn = cell;             
-            //_validate = nameController.text.isEmpty ; 
+            
           });
-          if (!_validate)
-          {
-            save();
-          }
-                
+          save();      
         }, 
         style: ElevatedButton.styleFrom(backgroundColor:cell==_btnTrunkSizeOn?Colors.blue:Colors.grey,),
         child: Text(_trunkSizeList[cell].code),
@@ -250,17 +275,14 @@ class _TreeHammeringPageState extends State<TreeHammeringPage> {
         children: [
           Visibility(
             maintainSize: false,
-            visible: _markedTree != null,
+            visible: _btnEditOn,
             child:ElevatedButton(onPressed: () {
               FocusManager.instance.primaryFocus?.unfocus();
+print("*****SETSTATE getBUTTON   **** ");                                  
               setState(() {
-                //_validate = nameController.text.isEmpty ; 
+              _btnEditOn = false ; 
               });
-              if (!_validate)
-              {
-                save();
-              }
-                
+                save();  
             }, 
             child: Text("Save",
               style: new TextStyle(
@@ -271,19 +293,27 @@ class _TreeHammeringPageState extends State<TreeHammeringPage> {
           ),
           Visibility(
             maintainSize: false,
-            visible: _markedTree != null,
+            visible: _btnEditOn,
             child: ElevatedButton(
               onPressed: () {
                 FocusManager.instance.primaryFocus?.unfocus();
+                setState(() {
+                  _btnEditOn = false ; 
+                });                
+/*                
                 _markedTree!.delete();
                 _markedTree!.save().then((value){
                   MarkedTreeList.getFromCampaign(widget.campaign.id).then((value) {
+print("*****SETSTATE GETBUTTON 2   **** ");                                        
                     setState(() {
                       _markedTreeList = value ; 
-                      _markedTree = null; 
+//ToDo : Faire le bouton Delete                       
+                      //_markedTree = null; 
                     });
-                  }); 
-                });
+*/
+                  //}); 
+                  
+                //});
               },
               child: Text("Delete",
                 style: new TextStyle(
@@ -295,11 +325,15 @@ class _TreeHammeringPageState extends State<TreeHammeringPage> {
           ),
           Visibility(
             maintainSize: false,
-            visible: _markedTree != null,
+            visible: _btnEditOn,
             child: ElevatedButton(
               onPressed: () {
                 FocusManager.instance.primaryFocus?.unfocus();
-                _markedTree = null; 
+                setState(() {
+                  _btnEditOn = false ; 
+                });
+//ToDo : Faire le bouton Delete                               
+                //_markedTree = null; 
               },
               child: Text("Cancel",
                 style: new TextStyle(
@@ -315,23 +349,51 @@ class _TreeHammeringPageState extends State<TreeHammeringPage> {
     
   }
 
+  Color? getLineColor(int index)
+  {
+    if (_markedTreeLastChange != null)
+    {
+      if (_markedTreeList[index].id == _markedTreeLastChange!.id)
+      {
+        return Colors.yellow[50];
+      }
+    }
+    return (index%2 == 0 ) ? Colors.grey[50] : Colors.grey[350];
+    
+  }
+  String getXYString(MarkedTree markedTree)
+  {
+    LatLng wgs84 = LatLng(markedTree.latitude,markedTree.longitude);
+    XY lv95 = LV95.fromWGS84(wgs84,precise: true,height: markedTree.altitude);        
+    return lv95.x.toString()+"/"+lv95.y.toString();
+  }
 
   Widget getList()
   {
+    DateFormat df = DateFormat("dd.MM.yyyy hh:mm"); 
     return Expanded(
-      child: ListView.builder(
+      child: ScrollablePositionedList.builder(
         scrollDirection: Axis.vertical,
+        itemScrollController: _itemScrollController,
+        scrollOffsetController: _scrollOffsetController,
+        itemPositionsListener: _itemPositionsListener,
+        scrollOffsetListener: _scrollOffsetListener,
         padding: EdgeInsets.zero,
         shrinkWrap: true,
         itemCount: _markedTreeList.length,
         itemBuilder: (BuildContext context, int index) {
           return Container(
-            color:(index%2 == 0 ) ? Colors.grey[50] : Colors.grey[350],
+            height: 75,
+            color: getLineColor(index),
             child: ListTile(
-              title: Text(_markedTreeList[index].species.name+" - "+_markedTreeList[index].trunkSize.toString()), 
+              leading: CircleAvatar(child: Text(_markedTreeList[index].species.code)),
+              title: Text(_markedTreeList[index].trunkSize.toString()), 
+              subtitle: Text("["+df.format(_markedTreeList[index].insertTime)+"] "+_markedTreeList[index].species.name+"\n"+getXYString(_markedTreeList[index])) ,           
               onLongPress: () {
                 // edit 
+print("*****SETSTATE GETLIST   **** ");                    
                 setState(() {
+                  _btnEditOn = true ; 
                   _markedTree =  _markedTreeList[index];
                   _btnSpeciesOn = _speciesList.indexWhere((element) => element.id == _markedTree!.species.id);
                   _btnTrunkSizeOn = _trunkSizeList.indexWhere((element) => element.id == _markedTree!.trunkSize.id);
@@ -350,27 +412,44 @@ class _TreeHammeringPageState extends State<TreeHammeringPage> {
 
   save()
   {
-  
-    
-    MarkedTree markedTree = _markedTree?? MarkedTreeGen.newObj();
-    markedTree.campaignId = widget.campaign.id ; 
-    markedTree.speciesId = _speciesList[_btnSpeciesOn].id;
-    markedTree.trunkSizeId = _trunkSizeList[_btnTrunkSizeOn].id;
 
+
+print("****SAVE-----");
+    //MarkedTree markedTree = _markedTree?? MarkedTreeGen.newObj();
+
+    MarkedTree mt = _markedTree.clone();
+    _markedTree = MarkedTreeGen.newObj();
+
+    
+    mt.campaign = widget.campaign ; 
+    mt.species = _speciesList[_btnSpeciesOn];
+    mt.trunkSize = _trunkSizeList[_btnTrunkSizeOn];
+
+
+
+    if (mt.id == 0)
+    {
+      setState(() {
+        _markedTreeList.add(mt);
+      });
+      _itemScrollController.scrollTo(
+        index: _markedTreeList.length -1 ,
+        duration: Duration(seconds: 2),
+        curve: Curves.easeInOutCubic
+      );
+    }
+
+    setState(() {
+      _markedTreeLastChange = mt ;  
+    });
 
     Geolocator.getCurrentPosition().then((value) {
-      print("POSITION **** "+value.latitude.toString());              
-      markedTree.latitude =  value.latitude ;
-      markedTree.longitude =  value.longitude ; 
+                  
+      mt.latitude =  value.latitude ;
+      mt.longitude =  value.longitude ; 
+      mt.altitude = value.altitude ; 
 
-      markedTree.save().then((value){
-        MarkedTreeList.getFromCampaign(widget.campaign.id).then((value) {
-          setState(() {
-            _markedTreeList = value ; 
-            _markedTree = null; 
-          });
-        }); 
-      });
+      mt.save();
     });
   }
 
@@ -505,7 +584,7 @@ class _TreeHammeringPageState extends State<TreeHammeringPage> {
 
 
       LatLng wgs84 = LatLng(_markedTreeList[i].latitude,_markedTreeList[i].longitude);
-      XY lv95 = LV95.fromWGS84(wgs84,precise: true,height: 431);
+      XY lv95 = LV95.fromWGS84(wgs84,precise: true,height: _markedTreeList[i].altitude);
 
       sheet.cell(ExcelLib.CellIndex.indexByString("E${i+2}")).value = ExcelLib.DoubleCellValue(lv95.x) ; 
       sheet.cell(ExcelLib.CellIndex.indexByString("F${i+2}")).value = ExcelLib.DoubleCellValue(lv95.y) ; 

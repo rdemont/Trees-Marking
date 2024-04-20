@@ -18,6 +18,7 @@ class CampaignGen extends BusinessObj
   static const String COLUMN_LATITUDE = "latitude";
   static const String COLUMN_LONGITUDE = "longitude";
   static const String COLUMN_CAMPAIGNDATE = "campaignDate";
+  static const String COLUMN_ALTITUDE = "altitude";
 
 
 
@@ -28,6 +29,7 @@ class CampaignGen extends BusinessObj
   double get latitude => _localDbObj.latitude;
   double get longitude => _localDbObj.longitude;
   DateTime get campaignDate => _localDbObj.campaignDate;
+  double get altitude => _localDbObj.altitude;
 
 
   set name(String value)
@@ -58,6 +60,10 @@ class CampaignGen extends BusinessObj
   {
     _localDbObj.campaignDate = value;
   }
+  set altitude(double value)
+  {
+    _localDbObj.altitude = value;
+  }
 
 
   static Campaign newObj(){
@@ -75,5 +81,13 @@ class CampaignGen extends BusinessObj
     return objDb.fromMap(map);
   }
 
+  @override
+  Campaign clone() {
+    Campaign result = CampaignGen.newObj(); 
+
+    super.cloneDB(result._localDbObj);
+    
+    return result ; 
+  }
 
 }

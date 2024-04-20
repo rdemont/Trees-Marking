@@ -9,7 +9,7 @@ class DatabaseService {
   static const String databaseName = "treesmarkingdb.sqlite";
   static Database? db;
 
-  static const DATABASE_VERSION = 1;
+  static const DATABASE_VERSION = 2;
   
 
   static const SECRET_KEY = "2021_PRIVATE_KEY_ENCRYPT_2021";
@@ -139,17 +139,15 @@ class DatabaseService {
 
 
     if (oldVersion < newVersion) {
-      if (oldVersion < 2) // add group table with link on todo
+
+
+      if (newVersion == 2) // add group table with link on todo
       {
-        /*
-        db.execute("""
-              CREATE TABLE Groups(
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                name TEXT NOT NULL
-              )      
-            """);
-        db.execute("""ALTER TABLE Todos ADD COLUMN group_FK INT """);
-        */
+        
+      
+        db.execute("""ALTER TABLE markedTree ADD COLUMN altitude FLOAT """);
+        db.execute("""ALTER TABLE campaign ADD COLUMN altitude FLOAT """);
+        
       }
     }
   }

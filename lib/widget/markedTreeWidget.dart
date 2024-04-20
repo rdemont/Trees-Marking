@@ -105,7 +105,7 @@ debugPrint("Test Debug Pring");
 print(textFieldController.text);
               MarkedTree markedTree = MarkedTreeGen.newObj();
               markedTree.remark = textFieldController.text;
-              markedTree.campaignId = widget.campaign.id ;
+              markedTree.campaign = widget.campaign ;
 print("markedTree Save 1");
               markedTree.save().then((value){
                 int tmpid = markedTree.id ;

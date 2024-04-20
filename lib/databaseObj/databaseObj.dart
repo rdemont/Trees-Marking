@@ -138,4 +138,13 @@ class DatabaseObj{
 
     }
 
+  
+  clone(DatabaseObj value)
+  {
+print ("****CLONE ID $id ");    
+    value._id = _id;
+    value.mode = mode;
+    tableName = tableName; 
+  }
 }
+

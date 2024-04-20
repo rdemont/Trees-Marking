@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:treesmarking/businessObj/campaign.dart';
+import 'package:treesmarking/generate/businessObj/speciesGen.dart';
 
 
 
@@ -13,6 +14,8 @@ import '../businessObj/trunkSize.dart';
 import '../businessObj/trunkSizeList.dart';
 import '../generate/businessObj/markedTreeGen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+import '../generate/businessObj/trunkSizeGen.dart';
 
 
 
@@ -102,9 +105,15 @@ class _MarkedTreePageState extends State<MarkedTreePage> {
                     color: Colors.deepPurpleAccent,
                   ),
                   onChanged: (value) {
-                    setState(() {
-                      widget.markedTree.speciesId = int.tryParse(value as String ) ?? 0 ;
-                    });
+                    if (int.tryParse(value as String ) != null)
+                    {
+                      SpeciesGen.openObj(int.tryParse(value) ?? 0).then((value) {
+                        setState(() {
+                          widget.markedTree.species = value;
+                        });
+                      });
+                    }
+                    
                   },
                   items:speciesListDdm,
                 ),
@@ -125,9 +134,14 @@ class _MarkedTreePageState extends State<MarkedTreePage> {
                     color: Colors.deepPurpleAccent,
                   ),
                   onChanged: (value) {
-                    setState(() {
-                      widget.markedTree.trunkSizeId = int.tryParse(value as String ) ?? 0 ;
-                    });
+                    if (int.tryParse(value as String ) != null)
+                    {
+                      TrunkSizeGen.openObj(int.tryParse(value) ?? 0).then((value) {
+                        setState(() {
+                          widget.markedTree.trunkSize = value;
+                        });
+                      });
+                    }
                   },
                   items:trunkSizeListDdm,
                 ),
@@ -175,7 +189,7 @@ class _MarkedTreePageState extends State<MarkedTreePage> {
   save()
   {
     widget.markedTree.remark = remarkController.text;
-    widget.markedTree.campaignId = widget.campaign.id;
+    widget.markedTree.campaign = widget.campaign;
     widget.markedTree.save().then((value){
       Navigator.pop(context);
     });

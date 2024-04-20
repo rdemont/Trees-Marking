@@ -63,5 +63,13 @@ class TrunkSizeGen extends BusinessObj
     return objDb.fromMap(map);
   }
 
+  @override
+  TrunkSize clone() {
+    TrunkSize result = TrunkSizeGen.newObj(); 
+
+    super.cloneDB(result._localDbObj);
+    
+    return result ; 
+  }
 
 }

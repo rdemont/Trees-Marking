@@ -47,6 +47,7 @@ dependencies:
   excel: ^4.0.3
   flutter_launcher_icons: ^0.13.1
   lv95: ^0.0.1
+  scrollable_positioned_list: ^0.3.8
 
 dev_dependencies:
   flutter_test:

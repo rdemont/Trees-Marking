@@ -57,5 +57,13 @@ class SpeciesGen extends BusinessObj
     return objDb.fromMap(map);
   }
 
+  @override
+  Species clone() {
+    Species result = SpeciesGen.newObj(); 
+
+    super.cloneDB(result._localDbObj);
+    
+    return result ; 
+  }
 
 }

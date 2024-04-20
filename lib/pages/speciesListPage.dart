@@ -53,18 +53,10 @@ class _SpeciesListPageState extends State<SpeciesListPage> {
               return new GestureDetector(
                 onLongPress: () => showSpecies(_speciesList[index]),
                 onTap: () => communUseChange(_speciesList[index]),
-                child: new Card(
-                  child: Container(
-                    margin: const EdgeInsets.only(left: 10.0, right: 5.0, top: 2.0, bottom: 2.0),
-                    child: Row(
-                      children: [
-                      Text("["+_speciesList[index].code+"] "),  
-                      Text(_speciesList[index].name),
-                      Expanded(child: Container()),
-                      Icon(_speciesList[index].communUse ? Icons.check :Icons.cancel_outlined)
-                    ]), 
-                  )
-                    
+                child: new ListTile(
+                  leading: CircleAvatar(child: Text(_speciesList[index].code)),
+                  title: Text(_speciesList[index].name),  
+                  trailing: Icon(_speciesList[index].communUse ? Icons.check :Icons.cancel_outlined)                    
                 ) 
               );
             }

@@ -121,6 +121,16 @@ class TrunkSizeDBGen extends DatabaseObj {
 
   }
 
+ 
+  @override
+  clone(DatabaseObj value)
+  {
+    super.clone(value);
+    (value as TrunkSizeDBGen)._minDiameter = minDiameter;
+    (value as TrunkSizeDBGen)._maxDiameter = maxDiameter;
+    (value as TrunkSizeDBGen)._volume = volume;
+    (value as TrunkSizeDBGen)._code = code;
+    (value as TrunkSizeDBGen)._name = name;
 
-
+  }
 }

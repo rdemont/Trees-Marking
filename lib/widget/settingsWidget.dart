@@ -133,7 +133,27 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                     ),
                     ListTile(
                       title: Text("Supprimer les marquages"),
-                       onTap: deleteCampagne,
+                       onTap:() => showDialog(
+                        context: context,
+                        builder: (BuildContext context) => AlertDialog(
+                          title: const Text('AlertDialog Title'),
+                          content: const Text('AlertDialog description'),
+                          actions: <Widget>[
+                            TextButton(
+                              onPressed: () => Navigator.pop(context, 'Cancel'),
+                              child: const Text('Cancel'),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                 deleteCampagne() ;
+                                 Navigator.pop(context, 'Ok');
+                              },
+                              child: const Text('OK'),
+                            ),
+                          ],
+                        ),
+                      ), 
+                      
                       
                     ),                    
                   ],
