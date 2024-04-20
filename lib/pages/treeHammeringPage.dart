@@ -145,7 +145,7 @@ print("***********speciesList.length :"+_speciesList.length.toString());
         getTrunkSizePart(),
         Visibility(
             maintainSize: false,
-            visible: _markedTree != null,
+            visible: _btnEditOn ,
             child: Divider(),
         ),
         getButton(),
@@ -398,8 +398,8 @@ print("*****SETSTATE GETLIST   **** ");
                 setState(() {
                   _btnEditOn = true ; 
                   _markedTree =  _markedTreeList[index];
-                  _btnSpeciesOn = _speciesList.indexWhere((element) => element.id == _markedTree!.species.id);
-                  _btnTrunkSizeOn = _trunkSizeList.indexWhere((element) => element.id == _markedTree!.trunkSize.id);
+                  _btnSpeciesOn = _speciesList.indexWhere((element) => element.id == _markedTree.species.id);
+                  _btnTrunkSizeOn = _trunkSizeList.indexWhere((element) => element.id == _markedTree.trunkSize.id);
 
                 });
               },
