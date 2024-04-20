@@ -62,7 +62,7 @@ class _MainPageState extends State<MainPage> {
     if (_speciesList.isEmpty)
     {
       speciesBody = ElevatedButton(
-        child: Text(AppLocalizations.of(context)!.createSpeciesFromVD) ,
+        child: Text("Sélection des essences") ,
         onPressed: () {
           setState(() {
             body = Text(AppLocalizations.of(context)!.pleaseWaite);  
@@ -78,7 +78,7 @@ class _MainPageState extends State<MainPage> {
     if (_trunkSizeList.isEmpty)
     {
       trunkSizeBody = ElevatedButton(
-        child: Text(AppLocalizations.of(context)!.createTrunkSizeFromVD) ,
+        child: Text("Tarif vaudois") ,
         onPressed: () {
           setState(() {
             body = Text(AppLocalizations.of(context)!.pleaseWaite);  
@@ -200,14 +200,14 @@ print("POSITION **** "+value.latitude.toString());
         db.execute("INSERT INTO species (name,code,type,communUse) VALUES ('Chêne rouge','CR',1,0)"),
         db.execute("INSERT INTO species (name,code,type,communUse) VALUES ('Chêne sessile','CS',1,0)"),
         db.execute("INSERT INTO species (name,code,type,communUse) VALUES ('Douglas','DO',2,0)"),
-        db.execute("INSERT INTO species (name,code,type,communUse) VALUES ('Épicéa','EP',2,0)"),
-        db.execute("INSERT INTO species (name,code,type,communUse) VALUES ('Érable','ER',1,0)"),
+        db.execute("INSERT INTO species (name,code,type,communUse) VALUES ('Épicéa','EP',2,1)"),
+        db.execute("INSERT INTO species (name,code,type,communUse) VALUES ('Érable','ER',1,1)"),
         db.execute("INSERT INTO species (name,code,type,communUse) VALUES ('Érable à feuilles d’obier','EO',1,0)"),
         db.execute("INSERT INTO species (name,code,type,communUse) VALUES ('Érable champêtre','EC',1,0)"),
         db.execute("INSERT INTO species (name,code,type,communUse) VALUES ('Érable plane','EP',1,0)"),
         db.execute("INSERT INTO species (name,code,type,communUse) VALUES ('Érable sycomore','ES',1,0)"),
-        db.execute("INSERT INTO species (name,code,type,communUse) VALUES ('Frêne','FR',1,0)"),
-        db.execute("INSERT INTO species (name,code,type,communUse) VALUES ('Hêtre','HE',1,0)"),
+        db.execute("INSERT INTO species (name,code,type,communUse) VALUES ('Frêne','FR',1,1)"),
+        db.execute("INSERT INTO species (name,code,type,communUse) VALUES ('Hêtre','HE',1,1)"),
         db.execute("INSERT INTO species (name,code,type,communUse) VALUES ('Houx','HO',1,0)"),
         db.execute("INSERT INTO species (name,code,type,communUse) VALUES ('If','IF',2,0)"),
         db.execute("INSERT INTO species (name,code,type,communUse) VALUES ('Marronnier d’Inde','MA',1,0)"),
@@ -224,7 +224,7 @@ print("POSITION **** "+value.latitude.toString());
         db.execute("INSERT INTO species (name,code,type,communUse) VALUES ('Peuplier blanc','PB',1,0)"),
         db.execute("INSERT INTO species (name,code,type,communUse) VALUES ('Peuplier noir','PR',1,0)"),
         db.execute("INSERT INTO species (name,code,type,communUse) VALUES ('Peuplier tremble','PT',1,0)"),
-        db.execute("INSERT INTO species (name,code,type,communUse) VALUES ('Pin','PI',2,0)"),
+        db.execute("INSERT INTO species (name,code,type,communUse) VALUES ('Pin','PI',2,1)"),
         db.execute("INSERT INTO species (name,code,type,communUse) VALUES ('Pin couché','PC',2,0)"),
         db.execute("INSERT INTO species (name,code,type,communUse) VALUES ('Pin de montagne','PM',2,0)"),
         db.execute("INSERT INTO species (name,code,type,communUse) VALUES ('Pin noir','PN',2,0)"),
@@ -233,11 +233,11 @@ print("POSITION **** "+value.latitude.toString());
         db.execute("INSERT INTO species (name,code,type,communUse) VALUES ('Poirier sauvage','PO',1,0)"),
         db.execute("INSERT INTO species (name,code,type,communUse) VALUES ('Pommier sauvage','PA',1,0)"),
         db.execute("INSERT INTO species (name,code,type,communUse) VALUES ('Robinier','RO',1,0)"),
-        db.execute("INSERT INTO species (name,code,type,communUse) VALUES ('Sapin','SA',2,0)"),
+        db.execute("INSERT INTO species (name,code,type,communUse) VALUES ('Sapin','SA',2,1)"),
         db.execute("INSERT INTO species (name,code,type,communUse) VALUES ('Saule','SL',1,0)"),
         db.execute("INSERT INTO species (name,code,type,communUse) VALUES ('Saule marsault','SM',1,0)"),
         db.execute("INSERT INTO species (name,code,type,communUse) VALUES ('Sorbier des oiseleurs','SO',1,0)"),
-        db.execute("INSERT INTO species (name,code,type,communUse) VALUES ('Tilleul','TI',1,0)"),
+        db.execute("INSERT INTO species (name,code,type,communUse) VALUES ('Tilleul','TI',1,1)"),
         db.execute("INSERT INTO species (name,code,type,communUse) VALUES ('Tilleul à grandes feuilles','TG',1,0)"),
         db.execute("INSERT INTO species (name,code,type,communUse) VALUES ('Tilleul à petites feuilles','TP',1,0)"),
       ]).then((value) {

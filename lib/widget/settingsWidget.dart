@@ -117,22 +117,23 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                 child: Column(
                   children: [
                     ListTile(
-                      title: Text(AppLocalizations.of(context)!.species),
+                      title: Text("Essences"),
                       onTap: openSpeciesListPage,
                     )
                     ,
                     ListTile(
-                      title: Text(AppLocalizations.of(context)!.trunkSize),
+                      title: Text("Tarif"),
                        onTap: openTrunkSizeListPage,
                       
                     ),
+                    /*
                     ListTile(
                       title: Text(AppLocalizations.of(context)!.campaign),
                        onTap: openCampaignListPage,
                       
-                    ),
+                    ),*/
                     ListTile(
-                      title: Text("Supprimer les marquages"),
+                      title: Text("Supprimer les données"),
                        onTap:() => showDialog(
                         context: context,
                         builder: (BuildContext context) => AlertDialog(

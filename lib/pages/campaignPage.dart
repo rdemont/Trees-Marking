@@ -43,7 +43,7 @@ class _CampaignPageState extends State<CampaignPage> {
       //resizeToAvoidBottomInset: false, 
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text("Campagne de martelage"),
+        title: Text("Martelage"),
       ),
       body: Container(
         margin: const EdgeInsets.only(left: 20.0, right: 20.0, top: 20.0, bottom: 10.0),

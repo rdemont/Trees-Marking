@@ -39,7 +39,7 @@ class _CampaignListPageState extends State<CampaignListPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(AppLocalizations.of(context)!.campaign),
+        title: Text("Martelages"),
       ),
       endDrawer:  Drawer(child:  SettingsWidget()), 
       floatingActionButton: FloatingActionButton(

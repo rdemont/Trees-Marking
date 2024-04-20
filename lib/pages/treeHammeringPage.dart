@@ -159,7 +159,7 @@ print("***********speciesList.length :"+_speciesList.length.toString());
   {
     return Row(
       children: [
-        Text("Localization :"),
+        //Text("Localization :"),
         Flexible(
           child: Text(widget.campaign.name)
         )  
@@ -273,6 +273,7 @@ print("*****SETSTATE TRUNKSIZECELL   **** ");
     return Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          /*
           Visibility(
             maintainSize: false,
             visible: _btnEditOn,
@@ -284,6 +285,7 @@ print("*****SETSTATE getBUTTON   **** ");
               });
                 save();  
             }, 
+            
             child: Text("Save",
               style: new TextStyle(
               fontSize: 30.0,
@@ -291,6 +293,7 @@ print("*****SETSTATE getBUTTON   **** ");
               ),)
             ),
           ),
+          */
           Visibility(
             maintainSize: false,
             visible: _btnEditOn,
@@ -499,7 +502,7 @@ print("****SAVE-----");
                 color: Colors.grey,
                 child: DataTable(
                   columns: [
-                    DataColumn(label: Text(AppLocalizations.of(context)!.species,style: TextStyle(fontStyle: FontStyle.italic),)),
+                    DataColumn(label: Text("Essences",style: TextStyle(fontStyle: FontStyle.italic),)),
                     DataColumn(label: Text(AppLocalizations.of(context)!.count,style: TextStyle(fontStyle: FontStyle.italic),)),
                     DataColumn(label: Text(AppLocalizations.of(context)!.sv,style: TextStyle(fontStyle: FontStyle.italic),)),
                   ],
@@ -523,7 +526,7 @@ print("****SAVE-----");
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               VerticalDivider(),
-              Text("${AppLocalizations.of(context)!.species}: ${speciesCount.length}"),
+              Text("Essences: ${speciesCount.length}"),
               VerticalDivider(),
               Text("${AppLocalizations.of(context)!.count}: ${_markedTreeList.length}"),
               VerticalDivider(),
@@ -546,8 +549,8 @@ print("****SAVE-----");
     excel.setDefaultSheet("PV martelage");
     ExcelLib.Sheet sheet = excel["liste de marquage"]; 
 
-    ExcelLib.CellStyle cellPVTitle = ExcelLib.CellStyle(bold: true,backgroundColorHex: ExcelLib.ExcelColor.fromHexString("#f59842"));   
-    ExcelLib.CellStyle cellPVSubTitle = ExcelLib.CellStyle(bold: true,backgroundColorHex: ExcelLib.ExcelColor.fromHexString("#f5c190"));   
+    ExcelLib.CellStyle cellPVTitle = ExcelLib.CellStyle(bold: true,backgroundColorHex: ExcelLib.ExcelColor.fromHexString("#08AA2A"));   
+    ExcelLib.CellStyle cellPVSubTitle = ExcelLib.CellStyle(bold: true,backgroundColorHex: ExcelLib.ExcelColor.fromHexString("#15CE3C"));   
 
     
     //sheet.merge(ExcelLib.CellIndex.indexByString('A1'), ExcelLib.CellIndex.indexByString('D1'), customValue: ExcelLib.TextCellValue(nameController.text));
