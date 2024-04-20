@@ -477,7 +477,7 @@ class _TreeHammeringPageState extends State<TreeHammeringPage> {
     sheet.cell(ExcelLib.CellIndex.indexByString("C1")).value = ExcelLib.TextCellValue("taille du tronc") ; 
     sheet.cell(ExcelLib.CellIndex.indexByString("D1")).value = ExcelLib.TextCellValue("Sylve") ; 
     sheet.cell(ExcelLib.CellIndex.indexByString("E1")).value = ExcelLib.TextCellValue("Latitude") ; 
-    sheet.cell(ExcelLib.CellIndex.indexByString("F1")).value = ExcelLib.TextCellValue("Longiture") ; 
+    sheet.cell(ExcelLib.CellIndex.indexByString("F1")).value = ExcelLib.TextCellValue("Longitude") ; 
 
     ExcelLib.CellStyle cellTitle = ExcelLib.CellStyle(bold: true);
     sheet.cell(ExcelLib.CellIndex.indexByString("A1")).cellStyle = cellTitle ;
