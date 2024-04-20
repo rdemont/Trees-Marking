@@ -12,6 +12,8 @@ import 'package:lv95/lv95.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:treesmarking/pages/speciesListPage.dart';
+import 'package:treesmarking/pages/speciesPage.dart';
 
 import '../businessObj/campaign.dart';
 import '../businessObj/markedTree.dart';
@@ -45,12 +47,13 @@ class _TreeHammeringPageState extends State<TreeHammeringPage> {
   List<MarkedTree> _markedTreeList = []; 
 
   Widget body = Text("Please waite ....loading ");  
-  int _btnSpeciesOn = 0 ; 
+  int _btnSpeciesOn = -1 ; 
   int _btnTrunkSizeOn = 0;
   bool _isLoaded = false  ; 
   
   late MarkedTree _markedTree; 
   MarkedTree? _markedTreeLastChange = null ; 
+  int _mtEditIndex = -1 ;
 
   
   bool _btnEditOn = false ; 
@@ -66,12 +69,8 @@ class _TreeHammeringPageState extends State<TreeHammeringPage> {
     
     super.initState();
 
-
     _markedTree = MarkedTreeGen.newObj();
-    //nameController.text = _campaign.name;§
-
-
-
+    
   }
 
 
@@ -106,13 +105,37 @@ class _TreeHammeringPageState extends State<TreeHammeringPage> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text("Martelage"),
+        actions: [
+          IconButton(
+            icon:Icon(Icons.forest_outlined),
+            tooltip: "Marteler",
+            onPressed: () {
+              openSpecies();
+            },
+          )
+        ]
       ),
       body:getScreen(), //body,
-      endDrawer:  Drawer(child:  SettingsWidget()), 
+      //endDrawer:  Drawer(child:  SettingsWidget()), 
       bottomNavigationBar: SizedBox(height: 75, child:BottomAppBar(child: getBottomInfo(),)),
     ) ;
   }
 
+
+  openSpecies()
+  {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) =>  SpeciesListPage())).then((value){
+        SpeciesList.getAll().then((value) {
+          setState(() {
+            _speciesList = value ;    
+          });
+          
+        });
+      }, );
+
+  }
 
 /*
   loadData(){              
@@ -139,17 +162,9 @@ print("***********speciesList.length :"+_speciesList.length.toString());
     return Column(
       children: [
         getHeadrePart(),
-        Divider(),
         getSpeciesPart(),
-        Divider(),
         getTrunkSizePart(),
-        Visibility(
-            maintainSize: false,
-            visible: _btnEditOn ,
-            child: Divider(),
-        ),
         getButton(),
-        Divider(),
         getList(),
       ],
     ); 
@@ -171,19 +186,26 @@ print("***********speciesList.length :"+_speciesList.length.toString());
     
     if (_speciesList.length > cell)
     {
-      return ElevatedButton(
-        onPressed: () {
-          FocusManager.instance.primaryFocus?.unfocus();
-print("*****SETSTATE SPECIESCELL   **** ");                              
-          setState(() {
-            _btnSpeciesOn = cell;    
-            //body = getScreen();        
-          });
-        },
-        style: ElevatedButton.styleFrom(backgroundColor:cell==_btnSpeciesOn?Colors.blue:Colors.grey,),
-        child: Text(_speciesList[cell].name),
+      return 
+      Container(
+        color:cell==_btnSpeciesOn?Colors.blue:null,
+        height: 60,
+        child: TextButton(
+          onPressed: () {
+            FocusManager.instance.primaryFocus?.unfocus();
+  print("*****SETSTATE SPECIESCELL   **** ");                              
+            setState(() {
+              _btnSpeciesOn = cell;    
+              //body = getScreen();        
+            });
+          },
+          //style: TextButton.styleFrom(backgroundColor:cell==_btnSpeciesOn?Colors.blue:Colors.grey,),
+          child: Text(
+            _speciesList[cell].name,
+            overflow: TextOverflow.ellipsis,
+          ),
+        )
       );
-
     }
     return Text("");
   }
@@ -199,6 +221,10 @@ print("*****SETSTATE SPECIESCELL   **** ");
       if (_speciesList[i].communUse)
       {
         val.add(i);
+        if (_btnSpeciesOn < 0)
+        {
+          _btnSpeciesOn = i ; 
+        }
       }
     }
 
@@ -208,7 +234,10 @@ print("*****SETSTATE SPECIESCELL   **** ");
     }
     
     return Table(
-      border: TableBorder(horizontalInside: BorderSide(width: 1, color: Colors.blue, style: BorderStyle.solid)),
+      border: TableBorder(
+        horizontalInside: BorderSide(width: 1, color: Colors.blue, style: BorderStyle.solid),
+        verticalInside:  BorderSide(width: 1, color: Colors.blue, style: BorderStyle.solid),  
+      ),
       children: [
         TableRow(
           children: [getSpeciesCell(val[0]),getSpeciesCell(val[1]),getSpeciesCell(val[2]),getSpeciesCell(val[3])]
@@ -227,18 +256,22 @@ print("*****SETSTATE SPECIESCELL   **** ");
   Widget getTrunkSizeCell(int cell){
     if (_trunkSizeList.length > cell)
     {
-      return ElevatedButton(
-        onPressed: () {
-          FocusManager.instance.primaryFocus?.unfocus();
-print("*****SETSTATE TRUNKSIZECELL   **** ");                              
-          setState(() {
-            _btnTrunkSizeOn = cell;             
+      return
+      Container(
+        color:cell==_btnTrunkSizeOn?Colors.blue:null,
+        height: 40,
+        child: TextButton(
+          onPressed: () {
+            FocusManager.instance.primaryFocus?.unfocus();
+  print("*****SETSTATE TRUNKSIZECELL   **** ");                              
+            setState(() {
+              _btnTrunkSizeOn = cell;             
             
-          });
-          save();      
-        }, 
-        style: ElevatedButton.styleFrom(backgroundColor:cell==_btnTrunkSizeOn?Colors.blue:Colors.grey,),
-        child: Text(_trunkSizeList[cell].code),
+            });
+            save();      
+          }, 
+          child: Text(_trunkSizeList[cell].code),
+        )
       );
     }
     return Text("void");
@@ -248,7 +281,10 @@ print("*****SETSTATE TRUNKSIZECELL   **** ");
  {
 
     return Table(
-      border: TableBorder(horizontalInside: BorderSide(width: 1, color: Colors.blue, style: BorderStyle.solid)),
+      border: TableBorder(
+        horizontalInside: BorderSide(width: 1, color: Colors.blue, style: BorderStyle.solid),
+        verticalInside:  BorderSide(width: 1, color: Colors.blue, style: BorderStyle.solid),
+      ),
       children: [
         TableRow(
           children: [getTrunkSizeCell(0),getTrunkSizeCell(1),getTrunkSizeCell(2),getTrunkSizeCell(3),getTrunkSizeCell(4),getTrunkSizeCell(5)]
@@ -273,27 +309,6 @@ print("*****SETSTATE TRUNKSIZECELL   **** ");
     return Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          /*
-          Visibility(
-            maintainSize: false,
-            visible: _btnEditOn,
-            child:ElevatedButton(onPressed: () {
-              FocusManager.instance.primaryFocus?.unfocus();
-print("*****SETSTATE getBUTTON   **** ");                                  
-              setState(() {
-              _btnEditOn = false ; 
-              });
-                save();  
-            }, 
-            
-            child: Text("Save",
-              style: new TextStyle(
-              fontSize: 30.0,
-              fontStyle: FontStyle.italic
-              ),)
-            ),
-          ),
-          */
           Visibility(
             maintainSize: false,
             visible: _btnEditOn,
@@ -302,21 +317,12 @@ print("*****SETSTATE getBUTTON   **** ");
                 FocusManager.instance.primaryFocus?.unfocus();
                 setState(() {
                   _btnEditOn = false ; 
+                  _mtEditIndex = -1 ; 
+                  _markedTreeList.remove(_markedTree);
                 });                
-/*                
-                _markedTree!.delete();
-                _markedTree!.save().then((value){
-                  MarkedTreeList.getFromCampaign(widget.campaign.id).then((value) {
-print("*****SETSTATE GETBUTTON 2   **** ");                                        
-                    setState(() {
-                      _markedTreeList = value ; 
-//ToDo : Faire le bouton Delete                       
-                      //_markedTree = null; 
-                    });
-*/
-                  //}); 
-                  
-                //});
+                _markedTree.delete();
+                _markedTree.save();
+                _markedTree = MarkedTreeGen.newObj();
               },
               child: Text("Delete",
                 style: new TextStyle(
@@ -334,6 +340,7 @@ print("*****SETSTATE GETBUTTON 2   **** ");
                 FocusManager.instance.primaryFocus?.unfocus();
                 setState(() {
                   _btnEditOn = false ; 
+                  _mtEditIndex = -1 ; 
                 });
 //ToDo : Faire le bouton Delete                               
                 //_markedTree = null; 
@@ -354,11 +361,15 @@ print("*****SETSTATE GETBUTTON 2   **** ");
 
   Color? getLineColor(int index)
   {
+    if(index == _mtEditIndex)
+    {
+        return Colors.red[200];
+    }
     if (_markedTreeLastChange != null)
     {
       if (_markedTreeList[index].id == _markedTreeLastChange!.id)
       {
-        return Colors.yellow[50];
+        return Colors.yellow[200];
       }
     }
     return (index%2 == 0 ) ? Colors.grey[50] : Colors.grey[350];
@@ -396,6 +407,7 @@ print("*****SETSTATE GETBUTTON 2   **** ");
                 // edit 
 print("*****SETSTATE GETLIST   **** ");                    
                 setState(() {
+                  _mtEditIndex = index; 
                   _btnEditOn = true ; 
                   _markedTree =  _markedTreeList[index];
                   _btnSpeciesOn = _speciesList.indexWhere((element) => element.id == _markedTree.species.id);
@@ -428,22 +440,35 @@ print("****SAVE-----");
     mt.species = _speciesList[_btnSpeciesOn];
     mt.trunkSize = _trunkSizeList[_btnTrunkSizeOn];
 
-
+    
 
     if (mt.id == 0)
     {
       setState(() {
         _markedTreeList.add(mt);
       });
-      _itemScrollController.scrollTo(
-        index: _markedTreeList.length -1 ,
-        duration: Duration(seconds: 2),
-        curve: Curves.easeInOutCubic
-      );
+      if (_markedTreeList.length > 1)
+      {
+        _itemScrollController.scrollTo(
+          index: _markedTreeList.length -1 ,
+          duration: Duration(seconds: 2),
+          curve: Curves.easeInOutCubic
+        );
+      }
+      
+    }
+    if (_mtEditIndex >= 0)
+    {
+      setState(() {
+        _markedTreeList[_mtEditIndex].trunkSize = _trunkSizeList[_btnTrunkSizeOn];
+        _markedTreeList[_mtEditIndex].species = _speciesList[_btnSpeciesOn];
+      });
     }
 
     setState(() {
       _markedTreeLastChange = mt ;  
+      _btnEditOn = false ; 
+      _mtEditIndex = -1 ; 
     });
 
     Geolocator.getCurrentPosition().then((value) {

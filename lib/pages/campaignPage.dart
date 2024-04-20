@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:treesmarking/generate/businessObj/markedTreeGen.dart';
+import 'package:treesmarking/generate/businessObj/markedTreeListGen.dart';
 import 'package:treesmarking/pages/treeHammeringPage.dart';
 
 import '../businessObj/campaign.dart';
+import '../businessObj/markedTreeList.dart';
 import '../generate/businessObj/campaignGen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -44,10 +47,54 @@ class _CampaignPageState extends State<CampaignPage> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text("Martelage"),
+        actions: [
+          IconButton(
+            icon:Icon(Icons.forest),
+            tooltip: "Marteler",
+            onPressed: () {
+              markedTree();
+            },
+
+          ),
+          IconButton(
+            icon:Icon(Icons.save),
+            tooltip: "Sauver",
+            onPressed: () {
+              save();
+            },
+          ),  
+          IconButton(
+            icon:Icon(Icons.delete),
+            tooltip: "Supprimer",
+            onPressed: () {                        
+              showDialog<String>(
+                context: context,
+                builder: (BuildContext context) => AlertDialog(
+                  title: const Text('Alerte'),
+                  content: const Text('Voulez-vous vraiment supprimer'),
+                  actions: <Widget>[
+                    TextButton(
+                      onPressed: () => Navigator.pop(context, 'Annuler'),
+                      child: const Text('Cancel'),
+                    ),
+                    TextButton(
+                      onPressed: (){ 
+                        delete();
+                        Navigator.pop(context, 'OK');
+                      },
+                      child: const Text('OK'),
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),                    
+        ],
       ),
-      body: Container(
-        margin: const EdgeInsets.only(left: 20.0, right: 20.0, top: 20.0, bottom: 10.0),
-        child:Column(
+      
+      body: SingleChildScrollView(
+
+        child: Column(
           children: [
             Row(
               children: [
@@ -127,27 +174,10 @@ class _CampaignPageState extends State<CampaignPage> {
                 
               ],
             ),
-            Expanded(child: Container()),
-            Row(children: [
-              ElevatedButton(onPressed: (){
-                  markedTree();
-                }, 
-                child: Text("Marteler")
-              ),
-              Expanded(child: Container()),
-              
-              ElevatedButton(onPressed: (){
-                delete();
-              }, 
-              child: Text(AppLocalizations.of(context)!.delete)),
-              ElevatedButton(onPressed: () {
-                cancel();
-              },
-              child: Text(AppLocalizations.of(context)!.cancel)),
-            ],)
           ],
         )
-      )
+      ),
+      
        
     );
   }
@@ -172,14 +202,30 @@ class _CampaignPageState extends State<CampaignPage> {
 
   delete()
   {
+
+    MarkedTreeList.getFromCampaign(widget.campaign.id).then((value) {
+      for (int i = 0;i<value.length;i++)
+      {
+        value[i].delete();
+        value[i].save(); 
+      }
+    },);
     widget.campaign.delete();
     widget.campaign.save().then((value){
       Navigator.pop(context);
     });
+
   }
 
-  cancel(){
-    Navigator.pop(context);
+  save(){
+    widget.campaign.name = nameController.text;
+    widget.campaign.remark = remarkController.text;
+    widget.campaign.owner = ownerController.text;
+    widget.campaign.yard = yardController.text;
+    widget.campaign.save().then((value) {
+      Navigator.pop(context);
+    });
+    
   }
 
 
