@@ -46,6 +46,7 @@ dependencies:
   file_selector: ^1.0.3
   excel: ^4.0.3
   flutter_launcher_icons: ^0.13.1
+  lv95: ^0.0.1
 
 dev_dependencies:
   flutter_test:

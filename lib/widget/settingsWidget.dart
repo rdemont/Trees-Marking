@@ -6,12 +6,17 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:treesmarking/services/databaseService.dart';
+import 'package:treesmarking/pages/mainPage.dart';
+
 
 import '../pages/campaignListPage.dart';
 import '../pages/speciesListPage.dart';
 import '../pages/trunkSizeListPage.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+import '../services/databaseService.dart';
+
+
 
 class SettingsWidget extends StatefulWidget {
   const SettingsWidget({Key? key});
@@ -126,6 +131,11 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                        onTap: openCampaignListPage,
                       
                     ),
+                    ListTile(
+                      title: Text("Supprimer les marquages"),
+                       onTap: deleteCampagne,
+                      
+                    ),                    
                   ],
                 ),
               ),
@@ -189,4 +199,17 @@ class _SettingsWidgetState extends State<SettingsWidget> {
     );
 
   }
+
+  deleteCampagne(){
+    DatabaseService.initializeDb().then((db) {
+      db.execute("DELETE FROM  markedTree");
+      db.execute("DELETE FROM  species");
+      db.execute("DELETE FROM  trunkSize");
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) =>  MainPage()  )
+     );
+    });
+  }
+
 }

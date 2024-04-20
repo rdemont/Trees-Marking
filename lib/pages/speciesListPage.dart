@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:treesmarking/businessObj/species.dart';
 
+
 import '../businessObj/speciesList.dart';
 import 'speciesPage.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -50,7 +51,8 @@ class _SpeciesListPageState extends State<SpeciesListPage> {
             itemCount: _speciesList.length,
             itemBuilder: (BuildContext context, int index) {
               return new GestureDetector(
-                onTap: () => showSpecies(_speciesList[index]),
+                onLongPress: () => showSpecies(_speciesList[index]),
+                onTap: () => communUseChange(_speciesList[index]),
                 child: new Card(
                   child: Container(
                     margin: const EdgeInsets.only(left: 10.0, right: 5.0, top: 2.0, bottom: 2.0),
@@ -83,6 +85,16 @@ class _SpeciesListPageState extends State<SpeciesListPage> {
       });
     });
   }
+
+  communUseChange(Species species)
+  {
+    setState(() {
+      species.communUse = !species.communUse ;  
+    });
+    
+    species.save();
+  }
+
 
   addSpecies() {
     Navigator.push(

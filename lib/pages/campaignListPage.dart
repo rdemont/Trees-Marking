@@ -7,6 +7,8 @@ import '../businessObj/campaignList.dart';
 import '../generate/businessObj/campaignGen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '../widget/settingsWidget.dart';
+
 
 
 
@@ -39,6 +41,7 @@ class _CampaignListPageState extends State<CampaignListPage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(AppLocalizations.of(context)!.campaign),
       ),
+      endDrawer:  Drawer(child:  SettingsWidget()), 
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add_circle_outline),
         onPressed: () {

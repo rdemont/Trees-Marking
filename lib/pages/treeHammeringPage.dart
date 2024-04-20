@@ -7,6 +7,7 @@ import 'dart:io';
 import 'package:excel/excel.dart' as ExcelLib;
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:lv95/lv95.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -21,7 +22,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:geolocator/geolocator.dart';
 
 import '../generate/businessObj/markedTreeGen.dart';
-import '../generate/businessObj/speciesGen.dart';
+
 import '../widget/settingsWidget.dart';
 
 class TreeHammeringPage extends StatefulWidget {
@@ -73,7 +74,7 @@ class _TreeHammeringPageState extends State<TreeHammeringPage> {
         return ;
       }),
 
-      SpeciesList.getAll(SpeciesGen.COLUMN_COMMUNUSE +"=1").then((value) {
+      SpeciesList.getAll().then((value) {
         _speciesList = value ;  
         return ;
       }),
@@ -92,13 +93,7 @@ class _TreeHammeringPageState extends State<TreeHammeringPage> {
     ) ;
   }
 
-
   loadData(){
-    /*
-    setState(() {
-      body = Text(AppLocalizations.of(context)!.pleaseWaite);
-    });
-    */
     if ((!_speciesList.isEmpty)
       && (!_trunkSizeList.isEmpty))
       {
@@ -115,8 +110,6 @@ class _TreeHammeringPageState extends State<TreeHammeringPage> {
 
   Widget getScreen()
   {
-    
-
     return Column(
       children: [
         getHeadrePart(),
@@ -172,14 +165,28 @@ class _TreeHammeringPageState extends State<TreeHammeringPage> {
   Widget getSpeciesPart()
   {
     
+    List<int> val =[]; 
+    for(int i=0;i<_speciesList.length;i++)
+    {
+      if (_speciesList[i].communUse)
+      {
+        val.add(i);
+      }
+    }
+
+    for(int i=0-1;i<8;i++)
+    {
+      val.add(999999);
+    }
+    
     return Table(
       border: TableBorder(horizontalInside: BorderSide(width: 1, color: Colors.blue, style: BorderStyle.solid)),
       children: [
         TableRow(
-          children: [getSpeciesCell(0),getSpeciesCell(1),getSpeciesCell(2),getSpeciesCell(3)]
+          children: [getSpeciesCell(val[0]),getSpeciesCell(val[1]),getSpeciesCell(val[2]),getSpeciesCell(val[3])]
         ),
         TableRow(
-          children: [getSpeciesCell(4),getSpeciesCell(5),getSpeciesCell(6),getSpeciesCell(7)]
+          children: [getSpeciesCell(val[4]),getSpeciesCell(val[5]),getSpeciesCell(val[6]),getSpeciesCell(val[7])]
         ),
       ],
 
@@ -469,12 +476,16 @@ class _TreeHammeringPageState extends State<TreeHammeringPage> {
     sheet.cell(ExcelLib.CellIndex.indexByString("B1")).value = ExcelLib.TextCellValue("Essence") ; 
     sheet.cell(ExcelLib.CellIndex.indexByString("C1")).value = ExcelLib.TextCellValue("taille du tronc") ; 
     sheet.cell(ExcelLib.CellIndex.indexByString("D1")).value = ExcelLib.TextCellValue("Sylve") ; 
+    sheet.cell(ExcelLib.CellIndex.indexByString("E1")).value = ExcelLib.TextCellValue("Latitude") ; 
+    sheet.cell(ExcelLib.CellIndex.indexByString("F1")).value = ExcelLib.TextCellValue("Longiture") ; 
 
     ExcelLib.CellStyle cellTitle = ExcelLib.CellStyle(bold: true);
     sheet.cell(ExcelLib.CellIndex.indexByString("A1")).cellStyle = cellTitle ;
     sheet.cell(ExcelLib.CellIndex.indexByString("B1")).cellStyle = cellTitle ;
     sheet.cell(ExcelLib.CellIndex.indexByString("C1")).cellStyle = cellTitle ;
     sheet.cell(ExcelLib.CellIndex.indexByString("D1")).cellStyle = cellTitle ;
+    sheet.cell(ExcelLib.CellIndex.indexByString("E1")).cellStyle = cellTitle ;
+    sheet.cell(ExcelLib.CellIndex.indexByString("F1")).cellStyle = cellTitle ;
 
 
     Map<String,int> sumNbTrunkLeafy = {};
@@ -491,6 +502,13 @@ class _TreeHammeringPageState extends State<TreeHammeringPage> {
       sheet.cell(ExcelLib.CellIndex.indexByString("B${i+2}")).value = ExcelLib.TextCellValue(_markedTreeList[i].species.name) ; 
       sheet.cell(ExcelLib.CellIndex.indexByString("C${i+2}")).value = ExcelLib.TextCellValue(_markedTreeList[i].trunkSize.code) ; 
       sheet.cell(ExcelLib.CellIndex.indexByString("D${i+2}")).value = ExcelLib.TextCellValue(_markedTreeList[i].trunkSize.volume.toStringAsFixed(2)) ; 
+
+
+      LatLng wgs84 = LatLng(_markedTreeList[i].latitude,_markedTreeList[i].longitude);
+      XY lv95 = LV95.fromWGS84(wgs84,precise: true,height: 431);
+
+      sheet.cell(ExcelLib.CellIndex.indexByString("E${i+2}")).value = ExcelLib.DoubleCellValue(lv95.x) ; 
+      sheet.cell(ExcelLib.CellIndex.indexByString("F${i+2}")).value = ExcelLib.DoubleCellValue(lv95.y) ; 
 
       switch(_markedTreeList[i].species.type)
       {
@@ -661,4 +679,6 @@ class _TreeHammeringPageState extends State<TreeHammeringPage> {
       Share.shareXFiles([XFile(filePath)]);
     });
   }
+
+  
 }
