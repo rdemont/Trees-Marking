@@ -13,7 +13,6 @@ import 'package:path_provider/path_provider.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:treesmarking/pages/speciesListPage.dart';
-import 'package:treesmarking/pages/speciesPage.dart';
 
 import '../businessObj/campaign.dart';
 import '../businessObj/markedTree.dart';
@@ -27,7 +26,6 @@ import 'package:geolocator/geolocator.dart';
 
 import '../generate/businessObj/markedTreeGen.dart';
 
-import '../widget/settingsWidget.dart';
 
 class TreeHammeringPage extends StatefulWidget {
 

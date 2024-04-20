@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:treesmarking/generate/businessObj/markedTreeGen.dart';
-import 'package:treesmarking/generate/businessObj/markedTreeListGen.dart';
+
 import 'package:treesmarking/pages/treeHammeringPage.dart';
 
 import '../businessObj/campaign.dart';
