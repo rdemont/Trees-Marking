@@ -377,7 +377,7 @@ print("***********speciesList.length :"+_speciesList.length.toString());
   {
     LatLng wgs84 = LatLng(markedTree.latitude,markedTree.longitude);
     XY lv95 = LV95.fromWGS84(wgs84,precise: true,height: markedTree.altitude);        
-    return lv95.x.toString()+"/"+lv95.y.toString();
+    return "x:"+lv95.x.toStringAsFixed(0).substring(1)+" y:"+lv95.y.toStringAsFixed(0).substring(1);
   }
 
   Widget getList()
@@ -399,8 +399,8 @@ print("***********speciesList.length :"+_speciesList.length.toString());
             color: getLineColor(index),
             child: ListTile(
               leading: CircleAvatar(child: Text(_markedTreeList[index].species.code)),
-              title: Text(_markedTreeList[index].trunkSize.toString()), 
-              subtitle: Text("["+df.format(_markedTreeList[index].insertTime)+"] "+_markedTreeList[index].species.name+"\n"+getXYString(_markedTreeList[index])) ,           
+              title: Text(_markedTreeList[index].trunkSize.code+" "+_markedTreeList[index].species.name), 
+              subtitle: Text(df.format(_markedTreeList[index].insertTime)+" - "+getXYString(_markedTreeList[index])), //+"\n"+_markedTreeList[index].trunkSize.toString()) ,           
               onLongPress: () {
                 // edit 
 print("*****SETSTATE GETLIST   **** ");                    
@@ -437,7 +437,7 @@ print("****SAVE-----");
     mt.campaign = widget.campaign ; 
     mt.species = _speciesList[_btnSpeciesOn];
     mt.trunkSize = _trunkSizeList[_btnTrunkSizeOn];
-
+    mt.insertTime = DateTime.now();
     
 
     if (mt.id == 0)
@@ -469,11 +469,12 @@ print("****SAVE-----");
       _mtEditIndex = -1 ; 
     });
 
-    Geolocator.getCurrentPosition().then((value) {
-                  
-      mt.latitude =  value.latitude ;
-      mt.longitude =  value.longitude ; 
-      mt.altitude = value.altitude ; 
+    Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high ).then((value) {
+      setState(() {
+        mt.latitude =  value.latitude ;
+        mt.longitude =  value.longitude ; 
+        mt.altitude = value.altitude ;         
+      });          
 
       mt.save();
     });
@@ -581,8 +582,8 @@ print("****SAVE-----");
     sheet.cell(ExcelLib.CellIndex.indexByString("B1")).value = ExcelLib.TextCellValue("Essence") ; 
     sheet.cell(ExcelLib.CellIndex.indexByString("C1")).value = ExcelLib.TextCellValue("taille du tronc") ; 
     sheet.cell(ExcelLib.CellIndex.indexByString("D1")).value = ExcelLib.TextCellValue("Sylve") ; 
-    sheet.cell(ExcelLib.CellIndex.indexByString("E1")).value = ExcelLib.TextCellValue("Latitude") ; 
-    sheet.cell(ExcelLib.CellIndex.indexByString("F1")).value = ExcelLib.TextCellValue("Longitude") ; 
+    sheet.cell(ExcelLib.CellIndex.indexByString("E1")).value = ExcelLib.TextCellValue("Coordonées X") ; 
+    sheet.cell(ExcelLib.CellIndex.indexByString("F1")).value = ExcelLib.TextCellValue("Coordonées Y") ; 
 
     ExcelLib.CellStyle cellTitle = ExcelLib.CellStyle(bold: true);
     sheet.cell(ExcelLib.CellIndex.indexByString("A1")).cellStyle = cellTitle ;
@@ -612,8 +613,8 @@ print("****SAVE-----");
       LatLng wgs84 = LatLng(_markedTreeList[i].latitude,_markedTreeList[i].longitude);
       XY lv95 = LV95.fromWGS84(wgs84,precise: true,height: _markedTreeList[i].altitude);
 
-      sheet.cell(ExcelLib.CellIndex.indexByString("E${i+2}")).value = ExcelLib.DoubleCellValue(lv95.x) ; 
-      sheet.cell(ExcelLib.CellIndex.indexByString("F${i+2}")).value = ExcelLib.DoubleCellValue(lv95.y) ; 
+      sheet.cell(ExcelLib.CellIndex.indexByString("E${i+2}")).value = ExcelLib.TextCellValue(lv95.x.toStringAsFixed(0).substring(1)) ; 
+      sheet.cell(ExcelLib.CellIndex.indexByString("F${i+2}")).value = ExcelLib.TextCellValue(lv95.y.toStringAsFixed(0).substring(1)) ; 
 
       switch(_markedTreeList[i].species.type)
       {

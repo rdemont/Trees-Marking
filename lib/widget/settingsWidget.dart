@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:treesmarking/pages/mainPage.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 
 import '../pages/campaignListPage.dart';
@@ -184,7 +185,9 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                           color: Colors.blue
                         ),
                       ),
-                      onTap: () {},
+                      onTap: () {
+                        launchUrl(Uri.parse("https://github.com/rdemont/Trees-Marking"));
+                      },
                     )
                   ],
                 ),

@@ -248,15 +248,27 @@ class DatabaseService {
     
     List<Map<String,dynamic>> listMaps=[];
 
-    for (var i = 0; i < tables.length; i++)
-    {
+    return Future(() {      
+      return dbs.rawQuery('SELECT * FROM sqlite_master ORDER BY name;').then((tab) 
+      async {
+        if (tab.length > 0) 
+        {
+          for (int i = 0; i < tab.length; i++) 
+          {
 
-      listMaps = await dbs.query(tables[i]); 
-
-      data.add(listMaps);
-
-    }
-
+            String tableName = tab[i]['name'].toString() ; 
+            if ((tableName != "sqlite_sequence") && (tableName != "android_metadata"))
+            {
+              tables.add(tableName);
+              listMaps = await dbs.query(tableName);
+              data.add(listMaps);  
+              
+            }
+          }
+        }
+      });
+    }).then((value) {
+      
     List backups=[tables,data];
 
     String json = convert.jsonEncode(backups);
@@ -273,8 +285,12 @@ class DatabaseService {
     }
     else
     {
+print("*** Backup ***");
+log(json);      
       return json;
     }
+    },);
+
   }
 
   static Future<void>restoreBackup(String backup,{ bool isEncrypted = false}) async {
@@ -282,8 +298,6 @@ class DatabaseService {
     await DatabaseService.emptyTables();
 
     var dbs = await DatabaseService.initializeDb();
-    
-
 
     Batch batch = dbs.batch();
     
@@ -297,7 +311,10 @@ class DatabaseService {
     {
       for (var k = 0; k < json[1][i].length; k++)
       {
-        batch.insert(json[0][i],json[1][i][k]);
+         dbs.execute("DELETE FROM ${json[0][i]}").then((value) {
+          batch.insert(json[0][i],json[1][i][k]);   
+         },);
+        
       }
     }
 
