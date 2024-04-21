@@ -27,8 +27,8 @@ jobs:
         with:
           release_branch: main
           scheme: semver
-          increment: minor
-          #increment: patch
+          #increment: minor
+          increment: patch
 
       - run: echo ${{ steps.version.outputs.version }}
 
