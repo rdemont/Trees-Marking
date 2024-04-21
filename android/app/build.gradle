@@ -59,7 +59,7 @@ android {
         }
     }
 
-
+}
 flutter {
     source '../..'
 }
