@@ -44,7 +44,8 @@ class _TreeHammeringPageState extends State<TreeHammeringPage> {
   List<Species> _speciesList = [] ; 
   List<MarkedTree> _markedTreeList = []; 
 
-  Widget body = Text("Please waite ....loading ");  
+  //Widget body = CircularProgressIndicator();
+  //Text("Please waite ....loading ");  
   int _btnSpeciesOn = -1 ; 
   int _btnTrunkSizeOn = 0;
   bool _isLoaded = false  ; 
@@ -154,7 +155,7 @@ print("*****SETSTATE LOADDATA **** ");
   {
     if (!_isLoaded)
     {
-      return Text("Please waite ....loading ");  
+      return Center(child:  CircularProgressIndicator()) ; //Text("Please waite ....loading ");  
     }
 print("***********speciesList.length :"+_speciesList.length.toString());
     return Column(
@@ -543,7 +544,7 @@ print("****SAVE-----");
       children: [
         IconButton(onPressed: () {
             exportData();
-          }, icon: Icon(Icons.attach_email_rounded)
+          }, icon: Icon(Icons.share_rounded)
         ),
         Expanded(child: 
           Row(

@@ -34,6 +34,38 @@ class DatabaseService {
         );
   }
 
+
+  static Future<void> recreateTables()
+  {
+    print("** Drop tables **");
+    return DatabaseService.initializeDb().then((db){
+      return db.rawQuery('SELECT * FROM sqlite_master ORDER BY name;').then((tables) 
+      {
+        if (tables.length > 0) 
+        {
+          for (int i = 0; i < tables.length; i++) 
+          {
+
+            String tableName = tables[i]['name'].toString() ; 
+            if ((tableName != "sqlite_sequence") && (tableName != "android_metadata"))
+            {
+              db.execute("DROP TABLE $tableName");
+            }
+          }
+        }
+
+        return createTables(db).then((value) {
+          return ; 
+        });
+        //updateTables(db, 0, DATABASE_VERSION);
+        
+      });
+      
+    });
+
+    
+  }
+
   static Future<void> emptyTables()
   {
     print("** empty tables **");
@@ -49,6 +81,7 @@ class DatabaseService {
             if ((tableName != "sqlite_sequence") && (tableName != "android_metadata"))
             {
               db.execute("DELETE FROM '$tableName' ");
+              
             }
           }
         }
@@ -162,7 +195,8 @@ class DatabaseService {
           remark TEXT,
           latitude FLOAT,
           longitude FLOAT,
-          insertTime DATETIME DEFAULT CURRENT_TIMESTAMP  
+          insertTime DATETIME DEFAULT CURRENT_TIMESTAMP  ,
+          altitude FLOAT
       )      
     """);
 
@@ -225,7 +259,8 @@ class DatabaseService {
       remark TEXT,
       latitude FLOAT,
       longitude FLOAT,
-      campaignDate DATETIME DEFAULT CURRENT_TIMESTAMP 
+      campaignDate DATETIME DEFAULT CURRENT_TIMESTAMP ,
+      altitude FLOAT
     )          
     """);        
 

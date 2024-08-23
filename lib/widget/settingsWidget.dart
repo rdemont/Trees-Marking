@@ -138,8 +138,8 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                        onTap:() => showDialog(
                         context: context,
                         builder: (BuildContext context) => AlertDialog(
-                          title: const Text('AlertDialog Title'),
-                          content: const Text('AlertDialog description'),
+                          title: const Text('Attention'),
+                          content: const Text('Toutes les données seront supprimées'),
                           actions: <Widget>[
                             TextButton(
                               onPressed: () => Navigator.pop(context, 'Cancel'),
@@ -225,6 +225,13 @@ class _SettingsWidgetState extends State<SettingsWidget> {
   }
 
   deleteCampagne(){
+    DatabaseService.recreateTables().then((value) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) =>  MainPage()  )
+      );
+    });
+    /*
     DatabaseService.initializeDb().then((db) {
       db.execute("DELETE FROM  markedTree");
       db.execute("DELETE FROM  species");
@@ -234,6 +241,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
         MaterialPageRoute(builder: (context) =>  MainPage()  )
      );
     });
+    */
   }
 
 }
