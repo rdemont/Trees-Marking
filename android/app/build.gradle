@@ -57,7 +57,7 @@ android {
         versionName flutterVersionName
         multiDexEnabled true
     }
-/*
+    /*
     signingConfigs {
         release {
            keyAlias keystoreProperties['keyAlias']
@@ -67,12 +67,14 @@ android {
 
         }
     }
-*/
+    */
+
     buildTypes {
         release {
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig signingConfigs.release
+            //signingConfig signingConfigs.release
+            signingConfig signingConfigs.debug
         }
     }
 
