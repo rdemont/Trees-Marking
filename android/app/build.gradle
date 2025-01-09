@@ -57,7 +57,7 @@ android {
         versionName flutterVersionName
         multiDexEnabled true
     }
-
+/*
     signingConfigs {
         release {
            keyAlias keystoreProperties['keyAlias']
@@ -67,7 +67,7 @@ android {
 
         }
     }
-
+*/
     buildTypes {
         release {
             // TODO: Add your own signing config for the release build.
