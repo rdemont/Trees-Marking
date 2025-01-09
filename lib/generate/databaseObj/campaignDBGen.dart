@@ -163,13 +163,13 @@ class CampaignDBGen extends DatabaseObj {
   {
     super.clone(value);
     (value as CampaignDBGen)._name = name;
-    (value as CampaignDBGen)._owner = owner;
-    (value as CampaignDBGen)._yard = yard;
-    (value as CampaignDBGen)._remark = remark;
-    (value as CampaignDBGen)._latitude = latitude;
-    (value as CampaignDBGen)._longitude = longitude;
-    (value as CampaignDBGen)._campaignDate = campaignDate;
-    (value as CampaignDBGen)._altitude = altitude;
+    value._owner = owner;
+    value._yard = yard;
+    value._remark = remark;
+    value._latitude = latitude;
+    value._longitude = longitude;
+    value._campaignDate = campaignDate;
+    value._altitude = altitude;
 
   }
 }

@@ -115,9 +115,9 @@ class SpeciesDBGen extends DatabaseObj {
   {
     super.clone(value);
     (value as SpeciesDBGen)._name = name;
-    (value as SpeciesDBGen)._code = code;
-    (value as SpeciesDBGen)._type = type;
-    (value as SpeciesDBGen)._communUse = communUse;
+    (value)._code = code;
+    (value)._type = type;
+    (value)._communUse = communUse;
 
   }
 }

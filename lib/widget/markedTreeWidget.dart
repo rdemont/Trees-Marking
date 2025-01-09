@@ -3,8 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:treesmarking/businessObj/campaign.dart';
 import 'package:treesmarking/pages/markedTreePage.dart';
 import '../businessObj/markedTree.dart';
-import '../businessObj/markedTreeList.dart';
-import '../generate/businessObj/markedTreeGen.dart';
+
 
 
 class MarkedTreeWidget extends StatefulWidget {
@@ -81,7 +80,7 @@ class _MarkedTreeWidgetState extends State<MarkedTreeWidget> {
   void _loadData() {
 
   }
-  
+  /*
   _addMarkedTree() {
 
     var textFieldController = TextEditingController();
@@ -131,7 +130,7 @@ print("load markedTreeList count : "+list.length.toString());
       ),
     );
   }
-  
+  */
 }
 
 

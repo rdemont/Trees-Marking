@@ -199,13 +199,13 @@ class MarkedTreeDBGen extends DatabaseObj {
   {
     super.clone(value);
     (value as MarkedTreeDBGen)._speciesId = speciesId;
-    (value as MarkedTreeDBGen)._trunkSizeId = trunkSizeId;
-    (value as MarkedTreeDBGen)._campaignId = campaignId;
-    (value as MarkedTreeDBGen)._remark = remark;
-    (value as MarkedTreeDBGen)._latitude = latitude;
-    (value as MarkedTreeDBGen)._longitude = longitude;
-    (value as MarkedTreeDBGen)._insertTime = insertTime;
-    (value as MarkedTreeDBGen)._altitude = altitude;
+    (value)._trunkSizeId = trunkSizeId;
+    (value)._campaignId = campaignId;
+    (value)._remark = remark;
+    (value)._latitude = latitude;
+    (value)._longitude = longitude;
+    (value)._insertTime = insertTime;
+    (value)._altitude = altitude;
 
   }
 }
