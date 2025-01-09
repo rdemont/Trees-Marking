@@ -31,7 +31,7 @@ if (keystorePropertiesFile.exists()) {
 android {
     namespace "com.example.treesmarking"
     compileSdk 35
-    ndkVersion flutter.ndkVersion
+    ndkVersion "28.0.12674087" //flutter.ndkVersion
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
