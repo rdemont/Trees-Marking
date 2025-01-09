@@ -63,7 +63,7 @@ jobs:
         name: Sign app APK
         id: sign_app
         with:
-          releaseDir: build/app/outputs/apk/release
+          releaseDir: build/app/outputs/apk/flutter-apk/
           signingKey: ${{ secrets.KEYSTORE }}
           keyAlias: ${{ secrets.SIGNING_KEY_ALIAS }}
           keyStorePassword: ${{ secrets.SIGNING_STORE_PASSWORD }}
